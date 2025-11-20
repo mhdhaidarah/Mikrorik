@@ -1,0 +1,20 @@
+/interface list
+add name=LAN_List
+add name=WAN_List
+/ip firewall address-list
+add address=192.168.0.0/16 list=Local_IPs
+add address=172.16.0.0/12 list=Local_IPs
+/ip firewall filter
+add action=drop chain=forward dst-address-list=Local_IPs src-address=\
+    192.168.20.0/24
+add action=accept chain=forward comment="Allow Internet for Local LANs" \
+    in-interface-list=LAN_List out-interface-list=WAN_List
+add action=accept chain=input comment="Allow established/related" \
+    connection-state=established,related
+add action=drop chain=input comment="Drop invalid" connection-state=invalid
+add action=accept chain=input comment="Allow ping" protocol=icmp
+add action=accept chain=forward comment="Allow return traffic" \
+    connection-state=established,related
+add action=drop chain=forward comment="Drop invalid forward" \
+    connection-state=invalid
+add action=drop chain=forward comment="Drop everything else"

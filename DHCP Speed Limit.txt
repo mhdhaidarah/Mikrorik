@@ -1,0 +1,1 @@
+:local queueName "Client- $leaseActMAC"; :if ($leaseBound = "1") do={ /queue simple add name=$queueName target=($leaseActIP . "/32") max-limit=1M/1M parent=Guest; } else={ /queue simple remove $queueName }

@@ -1,0 +1,118 @@
+/ip firewall layer7-protocol
+add name=FaceBook regexp="^.+(facebook.com|fbcdn.net|facebook.net|fbpigeon.com|fb.com|fb.gg|facebook-hardware.com|f\
+    b.watch|messenger.com|workplace.com|oculus.com|oculuscdn.com|metaverse.com).*\$"
+add name=Instagram regexp="^.+(instagram.com|cdninstagram.com|ig.me|igcdn.com|igsonar.com|igtv.com|instagr.am|ig.co\
+    m|threads.net|instagram-brand.com|instagram-engineering.com|instagram-help.com|instagram-press.com|instagram-pr\
+    ess.net|instagramci.com|instagramcn.com|instagramdi.com|instagramhashtags.net|instagramhilecim.com|instagramhil\
+    esi.org|instagramium.com|instagramizlenme.com|instagramkusu.com|instagramlogin.com|instagrampartners.com|instag\
+    ramphoto.com|instagramq.com|instagramsepeti.com|instagramtakipcisatinal.net|instagramtakiphilesi.com|instagramt\
+    ips.com|instagramtr.com|instagran.com|instagrem.com|instagrm.com|intagram.com|intagrm.com|instangram.com|instam\
+    gram.com|instagtram.com|instagy.com|instachecker.com|instafollower.com|instagainer.com|instagda.com|instagify.c\
+    om|instagmania.com|instafallow.com|instaadder.com|instaplayer.net|instastyle.tv|theinstagramhack.com|oninstagra\
+    m.com|online-instagram.com|onlineinstagram.com|web-instagram.net|wwwinstagram.com).*\$"
+add name=Threads regexp="^.+(threads.net).*\$"
+add name=TikTok regexp="^.+(tiktok.com|tiktokv.com|tiktokcdn.com|tiktokcdn-us.com|tiktokcdn-eu.com|tiktokapi.com|ti\
+    k-tokapi.com|tiktokglobalshop.com|byteoversea.com|ibyteimg.com|ibytedtos.com|myqcloud.com|ttlivecdn.com|musical\
+    .ly|muscdn.com|byted.org|bytecdn.cn|musemuse.cn|akamaized.net).*\$"
+add name=WhatsApp regexp="^.+(whatsapp.com|web.whatsapp.com|wa.me|mmg.whatsapp.net|whatsapp.net|whatsappbrand.com|w\
+    hatsapp.cc|whatsapp.info|whatsapp.org|whatsapp.biz).*\$"
+add name=YouTube regexp="^.+(youtube.com|m.youtube.com|youtu.be|yt.be|ytimg.com|yt3.ggpht.com|ytimg.l.google.com|yo\
+    utube.googleapis.com|youtubeads.googleapis.com|youtubei.googleapis.com|ggpht.com|googlevideo.com|wide-youtube.l\
+    .google.com|withyoutube.com|youtube-nocookie.com|youtube-ui.l.google.com|youtubeeducation.com|youtubeembeddedpl\
+    ayer.googleapis.com|youtubefanfest.com|youtubegaming.com|youtubego.co.id|youtubego.co.in|youtubego.com|youtubeg\
+    o.com.br|youtubego.id|youtubego.in|youtubekids.com|youtubemobilesupport.com).*\$"
+add name=Telegram regexp="^.+(telegram.org|t.me|telegram.me|tg.dev|telegra.ph|tdesktop.com).*\$"
+add name=Snapchat regexp="^.+(snapchat.com|sc-cdn.net|snapkit.com).*\$"
+add name=Twitter_X regexp="^.+(twitter.com|x.com|t.co|twimg.com).*\$"
+add name=LinkedIn regexp="^.+(linkedin.com|licdn.com).*\$"
+add name=Pinterest regexp="^.+(pinterest.com|pinimg.com).*\$"
+add name=Reddit regexp="^.+(reddit.com|redd.it).*\$"
+add name="Windows Update" regexp="^.*(update.microsoft.com|download.microsoft.com|\
+    windowsupdate.com|ntservicepack.microsoft.com|stats.microsoft.com|wustat.windo\
+    ws.com|windowsupdate.microsoft.com).*\$"
+add name=SpeedTest regexp="^.+(speedtest.net|ookla.com|testmy.net|fast.com|speed.io|speedof.me|measurementlab.net|\
+    nperf.com|dslreports.com|speedcheck.org|bandwidthplace.com|speed.cloudflare.com|speakeasy.net|ip-api.com|ipinfo.io|\
+    ifconfig.me|icanhazip.com|whatismyipaddress.com|myip.com|iplocation.net|whoer.net|speedtest.net).*\$"
+add name=Google_Play regexp="^.+(play.google.com|android.clients.google.com|lh3.googleusercontent.com|lh4.googleusercontent.com|lh5.googleusercontent.com|ggpht.com).*\$"
+add name=Apple_AppStore regexp="^.+(itunes.apple.com|apps.apple.com|mzstatic.com|appstore.com|apple.com|icloud.com|cdn-apple.com|akamaized.net).*\$"
+add name=Microsoft_Store regexp="^.+(microsoft.com|windowsupdate.com|storeedgefd.dsx.mp.microsoft.com|dl.delivery.mp.microsoft.com|update.microsoft.com).*\$"
+
+/ip firewall address-list
+# --- Local / Private IPv4 Ranges ---
+add list="Local_and_DNS" address=0.0.0.0/8 comment="Self-identification"
+add list="Local_and_DNS" address=10.0.0.0/8 comment="Private Network A"
+add list="Local_and_DNS" address=100.64.0.0/10 comment="Carrier-Grade NAT"
+add list="Local_and_DNS" address=127.0.0.0/8 comment="Loopback"
+add list="Local_and_DNS" address=169.254.0.0/16 comment="Link Local"
+add list="Local_and_DNS" address=172.16.0.0/12 comment="Private Network B"
+add list="Local_and_DNS" address=192.0.0.0/24 comment="IETF Protocol Assignments"
+add list="Local_and_DNS" address=192.0.2.0/24 comment="TEST-NET-1"
+add list="Local_and_DNS" address=192.88.99.0/24 comment="6to4 Relay"
+add list="Local_and_DNS" address=192.168.0.0/16 comment="Private Network C"
+add list="Local_and_DNS" address=198.18.0.0/15 comment="Network Benchmarking"
+add list="Local_and_DNS" address=198.51.100.0/24 comment="TEST-NET-2"
+add list="Local_and_DNS" address=203.0.113.0/24 comment="TEST-NET-3"
+add list="Local_and_DNS" address=224.0.0.0/4 comment="Multicast"
+add list="Local_and_DNS" address=240.0.0.0/4 comment="Reserved for Future Use"
+
+# --- Famous Public IPv4 DNS Servers ---
+add list="Local_and_DNS" address=8.8.8.8 comment="Google DNS 1"
+add list="Local_and_DNS" address=8.8.4.4 comment="Google DNS 2"
+add list="Local_and_DNS" address=1.1.1.1 comment="Cloudflare DNS 1"
+add list="Local_and_DNS" address=1.0.0.1 comment="Cloudflare DNS 2"
+add list="Local_and_DNS" address=9.9.9.9 comment="Quad9 DNS 1"
+add list="Local_and_DNS" address=149.112.112.112 comment="Quad9 DNS 2"
+add list="Local_and_DNS" address=208.67.222.222 comment="OpenDNS 1"
+add list="Local_and_DNS" address=208.67.220.220 comment="OpenDNS 2"
+add list="Local_and_DNS" address=94.140.14.14 comment="AdGuard DNS 1"
+add list="Local_and_DNS" address=94.140.15.15 comment="AdGuard DNS 2"
+add list="Local_and_DNS" address=185.228.168.9 comment="CleanBrowsing DNS 1"
+add list="Local_and_DNS" address=185.228.169.9 comment="CleanBrowsing DNS 2"
+add list="Local_and_DNS" address=64.6.64.6 comment="Verisign DNS 1"
+add list="Local_and_DNS" address=64.6.65.6 comment="Verisign DNS 2"
+add list="Local_and_DNS" address=76.76.19.19 comment="Alternate DNS 1"
+add list="Local_and_DNS" address=76.223.122.150 comment="Alternate DNS 2"
+add list=Telegram_IPs address=91.108.4.0/22
+add list=Telegram_IPs address=91.108.8.0/22
+add list=Telegram_IPs address=91.108.56.0/22
+add list=Telegram_IPs address=95.161.64.0/20
+add list=Telegram_IPs address=149.154.160.0/23
+add list=Telegram_IPs address=149.154.162.0/23
+add list=Telegram_IPs address=149.154.164.0/22
+add list=Telegram_IPs address=149.154.166.0/23
+
+
+/ip firewall mangle
+add action=add-dst-to-address-list address-list=WindowsUpdate_IP address-list-timeout=1w3d chain=forward comment=\
+    "Windows Update IP Collector" in-interface-list=LAN_List layer7-protocol="Windows Update" dst-address-list=!Local_and_DNS
+add action=mark-packet chain=prerouting comment="Windows Update Packet Collector" new-packet-mark="Windows Update" \
+    src-address-list=WindowsUpdate_IP
+add action=add-dst-to-address-list address-list=Facebook_IPs address-list-timeout=1w3d chain=forward comment=\
+    "Facebook IP Collector" in-interface-list=LAN_List layer7-protocol=FaceBook dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=Instagram_IPs address-list-timeout=1w3d chain=forward comment=\
+    "Instagram IP Collector" in-interface-list=LAN_List layer7-protocol=Instagram dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=TikTok_IPs address-list-timeout=1w3d chain=forward comment=\
+    "TikTok IP Collector" in-interface-list=LAN_List layer7-protocol=TikTok dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=WhatsApp_IPs address-list-timeout=1w3d chain=forward comment=\
+    "WhatsApp IP Collector" in-interface-list=LAN_List layer7-protocol=WhatsApp dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=YouTube_IPs address-list-timeout=1w3d chain=forward comment=\
+    "YouTube IP Collector" in-interface-list=LAN_List layer7-protocol=YouTube dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=Telegram_IPs address-list-timeout=1w3d chain=forward comment=\
+    "Telegram IP Collector" in-interface-list=LAN_List layer7-protocol=Telegram dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=Snapchat_IPs address-list-timeout=1w3d chain=forward comment=\
+    "Snapchat IP Collector" in-interface-list=LAN_List layer7-protocol=Snapchat dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=Twitter_IPs address-list-timeout=1w3d chain=forward comment=\
+    "Twitter/X IP Collector" in-interface-list=LAN_List layer7-protocol=Twitter_X dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=LinkedIn_IPs address-list-timeout=1w3d chain=forward comment=\
+    "LinkedIn IP Collector" in-interface-list=LAN_List layer7-protocol=LinkedIn dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=Pinterest_IPs address-list-timeout=1w3d chain=forward comment=\
+    "Pinterest IP Collector" in-interface-list=LAN_List layer7-protocol=Pinterest dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=Reddit_IPs address-list-timeout=1w3d chain=forward comment=\
+    "Reddit IP Collector" in-interface-list=LAN_List layer7-protocol=Reddit dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=SpeedTest_IPs address-list-timeout=1w3d chain=forward comment=\
+    "SpeedTest IP Collector" in-interface-list=LAN_List layer7-protocol=SpeedTest dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=GooglePlay_IP address-list-timeout=1w3d chain=forward comment="Google Play IP Collector" in-interface-list=LAN_List layer7-protocol=Google_Play dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=AppleStore_IP address-list-timeout=1w3d chain=forward comment="Apple App Store IP Collector" in-interface-list=LAN_List layer7-protocol=Apple_AppStore dst-address-list=!Local_and_DNS
+add action=add-dst-to-address-list address-list=MicrosoftStore_IP address-list-timeout=1w3d chain=forward comment="Microsoft Store IP Collector" in-interface-list=LAN_List layer7-protocol=Microsoft_Store dst-address-list=!Local_and_DNS
+
+
