@@ -80,39 +80,57 @@ add list=Telegram_IPs address=149.154.160.0/23
 add list=Telegram_IPs address=149.154.162.0/23
 add list=Telegram_IPs address=149.154.164.0/22
 add list=Telegram_IPs address=149.154.166.0/23
+add list=Collect_From address=192.168.1.0/24
 
 
 /ip firewall mangle
-add action=add-dst-to-address-list address-list=WindowsUpdate_IP address-list-timeout=1w3d chain=forward comment=\
-    "Windows Update IP Collector" in-interface-list=LAN_List layer7-protocol="Windows Update" dst-address-list=!Local_and_DNS
-add action=mark-packet chain=prerouting comment="Windows Update Packet Collector" new-packet-mark="Windows Update" \
-    src-address-list=WindowsUpdate_IP
-add action=add-dst-to-address-list address-list=Facebook_IPs address-list-timeout=1w3d chain=forward comment=\
-    "Facebook IP Collector" in-interface-list=LAN_List layer7-protocol=FaceBook dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=Instagram_IPs address-list-timeout=1w3d chain=forward comment=\
-    "Instagram IP Collector" in-interface-list=LAN_List layer7-protocol=Instagram dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=TikTok_IPs address-list-timeout=1w3d chain=forward comment=\
-    "TikTok IP Collector" in-interface-list=LAN_List layer7-protocol=TikTok dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=WhatsApp_IPs address-list-timeout=1w3d chain=forward comment=\
-    "WhatsApp IP Collector" in-interface-list=LAN_List layer7-protocol=WhatsApp dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=YouTube_IPs address-list-timeout=1w3d chain=forward comment=\
-    "YouTube IP Collector" in-interface-list=LAN_List layer7-protocol=YouTube dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=Telegram_IPs address-list-timeout=1w3d chain=forward comment=\
-    "Telegram IP Collector" in-interface-list=LAN_List layer7-protocol=Telegram dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=Snapchat_IPs address-list-timeout=1w3d chain=forward comment=\
-    "Snapchat IP Collector" in-interface-list=LAN_List layer7-protocol=Snapchat dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=Twitter_IPs address-list-timeout=1w3d chain=forward comment=\
-    "Twitter/X IP Collector" in-interface-list=LAN_List layer7-protocol=Twitter_X dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=LinkedIn_IPs address-list-timeout=1w3d chain=forward comment=\
-    "LinkedIn IP Collector" in-interface-list=LAN_List layer7-protocol=LinkedIn dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=Pinterest_IPs address-list-timeout=1w3d chain=forward comment=\
-    "Pinterest IP Collector" in-interface-list=LAN_List layer7-protocol=Pinterest dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=Reddit_IPs address-list-timeout=1w3d chain=forward comment=\
-    "Reddit IP Collector" in-interface-list=LAN_List layer7-protocol=Reddit dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=SpeedTest_IPs address-list-timeout=1w3d chain=forward comment=\
-    "SpeedTest IP Collector" in-interface-list=LAN_List layer7-protocol=SpeedTest dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=GooglePlay_IP address-list-timeout=1w3d chain=forward comment="Google Play IP Collector" in-interface-list=LAN_List layer7-protocol=Google_Play dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=AppleStore_IP address-list-timeout=1w3d chain=forward comment="Apple App Store IP Collector" in-interface-list=LAN_List layer7-protocol=Apple_AppStore dst-address-list=!Local_and_DNS
-add action=add-dst-to-address-list address-list=MicrosoftStore_IP address-list-timeout=1w3d chain=forward comment="Microsoft Store IP Collector" in-interface-list=LAN_List layer7-protocol=Microsoft_Store dst-address-list=!Local_and_DNS
+add action=passthrough chain=forward comment="Windows Update Data" dst-address-list=WindowsUpdate_IP
+add action=passthrough chain=forward comment="Facebook Data" dst-address-list=Facebook_IPs
+add action=passthrough chain=forward comment="Instagram Data" dst-address-list=Instagram_IPs
+add action=passthrough chain=forward comment="TikTok Data" dst-address-list=TikTok_IPs
+add action=passthrough chain=forward comment="WhatsApp Data" dst-address-list=WhatsApp_IPs
+add action=passthrough chain=forward comment="YouTube Data" dst-address-list=YouTube_IPs
+add action=passthrough chain=forward comment="Telegram Data" dst-address-list=Telegram_IPs
+add action=passthrough chain=forward comment="Snapchat Data" dst-address-list=Snapchat_IPs
+add action=passthrough chain=forward comment="Twitter/X Data" dst-address-list=Twitter_IPs
+add action=passthrough chain=forward comment="LinkedIn Data" dst-address-list=LinkedIn_IPs
+add action=passthrough chain=forward comment="Pinterest Data" dst-address-list=Pinterest_IPs
+add action=passthrough chain=forward comment="Reddit Data" dst-address-list=Reddit_IPs
+add action=passthrough chain=forward comment="SpeedTest Data" dst-address-list=SpeedTest_IPs
+add action=passthrough chain=forward comment="Google Play Data" dst-address-list=GooglePlay_IP
+add action=passthrough chain=forward comment="Apple App Store Data" dst-address-list=AppleStore_IP
+add action=passthrough chain=forward comment="Microsoft Store Data" dst-address-list=MicrosoftStore_IP
+add action=add-dst-to-address-list address-list=WindowsUpdate_IP address-list-timeout=30d chain=forward comment="Windows Update IP Collector" src-address-list=Collect_From layer7-protocol="Windows Update" dst-address-list=!Local_and_DNS
+add action=mark-packet chain=prerouting comment="Windows Update Packet Collector" new-packet-mark="Windows Update" src-address-list=WindowsUpdate_IP
+
+add action=add-dst-to-address-list address-list=Facebook_IPs address-list-timeout=30d chain=forward comment="Facebook IP Collector" src-address-list=Collect_From layer7-protocol=FaceBook dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=Instagram_IPs address-list-timeout=30d chain=forward comment="Instagram IP Collector" src-address-list=Collect_From layer7-protocol=Instagram dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=TikTok_IPs address-list-timeout=30d chain=forward comment="TikTok IP Collector" src-address-list=Collect_From layer7-protocol=TikTok dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=WhatsApp_IPs address-list-timeout=30d chain=forward comment="WhatsApp IP Collector" src-address-list=Collect_From layer7-protocol=WhatsApp dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=YouTube_IPs address-list-timeout=30d chain=forward comment="YouTube IP Collector" src-address-list=Collect_From layer7-protocol=YouTube dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=Telegram_IPs address-list-timeout=30d chain=forward comment="Telegram IP Collector" src-address-list=Collect_From layer7-protocol=Telegram dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=Snapchat_IPs address-list-timeout=30d chain=forward comment="Snapchat IP Collector" src-address-list=Collect_From layer7-protocol=Snapchat dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=Twitter_IPs address-list-timeout=30d chain=forward comment="Twitter/X IP Collector" src-address-list=Collect_From layer7-protocol=Twitter_X dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=LinkedIn_IPs address-list-timeout=30d chain=forward comment="LinkedIn IP Collector" src-address-list=Collect_From layer7-protocol=LinkedIn dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=Pinterest_IPs address-list-timeout=30d chain=forward comment="Pinterest IP Collector" src-address-list=Collect_From layer7-protocol=Pinterest dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=Reddit_IPS address-list-timeout=30d chain=forward comment="Reddit IP Collector" src-address-list=Collect_From layer7-protocol=Reddit dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=SpeedTest_IPs address-list-timeout=30d chain=forward comment="SpeedTest IP Collector" src-address-list=Collect_From layer7-protocol=SpeedTest dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=GooglePlay_IP address-list-timeout=30d chain=forward comment="Google Play IP Collector" src-address-list=Collect_From layer7-protocol=Google_Play dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=AppleStore_IP address-list-timeout=30d chain=forward comment="Apple App Store IP Collector" src-address-list=Collect_From layer7-protocol=Apple_AppStore dst-address-list=!Local_and_DNS
+
+add action=add-dst-to-address-list address-list=MicrosoftStore_IP address-list-timeout=30d chain=forward comment="Microsoft Store IP Collector" src-address-list=Collect_From layer7-protocol=Microsoft_Store dst-address-list=!Local_and_DNS
 
 
