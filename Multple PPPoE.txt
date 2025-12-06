@@ -1,0 +1,36 @@
+/interface macvlan
+add name=ISP_E1_1  mac-address=98:77:6B:0A:9F:11 mode=private interface=sfp-sfpplus1
+add name=ISP_E1_2  mac-address=98:77:6B:1B:7C:23 mode=private interface=sfp-sfpplus1
+add name=ISP_E1_3  mac-address=98:77:6B:2C:AA:35 mode=private interface=sfp-sfpplus1
+add name=ISP_E1_4  mac-address=98:77:6B:3D:88:47 mode=private interface=sfp-sfpplus1
+add name=ISP_E1_5  mac-address=98:77:6B:4E:66:59 mode=private interface=sfp-sfpplus1
+add name=ISP_E1_6  mac-address=98:77:6B:5F:44:6B mode=private interface=sfp-sfpplus1
+add name=ISP_E1_7  mac-address=98:77:6B:6A:99:7D mode=private interface=sfp-sfpplus1
+add name=ISP_E1_8  mac-address=98:77:6B:7B:55:8F mode=private interface=sfp-sfpplus1
+add name=ISP_E1_9  mac-address=98:77:6B:8C:33:91 mode=private interface=sfp-sfpplus1
+add name=ISP_E1_10 mac-address=98:77:6B:9D:11:A3 mode=private interface=sfp-sfpplus1
+
+/interface pppoe-client
+add name=ISP_E1_1-PPPoE interface=ISP_E1_1 disabled=yes add-default-route=yes
+add name=ISP_E1_2-PPPoE interface=ISP_E1_2 disabled=yes add-default-route=yes
+add name=ISP_E1_3-PPPoE interface=ISP_E1_3 disabled=yes add-default-route=yes
+add name=ISP_E1_4-PPPoE interface=ISP_E1_4 disabled=yes add-default-route=yes
+add name=ISP_E1_5-PPPoE interface=ISP_E1_5 disabled=yes add-default-route=yes
+add name=ISP_E1_6-PPPoE interface=ISP_E1_6 disabled=yes add-default-route=yes
+add name=ISP_E1_7-PPPoE interface=ISP_E1_7 disabled=yes add-default-route=yes
+add name=ISP_E1_8-PPPoE interface=ISP_E1_8 disabled=yes add-default-route=yes
+add name=ISP_E1_9-PPPoE interface=ISP_E1_9 disabled=yes add-default-route=yes
+add name=ISP_E1_10-PPPoE interface=ISP_E1_10 disabled=yes add-default-route=yes
+
+/interface list member
+add interface=ISP_E1_1-PPPoE list=WAN_List
+add interface=ISP_E1_2-PPPoE list=WAN_List
+add interface=ISP_E1_3-PPPoE list=WAN_List
+add interface=ISP_E1_4-PPPoE list=WAN_List
+add interface=ISP_E1_5-PPPoE list=WAN_List
+add interface=ISP_E1_6-PPPoE list=WAN_List
+add interface=ISP_E1_7-PPPoE list=WAN_List
+add interface=ISP_E1_8-PPPoE list=WAN_List
+add interface=ISP_E1_9-PPPoE list=WAN_List
+add interface=ISP_E1_10-PPPoE list=WAN_List
+
