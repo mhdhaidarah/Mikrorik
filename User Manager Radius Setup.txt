@@ -1,0 +1,55 @@
+/user-manager limitation
+add name=4M rate-limit-rx=4000000B rate-limit-tx=4000000B \
+    reset-counters-interval=daily transfer-limit=10000000000B
+add name=6M rate-limit-rx=6000000B rate-limit-tx=6000000B \
+    reset-counters-interval=daily transfer-limit=12000000000B
+add name=2M rate-limit-rx=2000000B rate-limit-tx=2000000B \
+    reset-counters-interval=daily transfer-limit=6000000000B
+add name=10M rate-limit-rx=10000000B rate-limit-tx=10000000B \
+    reset-counters-interval=daily transfer-limit=20000000000B
+add name=15M rate-limit-rx=15000000B rate-limit-tx=15000000B \
+    reset-counters-interval=daily transfer-limit=25000000000B
+/user-manager profile
+add name=4M/7D name-for-users=4M/7D price=30 starts-when=first-auth validity=\
+    1w
+add name=2M/7D name-for-users=2M/7D price=30 starts-when=first-auth validity=\
+    1w
+add name=6M/7D name-for-users=6M/7D price=30 starts-when=first-auth validity=\
+    1w
+add name=10M/7D name-for-users=10M/7D price=30 starts-when=first-auth \
+    validity=1w
+add name=15M/7D name-for-users=15M/7D price=30 starts-when=first-auth \
+    validity=1w
+add name=2M/30D name-for-users=2M/30D price=30 starts-when=first-auth \
+    validity=4w2d
+add name=4M/30D name-for-users=4M/30D price=30 starts-when=first-auth \
+    validity=4w2d
+add name=6M/30D name-for-users=6M/30D price=30 starts-when=first-auth \
+    validity=4w2d
+add name=10M/30D name-for-users=10M/30D price=30 starts-when=first-auth \
+    validity=4w2d
+add name=15M/30D name-for-users=15M/30D price=30 starts-when=first-auth \
+    validity=4w2d
+/ppp aaa
+set interim-update=1m use-radius=yes
+/radius
+add address=127.0.0.1 comment="User Manager" secret="c;5Dw(I+KwHH3;[d" \
+    service=ppp,hotspot timeout=3s
+/radius incoming
+set accept=yes
+/user-manager
+set certificate=*0 enabled=yes use-profiles=yes
+/user-manager profile-limitation
+add limitation=4M profile=4M/7D
+add limitation=4M profile=4M/30D
+add limitation=2M profile=2M/7D
+add limitation=2M profile=2M/30D
+add limitation=6M profile=6M/7D
+add limitation=6M profile=6M/30D
+add limitation=10M profile=10M/7D
+add limitation=10M profile=10M/30D
+add limitation=15M profile=15M/7D
+add limitation=15M profile=15M/30D
+/user-manager router
+add address=127.0.0.1 name=Mikrotik shared-secret="c;5Dw(I+KwHH3;[d"
+
