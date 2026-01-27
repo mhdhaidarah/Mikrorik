@@ -1,0 +1,19 @@
+# For Normal Router <Router ID Can Be Anything
+/routing ospf instance
+add disabled=no name=ospf-instance-1  router-id=45.11.11.10
+/routing ospf area
+add disabled=no instance=ospf-instance-1 name=ospf-area-1
+/routing ospf interface-template
+add area=ospf-area-1 disabled=no interfaces=all 
+
+
+
+# For Main Router with Default Route <Router ID Can Be Anything
+/routing ospf instance
+add disabled=no name=ospf-instance-1 originate-default=if-installed router-id=45.11.11.10
+/routing ospf area
+add disabled=no instance=ospf-instance-1 name=ospf-area-1
+/routing ospf interface-template
+add area=ospf-area-1 disabled=no interfaces=all 
+
+
