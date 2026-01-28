@@ -134,3 +134,4 @@ add action=add-dst-to-address-list address-list=AppleStore_IP address-list-timeo
 add action=add-dst-to-address-list address-list=MicrosoftStore_IP address-list-timeout=30d chain=forward comment="Microsoft Store IP Collector" src-address-list=Collect_From layer7-protocol=Microsoft_Store dst-address-list=!Local_and_DNS
 
 
+
