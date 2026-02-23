@@ -1,0 +1,32 @@
+# Connecting DMA Radius with Mikrotik
+
+/ip pool
+add name=PPPoE ranges=172.16.100.2-172.16.149.255
+add name=Expired ranges=172.16.180.2-172.16.189.255
+/ppp profile
+add comment="PPPoE Main Profile" local-address=172.16.100.1 name=PPPoE \
+    only-one=yes remote-address=PPPoE
+/interface pppoe-server server
+add authentication=pap,chap comment="Main PPPoE Server" default-profile=PPPoE \
+    disabled=no interface=ether2 service-name=PPPoE
+/ip dns
+set allow-remote-requests=yes cache-size=15000KiB servers=\
+    8.8.8.8,8.8.4.4,1.1.1.1
+/ip firewall filter
+add action=drop chain=forward comment="PPPoE Expired Block" dst-address=\
+    !192.168.1.49 src-address=172.16.180.2-172.16.189.255
+/ip firewall nat
+add action=masquerade chain=srcnat comment="Main NAT for PPPoE" src-address=\
+    172.16.100.2-172.16.149.255
+add action=masquerade chain=srcnat comment="Main NAT for Expired" src-address=\
+    172.16.180.2-172.16.189.255
+add action=dst-nat chain=dstnat comment="Main NAT for PPPoE" dst-port=80 \
+    protocol=tcp src-address=172.16.180.2-172.16.189.255 to-addresses=\
+    192.168.1.49 to-ports=8081
+/ppp aaa
+set interim-update=5m use-radius=yes
+/radius
+add address=192.168.1.49 comment="DMA Radius" require-message-auth=no secret=\
+    dMaRaDiUs@123 service=ppp,hotspot
+/radius incoming
+set accept=yes
