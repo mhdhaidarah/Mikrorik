@@ -6,7 +6,6 @@ set allow-remote-requests=yes address-list-extra-time=1w3d \
     max-concurrent-queries=1000 servers=8.8.8.8,8.8.4.4,1.1.1.1
 
 /ip dns static
-remove [find where comment~"IPs"]
 # ===================== SPEEDTEST / IP CHECK =====================
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=aiv-delivery.net type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=c.speedtest.net type=FWD
@@ -295,12 +294,6 @@ add action=passthrough chain=prerouting comment="Likee Traffic" src-address-list
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Arena of Valor IPs" address-list-timeout=1d protocol=tcp dst-port=10001-10094 comment="Arena of Valor IPs" dst-address-type=!local
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Arena of Valor IPs" address-list-timeout=1d protocol=udp dst-port=10080,17000 comment="Arena of Valor IPs" dst-address-type=!local
 
-#Redirect to Local DNS
-/ip firewall nat
-remove [find where dst-port 53]
-add action=redirect chain=dstnat dst-port=53 protocol=udp
-add action=redirect chain=dstnat dst-port=53 protocol=tcp
-
 ..
 ..
 ..
@@ -308,3 +301,4 @@ add action=redirect chain=dstnat dst-port=53 protocol=tcp
 #by Mohammed Haidar
 #+961 81507933
 #Beirut Lebanon
+
