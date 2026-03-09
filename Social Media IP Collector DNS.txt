@@ -1,5 +1,5 @@
 /ip dns
-set address-list-extra-time=1w3d allow-remote-requests=yes \
+set address-list-extra-time=1d allow-remote-requests=yes \
     max-concurrent-queries=1000 servers=8.8.8.8,8.8.4.4
 /ip dns
 set allow-remote-requests=yes address-list-extra-time=1w3d \
@@ -301,4 +301,5 @@ add action=passthrough chain=prerouting comment="Likee Traffic" src-address-list
 #by Mohammed Haidar
 #+961 81507933
 #Beirut Lebanon
+
 
