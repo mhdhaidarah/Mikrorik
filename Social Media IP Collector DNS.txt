@@ -9,6 +9,7 @@ set allow-remote-requests=yes address-list-extra-time=1w3d \
 # ===================== SPEEDTEST / IP CHECK =====================
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=aiv-delivery.net type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=c.speedtest.net type=FWD
+add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=wifiman.com type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=check-host.net type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=cli.speedtest.net type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=earthlink.net type=FWD
@@ -63,7 +64,6 @@ add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=mu
 add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=youtubei.googleapis.com type=FWD
 
 # ===================== TIKTOK / BYTEDANCE =====================
-/ip dns static
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=akamaized.net type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=bytecdn.cn type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=byted.org type=FWD
@@ -159,6 +159,20 @@ add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=fb.com type=FWD
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=fbcdn.net type=FWD
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=messenger.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=fbsbx.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=fbpigeon.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebook-hardware.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebookgroups.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=m.me type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=fbinnovation.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=freebasics.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebookstories.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebook.de type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=friendfeed.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebook.pl type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=thefind.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=oculusvr.com type=FWD
+add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=thefacebook.com type=FWD
 add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=instagram.com type=FWD
 add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=cdninstagram.com type=FWD
 add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=threads.com type=FWD
@@ -166,7 +180,16 @@ add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes nam
 # ===================== WHATSAPP =====================
 add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.com type=FWD
 add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.net type=FWD
-add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=mmg.whatsapp.net type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=wa.me type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=wl.co type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.cc type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsappbrand.com type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp-plus.me type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.org type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp-plus.info type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp-plus.net type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.tv type=FWD
+add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.info type=FWD
 
 # ===================== AI SERVICES =====================
 add address-list="AI IPs" comment="AI IPs" match-subdomain=yes name=anthropic.com type=FWD
@@ -205,6 +228,14 @@ add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=like.v
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=likee.video type=FWD
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=likeevideo.ru type=FWD
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=like-video.com type=FWD
+
+# ===================== Kwai =====================
+add address-list="kwai IPS" match-subdomain=yes name=kwai.com type=FWD
+add address-list="kwai IPS" match-subdomain=yes name=kwcdn.com type=FWD
+add address-list="kwai IPS" match-subdomain=yes name=kwai-pro.com type=FWD
+add address-list="kwai IPS" match-subdomain=yes name=yximgs.com type=FWD
+add address-list="kwai IPS" match-subdomain=yes name=kwaipros.com type=FWD
+
 
 /ip firewall address-list
 add address=91.105.192.0/23 list="Telegram IPs"
