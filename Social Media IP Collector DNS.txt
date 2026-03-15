@@ -2,7 +2,7 @@
 set address-list-extra-time=1d allow-remote-requests=yes \
     max-concurrent-queries=1000 servers=8.8.8.8,8.8.4.4
 /ip dns
-set allow-remote-requests=yes address-list-extra-time=1w3d \
+set allow-remote-requests=yes address-list-extra-time=1d \
     max-concurrent-queries=1000 servers=8.8.8.8,8.8.4.4,1.1.1.1
 
 /ip dns static
