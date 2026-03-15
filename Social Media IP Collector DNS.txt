@@ -228,11 +228,11 @@ add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=likeev
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=like-video.com type=FWD
 
 # ===================== Kwai =====================
-add address-list="kwai IPS" match-subdomain=yes name=kwai.com type=FWD
-add address-list="kwai IPS" match-subdomain=yes name=kwcdn.com type=FWD
-add address-list="kwai IPS" match-subdomain=yes name=kwai-pro.com type=FWD
-add address-list="kwai IPS" match-subdomain=yes name=yximgs.com type=FWD
-add address-list="kwai IPS" match-subdomain=yes name=kwaipros.com type=FWD
+add address-list="kwai IPS" comment="Kwai IPs" match-subdomain=yes name=kwai.com type=FWD
+add address-list="kwai IPS" comment="Kwai IPs" match-subdomain=yes name=kwcdn.com type=FWD
+add address-list="kwai IPS" comment="Kwai IPs" match-subdomain=yes name=kwai-pro.com type=FWD
+add address-list="kwai IPS" comment="Kwai IPs" match-subdomain=yes name=yximgs.com type=FWD
+add address-list="kwai IPS" comment="Kwai IPs" match-subdomain=yes name=kwaipros.com type=FWD
 
 
 /ip firewall address-list
