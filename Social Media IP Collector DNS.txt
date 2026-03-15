@@ -289,6 +289,9 @@ add action=passthrough chain=prerouting comment="AI Traffic" src-address-list="A
 # ===================== LIKEE =====================
 add action=passthrough chain=prerouting comment="Likee Traffic" src-address-list="Likee IPs"
 
+# ===================== LIKEE =====================
+add action=passthrough chain=prerouting comment="Kwai Traffic" src-address-list="Kwai IPs"
+
 
 # ===================== GAMES =====================
 # ----- Call of Duty Mobile Detection -----
