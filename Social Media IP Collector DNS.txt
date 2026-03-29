@@ -47,6 +47,7 @@ add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes nam
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=ipchicken.com type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=ipburger.com type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=2ip.io type=FWD
+add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=iplocation.io type=FWD
 
 
 # ===================== YOUTUBE / GOOGLE VIDEO =====================
