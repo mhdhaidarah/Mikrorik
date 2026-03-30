@@ -24,11 +24,11 @@ add name=20M/30D name-for-users=20M/30D price=30 starts-when=first-auth validity
 /ppp aaa
 set interim-update=1m use-radius=yes
 /radius
-add address=127.0.0.1 comment="User Manager" secret="c;5Dw(I+KwHH3;[d" service=ppp,hotspot timeout=3s
+add address=127.0.0.1 comment="User Manager" secret="c;5Dw(I+KwHH3;[d" service=ppp,hotspot timeout=3s require-message-auth=no 
 /radius incoming
 set accept=yes
 /user-manager
-set certificate=*0 enabled=yes use-profiles=yes
+set certificate=*0 enabled=yes use-profiles=yes require-message-auth=no 
 /user-manager profile-limitation
 add limitation=4M profile=4M/7D
 add limitation=4M profile=4M/30D
