@@ -8,13 +8,13 @@ add name=10M-Quota rate-limit-rx=10000000B rate-limit-tx=10000000B transfer-limi
 add name=15M-Quota rate-limit-rx=15000000B rate-limit-tx=15000000B transfer-limit=15000000000
 add name=20M-Quota rate-limit-rx=20000000B rate-limit-tx=20000000B transfer-limit=20000000000
 
-add name=1M-Quota-Reset-Daily rate-limit-rx=1000000B rate-limit-tx=1000000B transfer-limit=1000000000
-add name=2M-Quota-Reset-Daily rate-limit-rx=2000000B rate-limit-tx=2000000B transfer-limit=2000000000
-add name=4M-Quota-Reset-Daily rate-limit-rx=4000000B rate-limit-tx=4000000B transfer-limit=4000000000
-add name=6M-Quota-Reset-Daily rate-limit-rx=6000000B rate-limit-tx=6000000B transfer-limit=6000000000
-add name=10M-Quota-Reset-Daily rate-limit-rx=10000000B rate-limit-tx=10000000B transfer-limit=10000000000
-add name=15M-Quota-Reset-Daily rate-limit-rx=15000000B rate-limit-tx=15000000B transfer-limit=15000000000
-add name=20M-Quota-Reset-Daily rate-limit-rx=20000000B rate-limit-tx=20000000B transfer-limit=20000000000
+add name=1M-Quota-Reset-Daily rate-limit-rx=1000000B rate-limit-tx=1000000B transfer-limit=1000000000 reset-counters-interval=daily reset-counters-start-time="2026-04-06 00:00:00"
+add name=2M-Quota-Reset-Daily rate-limit-rx=2000000B rate-limit-tx=2000000B transfer-limit=2000000000 reset-counters-interval=daily reset-counters-start-time="2026-04-06 00:00:00"
+add name=4M-Quota-Reset-Daily rate-limit-rx=4000000B rate-limit-tx=4000000B transfer-limit=4000000000 reset-counters-interval=daily reset-counters-start-time="2026-04-06 00:00:00"
+add name=6M-Quota-Reset-Daily rate-limit-rx=6000000B rate-limit-tx=6000000B transfer-limit=6000000000 reset-counters-interval=daily reset-counters-start-time="2026-04-06 00:00:00"
+add name=10M-Quota-Reset-Daily rate-limit-rx=10000000B rate-limit-tx=10000000B transfer-limit=10000000000 reset-counters-interval=daily reset-counters-start-time="2026-04-06 00:00:00"
+add name=15M-Quota-Reset-Daily rate-limit-rx=15000000B rate-limit-tx=15000000B transfer-limit=15000000000 reset-counters-interval=daily reset-counters-start-time="2026-04-06 00:00:00"
+add name=20M-Quota-Reset-Daily rate-limit-rx=20000000B rate-limit-tx=20000000B transfer-limit=20000000000 reset-counters-interval=daily reset-counters-start-time="2026-04-06 00:00:00"
 
 add name=1M-20 rate-limit-rx=200000B rate-limit-tx=200000B
 add name=2M-20 rate-limit-rx=400000B rate-limit-tx=400000B
