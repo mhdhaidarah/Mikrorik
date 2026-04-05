@@ -8,7 +8,7 @@ add name=PPPoE ranges=10.20.0.2-10.20.19.99
 add name=DHCP ranges=10.30.0.2-10.30.15.254
 /ip hotspot
 add address-pool=DHCP disabled=no interface=LAN name=HotSpot profile=hsprof1
-/ip hotspot profile
+/ip hotspot user profile
 add name=1M rate-limit=1M/1M
 add name=2M rate-limit=2M/2M
 add name=3M rate-limit=3M/3M
