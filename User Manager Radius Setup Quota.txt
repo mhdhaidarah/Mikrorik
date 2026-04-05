@@ -1,11 +1,28 @@
 /user-manager limitation
-add name=1M rate-limit-rx=1000000B rate-limit-tx=1000000B
-add name=2M rate-limit-rx=2000000B rate-limit-tx=2000000B
-add name=4M rate-limit-rx=4000000B rate-limit-tx=4000000B
-add name=6M rate-limit-rx=6000000B rate-limit-tx=6000000B
-add name=10M rate-limit-rx=10000000B rate-limit-tx=10000000B
-add name=15M rate-limit-rx=15000000B rate-limit-tx=15000000B
-add name=20M rate-limit-rx=20000000B rate-limit-tx=20000000B
+
+add name=1M-Quota rate-limit-rx=1000000B rate-limit-tx=1000000B transfer-limit=1000000000
+add name=2M-Quota rate-limit-rx=2000000B rate-limit-tx=2000000B transfer-limit=2000000000
+add name=4M-Quota rate-limit-rx=4000000B rate-limit-tx=4000000B transfer-limit=4000000000
+add name=6M-Quota rate-limit-rx=6000000B rate-limit-tx=6000000B transfer-limit=6000000000
+add name=10M-Quota rate-limit-rx=10000000B rate-limit-tx=10000000B transfer-limit=10000000000
+add name=15M-Quota rate-limit-rx=15000000B rate-limit-tx=15000000B transfer-limit=15000000000
+add name=20M-Quota rate-limit-rx=20000000B rate-limit-tx=20000000B transfer-limit=20000000000
+
+add name=1M-Quota-Reset-Daily rate-limit-rx=1000000B rate-limit-tx=1000000B transfer-limit=1000000000
+add name=2M-Quota-Reset-Daily rate-limit-rx=2000000B rate-limit-tx=2000000B transfer-limit=2000000000
+add name=4M-Quota-Reset-Daily rate-limit-rx=4000000B rate-limit-tx=4000000B transfer-limit=4000000000
+add name=6M-Quota-Reset-Daily rate-limit-rx=6000000B rate-limit-tx=6000000B transfer-limit=6000000000
+add name=10M-Quota-Reset-Daily rate-limit-rx=10000000B rate-limit-tx=10000000B transfer-limit=10000000000
+add name=15M-Quota-Reset-Daily rate-limit-rx=15000000B rate-limit-tx=15000000B transfer-limit=15000000000
+add name=20M-Quota-Reset-Daily rate-limit-rx=20000000B rate-limit-tx=20000000B transfer-limit=20000000000
+
+add name=1M-20 rate-limit-rx=200000B rate-limit-tx=200000B
+add name=2M-20 rate-limit-rx=400000B rate-limit-tx=400000B
+add name=4M-20 rate-limit-rx=800000B rate-limit-tx=800000B
+add name=6M-20 rate-limit-rx=1200000B rate-limit-tx=1200000B
+add name=10M-20 rate-limit-rx=2000000B rate-limit-tx=2000000B
+add name=15M-20 rate-limit-rx=3000000B rate-limit-tx=3000000B
+add name=20M-20 rate-limit-rx=4000000B rate-limit-tx=4000000B
 
 
 /user-manager profile
@@ -50,37 +67,45 @@ set accept=yes
 /user-manager
 set certificate=*0 enabled=yes use-profiles=yes require-message-auth=no 
 /user-manager profile-limitation
-add limitation=1M profile=1M/3D
-add limitation=1M profile=1M/7D
-add limitation=1M profile=1M/30D
+add limitation=1M-Quota profile=1M/3D
+add limitation=1M-Quota profile=1M/7D
+add limitation=1M-Quota-Reset-Daily profile=1M/30D
+add limitation=1M-20 profile=1M/30D
 
-add limitation=2M profile=2M/3D
-add limitation=2M profile=2M/7D
-add limitation=2M profile=2M/30D
+add limitation=2M-Quota profile=2M/3D
+add limitation=2M-Quota profile=2M/7D
+add limitation=2M-Quota-Reset-Daily profile=2M/30D
+add limitation=2M-20 profile=2M/30D
 
-add limitation=3M profile=3M/3D
-add limitation=3M profile=3M/7D
-add limitation=3M profile=3M/30D
+add limitation=3M-Quota profile=3M/3D
+add limitation=3M-Quota profile=3M/7D
+add limitation=3M-Quota-Reset-Daily profile=3M/30D
+add limitation=3M-20 profile=3M/30D
 
-add limitation=4M profile=4M/3D
-add limitation=4M profile=4M/7D
-add limitation=4M profile=4M/30D
+add limitation=4M-Quota profile=4M/3D
+add limitation=4M-Quota profile=4M/7D
+add limitation=4M-Quota-Reset-Daily profile=4M/30D
+add limitation=4M-20 profile=4M/30D
 
-add limitation=6M profile=6M/3D
-add limitation=6M profile=6M/7D
-add limitation=6M profile=6M/30D
+add limitation=6M-Quota profile=6M/3D
+add limitation=6M-Quota profile=6M/7D
+add limitation=6M-Quota-Reset-Daily profile=6M/30D
+add limitation=6M-20 profile=6M/30D
 
-add limitation=10M profile=10M/3D
-add limitation=10M profile=10M/7D
-add limitation=10M profile=10M/30D
+add limitation=10M-Quota profile=10M/3D
+add limitation=10M-Quota profile=10M/7D
+add limitation=10M-Quota-Reset-Daily profile=10M/30D
+add limitation=10M-20 profile=10M/30D
 
-add limitation=15M profile=15M/3D
-add limitation=15M profile=15M/7D
-add limitation=15M profile=15M/30D
+add limitation=15M-Quota profile=15M/3D
+add limitation=15M-Quota profile=15M/7D
+add limitation=15M-Quota-Reset-Daily profile=15M/30D
+add limitation=15M-20 profile=15M/30D
 
-add limitation=20M profile=20M/3D
-add limitation=20M profile=20M/7D
-add limitation=20M profile=20M/30D
+add limitation=20M-Quota profile=20M/3D
+add limitation=20M-Quota profile=20M/7D
+add limitation=20M-Quota-Reset-Daily profile=20M/30D
+add limitation=20M-20 profile=20M/30D
 
 /user-manager router
 add address=127.0.0.1 name=Mikrotik shared-secret="c;5Dw(I+KwHH3;[d"
