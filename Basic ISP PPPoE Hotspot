@@ -6,8 +6,10 @@ add hotspot-address=10.30.0.1 html-directory=hotspot name=hsprof1 radius-interim
 /ip pool
 add name=PPPoE ranges=10.20.0.2-10.20.19.99
 add name=DHCP ranges=10.30.0.2-10.30.15.254
+
 /ip hotspot
 add address-pool=DHCP disabled=no interface=LAN name=HotSpot profile=hsprof1
+
 /ip hotspot user profile
 add name=1M rate-limit=1M/1M
 add name=2M rate-limit=2M/2M
@@ -20,6 +22,7 @@ add name=10M rate-limit=10M/10M
 add name=15M rate-limit=15M/15M
 add name=20M rate-limit=20M/20M
 add name=30M rate-limit=30M/30M
+
 /ppp profile
 add local-address=10.20.0.1 name=1M only-one=yes rate-limit=1M/1M remote-address=PPPoE
 add local-address=10.20.0.1 name=2M only-one=yes rate-limit=2M/2M remote-address=PPPoE
@@ -30,6 +33,7 @@ add local-address=10.20.0.1 name=8M only-one=yes rate-limit=8M/8M remote-address
 add local-address=10.20.0.1 name=10M only-one=yes rate-limit=10M/10M remote-address=PPPoE
 add local-address=10.20.0.1 name=15M only-one=yes rate-limit=15M/15M remote-address=PPPoE
 add local-address=10.20.0.1 name=20M only-one=yes rate-limit=20M/20M remote-address=PPPoE
+
 /interface pppoe-server server
 add authentication=pap,chap default-profile=1M disabled=no interface=LAN service-name=PPPoE
 /ip address
