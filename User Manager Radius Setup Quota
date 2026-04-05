@@ -7,6 +7,14 @@ add name=10M rate-limit-rx=10000000B rate-limit-tx=10000000B
 add name=15M rate-limit-rx=15000000B rate-limit-tx=15000000B
 add name=20M rate-limit-rx=20000000B rate-limit-tx=20000000B
 
+add name=1M-20% rate-limit-rx=200000B rate-limit-tx=200000B
+add name=2M-20% rate-limit-rx=400000B rate-limit-tx=400000B
+add name=4M-20% rate-limit-rx=800000B rate-limit-tx=800000B
+add name=6M-20% rate-limit-rx=1200000B rate-limit-tx=1200000B
+add name=10M-20% rate-limit-rx=2000000B rate-limit-tx=2000000B
+add name=15M-20% rate-limit-rx=3000000B rate-limit-tx=3000000B
+add name=20M-20% rate-limit-rx=4000000B rate-limit-tx=4000000B
+
 add name=1GB transfer-limit=1024000000B
 add name=3GB transfer-limit=3072000000B
 add name=5GB transfer-limit=5120000000B
