@@ -7,15 +7,6 @@ add name=10M rate-limit-rx=10000000B rate-limit-tx=10000000B
 add name=15M rate-limit-rx=15000000B rate-limit-tx=15000000B
 add name=20M rate-limit-rx=20000000B rate-limit-tx=20000000B
 
-add name=1M-Quota rate-limit-rx=1000000B rate-limit-tx=1000000B transfer-limit=1000000000
-add name=2M-Quota rate-limit-rx=2000000B rate-limit-tx=2000000B transfer-limit=2000000000
-add name=4M-Quota rate-limit-rx=4000000B rate-limit-tx=4000000B transfer-limit=4000000000
-add name=6M-Quota rate-limit-rx=6000000B rate-limit-tx=6000000B transfer-limit=6000000000
-add name=10M-Quota rate-limit-rx=10000000B rate-limit-tx=10000000B transfer-limit=10000000000
-add name=15M-Quota rate-limit-rx=15000000B rate-limit-tx=15000000B transfer-limit=15000000000
-add name=20M-Quota rate-limit-rx=20000000B rate-limit-tx=20000000B transfer-limit=20000000000
-
-
 /user-manager profile
 add name=1M/3D name-for-users=1M/3D price=5 starts-when=first-auth validity=3d
 add name=1M/7D name-for-users=1M/7D price=10 starts-when=first-auth validity=1w
