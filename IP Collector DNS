@@ -313,15 +313,12 @@ add action=passthrough chain=prerouting comment="Kwai Traffic Up" dst-address-li
 # ===================== GAMES =====================
 # ----- Call of Duty Mobile Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="COD Mobile IPs" address-list-timeout=1d protocol=tcp dst-port=3013,18082,65010,65050 comment="COD Mobile IPs" dst-address-type=!local
-/ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="COD Mobile IPs" address-list-timeout=1d protocol=udp dst-port=7500-7650 comment="COD Mobile IPs" dst-address-type=!local
 
 # ----- Free Fire Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Free Fire IPs" address-list-timeout=1d protocol=tcp dst-port=39003,39698,39779 comment="Free Fire IPs" dst-address-type=!local
-/ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Free Fire IPs" address-list-timeout=1d protocol=udp dst-port=10001,10003,10012 comment="Free Fire IPs" dst-address-type=!local
 
 # ----- PUBG Mobile Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="PUBG Mobile IPs" address-list-timeout=1d protocol=tcp dst-port=10012,17500 comment="PUBG Mobile IPs" dst-address-type=!local
-/ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="PUBG Mobile IPs" address-list-timeout=1d protocol=udp dst-port=10010,10013,10039,10096,10491,10612,11455,12235,13748,13894,13972,20000-20002 comment="PUBG Mobile IPs" dst-address-type=!local
 
 # ----- Mobile Legends Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Mobile Legends IPs" address-list-timeout=1d protocol=tcp dst-port=5001,5003,9001,30000-30200 comment="Mobile Legends IPs" dst-address-type=!local
@@ -336,13 +333,10 @@ add action=passthrough chain=prerouting comment="Kwai Traffic Up" dst-address-li
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Dragon Nest IPs" address-list-timeout=1d protocol=tcp dst-port=10514 comment="Dragon Nest IPs" dst-address-type=!local
 
 # ----- Clash Royale Detection -----
-/ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Clash Royale IPs" address-list-timeout=1d protocol=tcp dst-port=9330-9340 comment="Clash Royale IPs" dst-address-type=!local dst-address-type=!local
-/ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Clash Royale IPs" address-list-timeout=1d protocol=udp dst-port=9330-9340 comment="Clash Royale IPs" dst-address-type=!local dst-address-type=!local
+/ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Clash Royale IPs" address-list-timeout=1d protocol=tcp dst-port=9330-9340 comment="Clash Royale IPs" dst-address-type=!local
 
 # ----- Arena of Valor Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Arena of Valor IPs" address-list-timeout=1d protocol=tcp dst-port=10001-10094 comment="Arena of Valor IPs" dst-address-type=!local
-/ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Arena of Valor IPs" address-list-timeout=1d protocol=udp dst-port=10080,17000 comment="Arena of Valor IPs" dst-address-type=!local
-
 ..
 ..
 ..
