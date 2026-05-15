@@ -256,44 +256,58 @@ add address=185.76.151.0/24 list="Telegram IPs"
 remove [find where comment~"Traffic"]
 remove [find where comment~"IPs"]
 # ===================== SPEEDTEST / IP CHECK =====================
-add action=passthrough chain=prerouting comment="SpeedTest Traffic" src-address-list="SpeedTest IPs"
+add action=passthrough chain=prerouting comment="SpeedTest Traffic Down" src-address-list="SpeedTest IPs"
+add action=passthrough chain=prerouting comment="SpeedTest Traffic Up" dst-address-list="SpeedTest IPs"
 
 # ===================== YOUTUBE / GOOGLE VIDEO =====================
-add action=passthrough chain=prerouting comment="Youtube Traffic" src-address-list="Youtube IPs"
+add action=passthrough chain=prerouting comment="Youtube Traffic Down" src-address-list="Youtube IPs"
+add action=passthrough chain=prerouting comment="Youtube Traffic Up" dst-address-list="Youtube IPs"
 
 # ===================== TIKTOK / BYTEDANCE =====================
-add action=passthrough chain=prerouting comment="Tiktok Traffic" src-address-list="Tiktok IPs"
+add action=passthrough chain=prerouting comment="Tiktok Traffic Down" src-address-list="Tiktok IPs"
+add action=passthrough chain=prerouting comment="Tiktok Traffic Up" dst-address-list="Tiktok IPs"
 
 # ===================== TELEGRAM (FULL) =====================
-add action=passthrough chain=prerouting comment="Telegram Traffic" src-address-list="Telegram IPs"
+add action=passthrough chain=prerouting comment="Telegram Traffic Down" src-address-list="Telegram IPs"
+add action=passthrough chain=prerouting comment="Telegram Traffic Up" dst-address-list="Telegram IPs"
 
 # ===================== SNAPCHAT =====================
-add action=passthrough chain=prerouting comment="Snapchat Traffic" src-address-list="Snapchat IPs"
+add action=passthrough chain=prerouting comment="Snapchat Traffic Down" src-address-list="Snapchat IPs"
+add action=passthrough chain=prerouting comment="Snapchat Traffic Up" dst-address-list="Snapchat IPs"
 
 # ===================== TWITTER / X =====================
-add action=passthrough chain=prerouting comment="Twitter/X Traffic" src-address-list="Twitter/X IPs"
+add action=passthrough chain=prerouting comment="Twitter/X Traffic Down" src-address-list="Twitter/X IPs"
+add action=passthrough chain=prerouting comment="Twitter/X Traffic Up" dst-address-list="Twitter/X IPs"
 
 # ===================== NETFLIX / SHAHID / DISNEY / PRIME =====================
-add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic" src-address-list="Shahid/Netflix IPs"
+add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Down" src-address-list="Shahid/Netflix IPs"
+add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Up" dst-address-list="Shahid/Netflix IPs"
 
 # ===================== APP STORES / UPDATES =====================
-add action=passthrough chain=prerouting comment="Store Traffic" src-address-list="Store IPs"
+add action=passthrough chain=prerouting comment="Store Traffic Down" src-address-list="Store IPs"
+add action=passthrough chain=prerouting comment="Store Traffic Up" dst-address-list="Store IPs"
 
 # ===================== META / FACEBOOK / INSTAGRAM =====================
-add action=passthrough chain=prerouting comment="Facebook Traffic" src-address-list="Facebook IPs"
-add action=passthrough chain=prerouting comment="Instagram Traffic" src-address-list="Instagram IPs"
+add action=passthrough chain=prerouting comment="Facebook Traffic Down" src-address-list="Facebook IPs"
+add action=passthrough chain=prerouting comment="Facebook Traffic Up" dst-address-list="Facebook IPs"
+add action=passthrough chain=prerouting comment="Instagram Traffic Down" src-address-list="Instagram IPs"
+add action=passthrough chain=prerouting comment="Instagram Traffic Up" dst-address-list="Instagram IPs"
 
 # ===================== WHATSAPP =====================
-add action=passthrough chain=prerouting comment="Whatsapp Traffic" src-address-list="Whatsapp IPs"
+add action=passthrough chain=prerouting comment="Whatsapp Traffic Down" src-address-list="Whatsapp IPs"
+add action=passthrough chain=prerouting comment="Whatsapp Traffic Up" dst-address-list="Whatsapp IPs"
 
 # ===================== AI SERVICES =====================
-add action=passthrough chain=prerouting comment="AI Traffic" src-address-list="AI IPs"
+add action=passthrough chain=prerouting comment="AI Traffic Down" src-address-list="AI IPs"
+add action=passthrough chain=prerouting comment="AI Traffic Up" dst-address-list="AI IPs"
 
 # ===================== LIKEE =====================
-add action=passthrough chain=prerouting comment="Likee Traffic" src-address-list="Likee IPs"
+add action=passthrough chain=prerouting comment="Likee Traffic Down" src-address-list="Likee IPs"
+add action=passthrough chain=prerouting comment="Likee Traffic Up" dst-address-list="Likee IPs"
 
-# ===================== LIKEE =====================
-add action=passthrough chain=prerouting comment="Kwai Traffic" src-address-list="Kwai IPs"
+# ===================== KWAI =====================
+add action=passthrough chain=prerouting comment="Kwai Traffic Down" src-address-list="Kwai IPs"
+add action=passthrough chain=prerouting comment="Kwai Traffic Up" dst-address-list="Kwai IPs"
 
 
 # ===================== GAMES =====================
