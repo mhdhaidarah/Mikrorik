@@ -235,11 +235,11 @@ add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=likeev
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=like-video.com type=FWD
 
 # ===================== Kwai =====================
-add address-list="kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwai.com type=FWD
-add address-list="kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwcdn.com type=FWD
-add address-list="kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwai-pro.com type=FWD
-add address-list="kwai IPs" comment="Kwai IPs" match-subdomain=yes name=yximgs.com type=FWD
-add address-list="kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwaipros.com type=FWD
+add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwai.com type=FWD
+add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwcdn.com type=FWD
+add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwai-pro.com type=FWD
+add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=yximgs.com type=FWD
+add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwaipros.com type=FWD
 
 
 /ip firewall address-list
@@ -307,7 +307,7 @@ add action=passthrough chain=prerouting comment="AI Traffic Up" dst-address-list
 add action=passthrough chain=prerouting comment="Likee Traffic Down" src-address-list="Likee IPs"
 add action=passthrough chain=prerouting comment="Likee Traffic Up" dst-address-list="Likee IPs"
 
-# ===================== KWAI =====================
+# ===================== Kwai =====================
 add action=passthrough chain=prerouting comment="Kwai Traffic Down" src-address-list="Kwai IPs"
 add action=passthrough chain=prerouting comment="Kwai Traffic Up" dst-address-list="Kwai IPs"
 
