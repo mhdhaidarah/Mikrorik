@@ -120,7 +120,9 @@ add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdoma
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=nflximg.net type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=nflxso.net type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=shahid.net type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=shahid.mbc.net type=FWD
+add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=mbc.net type=FWD
+add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=mbcgroup.net type=FWD
+add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=shahidvodcdn.com type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=disneyplus.com type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=dssott.com type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=primevideo.com type=FWD
