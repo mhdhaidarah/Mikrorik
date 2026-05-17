@@ -7,8 +7,7 @@ set address-list-extra-time=1d allow-remote-requests=yes cache-max-ttl=1d \
 add action=redirect chain=dstnat comment="NAT DNS to Local Router" dst-port=53 protocol=udp
 # SAMM skipped end
 
-/ip dns
-set address-list-extra-time=1d
+/ip dns set address-list-extra-time=1d
 
 /ip dns static
 # ===================== SPEEDTEST / IP CHECK =====================
