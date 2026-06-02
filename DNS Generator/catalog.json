@@ -13,7 +13,6 @@
       "category": "speedtest",
       "priority": 8,
       "domains": [
-        "aiv-delivery.net",
         "c.speedtest.net",
         "wifiman.com",
         "check-host.net",
@@ -84,18 +83,15 @@
       "category": "social",
       "priority": 5,
       "domains": [
-        "akamaized.net",
         "bytecdn.cn",
         "byted.org",
         "bytedance.com",
         "byteoversea.com",
-        "footprint.net",
         "ibyteimg.com",
         "ibytedtos.com",
         "muscdn.com",
         "musemuse.cn",
         "musical.ly",
-        "myqcloud.com",
         "tiktok.com",
         "tiktok.net",
         "tiktok.org",
@@ -199,7 +195,6 @@
         "play.google.com",
         "play.googleapis.com",
         "play-fe.googleapis.com",
-        "googleusercontent.com",
         "android.clients.google.com",
         "andorid.clients.google.com",
         "market.android.com",
@@ -358,6 +353,255 @@
         "Kwaipros.com"
       ],
       "cidrs": []
+    },
+    {
+      "slug": "discord",
+      "label": "Discord",
+      "section": "DISCORD",
+      "category": "messaging",
+      "priority": 1,
+      "domains": [
+        "discord.com",
+        "discordapp.com",
+        "discord.gg",
+        "discordapp.net",
+        "discord.media"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "zoom",
+      "label": "Zoom",
+      "section": "ZOOM",
+      "category": "conferencing",
+      "priority": 4,
+      "domains": [
+        "zoom.us",
+        "zoom.com",
+        "zoomgov.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "google-meet",
+      "label": "Google Meet",
+      "section": "GOOGLE MEET",
+      "category": "conferencing",
+      "priority": 4,
+      "domains": [
+        "meet.google.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "microsoft-teams",
+      "label": "Microsoft Teams",
+      "section": "MICROSOFT TEAMS",
+      "category": "conferencing",
+      "priority": 4,
+      "domains": [
+        "teams.microsoft.com",
+        "teams.live.com",
+        "teams.cloud.microsoft"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "twitch",
+      "label": "Twitch",
+      "section": "TWITCH",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "twitch.tv",
+        "ttvnw.net",
+        "jtvnw.net",
+        "twitchcdn.net"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "spotify",
+      "label": "Spotify",
+      "section": "SPOTIFY",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "spotify.com",
+        "scdn.co",
+        "spotifycdn.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "soundcloud",
+      "label": "SoundCloud",
+      "section": "SOUNDCLOUD",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "soundcloud.com",
+        "sndcdn.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "anghami",
+      "label": "Anghami",
+      "section": "ANGHAMI",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "anghami.com",
+        "anghcdn.co"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "reddit",
+      "label": "Reddit",
+      "section": "REDDIT",
+      "category": "social",
+      "priority": 5,
+      "domains": [
+        "reddit.com",
+        "redd.it",
+        "redditstatic.com",
+        "redditmedia.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "pinterest",
+      "label": "Pinterest",
+      "section": "PINTEREST",
+      "category": "social",
+      "priority": 5,
+      "domains": [
+        "pinterest.com",
+        "pinimg.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "linkedin",
+      "label": "LinkedIn",
+      "section": "LINKEDIN",
+      "category": "social",
+      "priority": 5,
+      "domains": [
+        "linkedin.com",
+        "licdn.com",
+        "lnkd.in"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "steam",
+      "label": "Steam",
+      "section": "STEAM",
+      "category": "download",
+      "priority": 7,
+      "domains": [
+        "steampowered.com",
+        "steamcommunity.com",
+        "steamcontent.com",
+        "steamstatic.com",
+        "steamserver.net"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "epic-games",
+      "label": "Epic Games",
+      "section": "EPIC GAMES",
+      "category": "download",
+      "priority": 7,
+      "domains": [
+        "epicgames.com",
+        "unrealengine.com",
+        "fortnite.com",
+        "epicgames.dev"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "playstation-network",
+      "label": "PlayStation Network",
+      "section": "PLAYSTATION NETWORK",
+      "category": "download",
+      "priority": 7,
+      "domains": [
+        "playstation.com",
+        "playstation.net",
+        "sonyentertainmentnetwork.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "xbox-live",
+      "label": "Xbox Live",
+      "section": "XBOX LIVE",
+      "category": "download",
+      "priority": 7,
+      "domains": [
+        "xbox.com",
+        "xboxlive.com",
+        "xboxservices.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "google-drive",
+      "label": "Google Drive",
+      "section": "GOOGLE DRIVE",
+      "category": "download",
+      "priority": 7,
+      "domains": [
+        "drive.google.com",
+        "drive.usercontent.google.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "onedrive",
+      "label": "OneDrive",
+      "section": "ONEDRIVE",
+      "category": "download",
+      "priority": 7,
+      "domains": [
+        "onedrive.com",
+        "onedrive.live.com",
+        "1drv.com",
+        "storage.live.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "icloud-drive",
+      "label": "iCloud Drive",
+      "section": "ICLOUD DRIVE",
+      "category": "download",
+      "priority": 7,
+      "domains": [
+        "icloud-content.com",
+        "icloud.com.cn"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "dropbox",
+      "label": "Dropbox",
+      "section": "DROPBOX",
+      "category": "download",
+      "priority": 7,
+      "domains": [
+        "dropbox.com",
+        "dropboxusercontent.com",
+        "dropboxstatic.com",
+        "db.tt"
+      ],
+      "cidrs": []
     }
   ],
   "games": [
@@ -367,7 +611,8 @@
       "category": "gaming",
       "priority": 4,
       "protocol": "tcp",
-      "ports": "3013,18082,65010,65050"
+      "ports": "3013,18082,65010,65050",
+      "counter": true
     },
     {
       "slug": "free-fire",
@@ -375,7 +620,8 @@
       "category": "gaming",
       "priority": 4,
       "protocol": "tcp",
-      "ports": "39003,39698,39779"
+      "ports": "39003,39698,39779",
+      "counter": true
     },
     {
       "slug": "pubg-mobile",
@@ -383,7 +629,8 @@
       "category": "gaming",
       "priority": 4,
       "protocol": "tcp",
-      "ports": "10012,17500"
+      "ports": "10012,17500",
+      "counter": true
     },
     {
       "slug": "mobile-legends",
@@ -391,7 +638,8 @@
       "category": "gaming",
       "priority": 4,
       "protocol": "tcp",
-      "ports": "5001,5003,9001,30000-30200"
+      "ports": "5001,5003,9001,30000-30200",
+      "counter": true
     },
     {
       "slug": "rules-of-survival",
@@ -399,7 +647,8 @@
       "category": "gaming",
       "priority": 4,
       "protocol": "udp",
-      "ports": "24000-24050"
+      "ports": "24000-24050",
+      "counter": true
     },
     {
       "slug": "clash-of-clans",
@@ -407,7 +656,8 @@
       "category": "gaming",
       "priority": 4,
       "protocol": "tcp",
-      "ports": "9330-9340"
+      "ports": "9330-9340",
+      "counter": true
     },
     {
       "slug": "dragon-nest",
@@ -415,7 +665,8 @@
       "category": "gaming",
       "priority": 4,
       "protocol": "tcp",
-      "ports": "10514"
+      "ports": "10514",
+      "counter": true
     },
     {
       "slug": "clash-royale",
@@ -423,7 +674,8 @@
       "category": "gaming",
       "priority": 4,
       "protocol": "tcp",
-      "ports": "9330-9340"
+      "ports": "9330-9340",
+      "counter": true
     },
     {
       "slug": "arena-of-valor",
@@ -431,7 +683,8 @@
       "category": "gaming",
       "priority": 4,
       "protocol": "tcp",
-      "ports": "10001-10094"
+      "ports": "10001-10094",
+      "counter": true
     }
   ]
 }
