@@ -192,9 +192,9 @@
       "cidrs": []
     },
     {
-      "slug": "shahid-netflix",
-      "label": "Shahid/Netflix",
-      "section": "NETFLIX / SHAHID / DISNEY / PRIME",
+      "slug": "netflix",
+      "label": "Netflix",
+      "section": "NETFLIX",
       "category": "streaming",
       "priority": 6,
       "domains": [
@@ -203,18 +203,28 @@
         "nflxvideo.net",
         "nflximg.net",
         "nflxso.net",
-        "shahid.net",
-        "mbc.net",
-        "mbcgroup.net",
-        "shahidvodcdn.com",
         "nflxext.com"
       ],
       "cidrs": []
     },
     {
-      "slug": "store",
-      "label": "Store",
-      "section": "APP STORES / UPDATES",
+      "slug": "shahid",
+      "label": "Shahid",
+      "section": "SHAHID (MBC)",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "shahid.net",
+        "mbc.net",
+        "mbcgroup.net",
+        "shahidvodcdn.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "play-store",
+      "label": "Play Store",
+      "section": "PLAY STORE",
       "category": "store",
       "priority": 3,
       "domains": [
@@ -223,12 +233,21 @@
         "play-fe.googleapis.com",
         "android.clients.google.com",
         "market.android.com",
-        "ota.googlezip.net",
+        "ota.googlezip.net"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "app-store",
+      "label": "App Store",
+      "section": "APPLE APP STORE",
+      "category": "store",
+      "priority": 3,
+      "domains": [
+        "apps.apple.com",
         "apple.com",
-        "icloud.com",
         "itunes.com",
         "appstore.com",
-        "apps.apple.com",
         "applemusic.com",
         "apple-dns.net",
         "mzstatic.com",
@@ -236,8 +255,29 @@
         "updates-http.cdn-apple.com",
         "swscan.apple.com",
         "swdist.apple.com",
+        "icloud.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "microsoft-store",
+      "label": "Microsoft Store",
+      "section": "MICROSOFT STORE",
+      "category": "store",
+      "priority": 3,
+      "domains": [
         "apps.microsoft.com",
-        "storeedgefd.dsx.mp.microsoft.com",
+        "storeedgefd.dsx.mp.microsoft.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "windows-update",
+      "label": "Windows Update",
+      "section": "WINDOWS UPDATE",
+      "category": "download",
+      "priority": 7,
+      "domains": [
         "windowsupdate.com",
         "update.microsoft.com",
         "download.windowsupdate.com",
