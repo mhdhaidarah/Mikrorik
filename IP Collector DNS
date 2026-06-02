@@ -147,43 +147,47 @@ add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes nam
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=twimg.com type=FWD
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=video.twimg.com type=FWD
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=abs.twimg.com type=FWD
-# ===================== NETFLIX / SHAHID / DISNEY / PRIME =====================
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=netflix.com type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=netflix.net type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=nflxvideo.net type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=nflximg.net type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=nflxso.net type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=shahid.net type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=mbc.net type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=mbcgroup.net type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=shahidvodcdn.com type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=nflxext.com type=FWD
-# ===================== APP STORES / UPDATES =====================
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play.google.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play.googleapis.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play-fe.googleapis.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=android.clients.google.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=market.android.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=ota.googlezip.net type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=apple.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=icloud.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=itunes.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=appstore.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=apps.apple.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=applemusic.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=apple-dns.net type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=mzstatic.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=mesu.apple.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=updates-http.cdn-apple.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=swscan.apple.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=swdist.apple.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=apps.microsoft.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=storeedgefd.dsx.mp.microsoft.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=windowsupdate.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=update.microsoft.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=download.windowsupdate.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=msftncsi.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=msftconnecttest.com type=FWD
+# ===================== NETFLIX =====================
+add address-list="Netflix IPs" comment="Netflix IPs" match-subdomain=yes name=netflix.com type=FWD
+add address-list="Netflix IPs" comment="Netflix IPs" match-subdomain=yes name=netflix.net type=FWD
+add address-list="Netflix IPs" comment="Netflix IPs" match-subdomain=yes name=nflxvideo.net type=FWD
+add address-list="Netflix IPs" comment="Netflix IPs" match-subdomain=yes name=nflximg.net type=FWD
+add address-list="Netflix IPs" comment="Netflix IPs" match-subdomain=yes name=nflxso.net type=FWD
+add address-list="Netflix IPs" comment="Netflix IPs" match-subdomain=yes name=nflxext.com type=FWD
+# ===================== SHAHID (MBC) =====================
+add address-list="Shahid IPs" comment="Shahid IPs" match-subdomain=yes name=shahid.net type=FWD
+add address-list="Shahid IPs" comment="Shahid IPs" match-subdomain=yes name=mbc.net type=FWD
+add address-list="Shahid IPs" comment="Shahid IPs" match-subdomain=yes name=mbcgroup.net type=FWD
+add address-list="Shahid IPs" comment="Shahid IPs" match-subdomain=yes name=shahidvodcdn.com type=FWD
+# ===================== PLAY STORE =====================
+add address-list="Play Store IPs" comment="Play Store IPs" match-subdomain=yes name=play.google.com type=FWD
+add address-list="Play Store IPs" comment="Play Store IPs" match-subdomain=yes name=play.googleapis.com type=FWD
+add address-list="Play Store IPs" comment="Play Store IPs" match-subdomain=yes name=play-fe.googleapis.com type=FWD
+add address-list="Play Store IPs" comment="Play Store IPs" match-subdomain=yes name=android.clients.google.com type=FWD
+add address-list="Play Store IPs" comment="Play Store IPs" match-subdomain=yes name=market.android.com type=FWD
+add address-list="Play Store IPs" comment="Play Store IPs" match-subdomain=yes name=ota.googlezip.net type=FWD
+# ===================== APPLE APP STORE =====================
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=apps.apple.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=apple.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=itunes.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=appstore.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=applemusic.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=apple-dns.net type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=mzstatic.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=mesu.apple.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=updates-http.cdn-apple.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=swscan.apple.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=swdist.apple.com type=FWD
+add address-list="App Store IPs" comment="App Store IPs" match-subdomain=yes name=icloud.com type=FWD
+# ===================== MICROSOFT STORE =====================
+add address-list="Microsoft Store IPs" comment="Microsoft Store IPs" match-subdomain=yes name=apps.microsoft.com type=FWD
+add address-list="Microsoft Store IPs" comment="Microsoft Store IPs" match-subdomain=yes name=storeedgefd.dsx.mp.microsoft.com type=FWD
+# ===================== WINDOWS UPDATE =====================
+add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=windowsupdate.com type=FWD
+add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=update.microsoft.com type=FWD
+add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=download.windowsupdate.com type=FWD
+add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=msftncsi.com type=FWD
+add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=msftconnecttest.com type=FWD
 # ===================== META / FACEBOOK / INSTAGRAM =====================
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebook.com type=FWD
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebook.net type=FWD
@@ -479,12 +483,24 @@ add action=passthrough chain=prerouting comment="Snapchat Traffic Up" dst-addres
 # Twitter/X
 add action=passthrough chain=prerouting comment="Twitter/X Traffic Down" src-address-list="Twitter/X IPs"
 add action=passthrough chain=prerouting comment="Twitter/X Traffic Up" dst-address-list="Twitter/X IPs"
-# Shahid/Netflix
-add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Down" src-address-list="Shahid/Netflix IPs"
-add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Up" dst-address-list="Shahid/Netflix IPs"
-# Store
-add action=passthrough chain=prerouting comment="Store Traffic Down" src-address-list="Store IPs"
-add action=passthrough chain=prerouting comment="Store Traffic Up" dst-address-list="Store IPs"
+# Netflix
+add action=passthrough chain=prerouting comment="Netflix Traffic Down" src-address-list="Netflix IPs"
+add action=passthrough chain=prerouting comment="Netflix Traffic Up" dst-address-list="Netflix IPs"
+# Shahid
+add action=passthrough chain=prerouting comment="Shahid Traffic Down" src-address-list="Shahid IPs"
+add action=passthrough chain=prerouting comment="Shahid Traffic Up" dst-address-list="Shahid IPs"
+# Play Store
+add action=passthrough chain=prerouting comment="Play Store Traffic Down" src-address-list="Play Store IPs"
+add action=passthrough chain=prerouting comment="Play Store Traffic Up" dst-address-list="Play Store IPs"
+# App Store
+add action=passthrough chain=prerouting comment="App Store Traffic Down" src-address-list="App Store IPs"
+add action=passthrough chain=prerouting comment="App Store Traffic Up" dst-address-list="App Store IPs"
+# Microsoft Store
+add action=passthrough chain=prerouting comment="Microsoft Store Traffic Down" src-address-list="Microsoft Store IPs"
+add action=passthrough chain=prerouting comment="Microsoft Store Traffic Up" dst-address-list="Microsoft Store IPs"
+# Windows Update
+add action=passthrough chain=prerouting comment="Windows Update Traffic Down" src-address-list="Windows Update IPs"
+add action=passthrough chain=prerouting comment="Windows Update Traffic Up" dst-address-list="Windows Update IPs"
 # Facebook
 add action=passthrough chain=prerouting comment="Facebook Traffic Down" src-address-list="Facebook IPs"
 add action=passthrough chain=prerouting comment="Facebook Traffic Up" dst-address-list="Facebook IPs"
@@ -705,12 +721,24 @@ add action=passthrough chain=prerouting comment="Snapchat Traffic Up" dst-addres
 # Twitter/X
 add action=passthrough chain=prerouting comment="Twitter/X Traffic Down" src-address-list="Twitter/X IPs"
 add action=passthrough chain=prerouting comment="Twitter/X Traffic Up" dst-address-list="Twitter/X IPs"
-# Shahid/Netflix
-add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Down" src-address-list="Shahid/Netflix IPs"
-add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Up" dst-address-list="Shahid/Netflix IPs"
-# Store
-add action=passthrough chain=prerouting comment="Store Traffic Down" src-address-list="Store IPs"
-add action=passthrough chain=prerouting comment="Store Traffic Up" dst-address-list="Store IPs"
+# Netflix
+add action=passthrough chain=prerouting comment="Netflix Traffic Down" src-address-list="Netflix IPs"
+add action=passthrough chain=prerouting comment="Netflix Traffic Up" dst-address-list="Netflix IPs"
+# Shahid
+add action=passthrough chain=prerouting comment="Shahid Traffic Down" src-address-list="Shahid IPs"
+add action=passthrough chain=prerouting comment="Shahid Traffic Up" dst-address-list="Shahid IPs"
+# Play Store
+add action=passthrough chain=prerouting comment="Play Store Traffic Down" src-address-list="Play Store IPs"
+add action=passthrough chain=prerouting comment="Play Store Traffic Up" dst-address-list="Play Store IPs"
+# App Store
+add action=passthrough chain=prerouting comment="App Store Traffic Down" src-address-list="App Store IPs"
+add action=passthrough chain=prerouting comment="App Store Traffic Up" dst-address-list="App Store IPs"
+# Microsoft Store
+add action=passthrough chain=prerouting comment="Microsoft Store Traffic Down" src-address-list="Microsoft Store IPs"
+add action=passthrough chain=prerouting comment="Microsoft Store Traffic Up" dst-address-list="Microsoft Store IPs"
+# Windows Update
+add action=passthrough chain=prerouting comment="Windows Update Traffic Down" src-address-list="Windows Update IPs"
+add action=passthrough chain=prerouting comment="Windows Update Traffic Up" dst-address-list="Windows Update IPs"
 # Facebook
 add action=passthrough chain=prerouting comment="Facebook Traffic Down" src-address-list="Facebook IPs"
 add action=passthrough chain=prerouting comment="Facebook Traffic Up" dst-address-list="Facebook IPs"
