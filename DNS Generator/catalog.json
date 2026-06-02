@@ -185,6 +185,7 @@
         "twitter.com",
         "t.co",
         "twttr.com",
+        "twimg.com",
         "video.twimg.com",
         "abs.twimg.com"
       ],
@@ -206,10 +207,7 @@
         "mbc.net",
         "mbcgroup.net",
         "shahidvodcdn.com",
-        "disneyplus.com",
-        "dssott.com",
-        "primevideo.com",
-        "aiv-delivery.net"
+        "nflxext.com"
       ],
       "cidrs": []
     },
@@ -224,7 +222,6 @@
         "play.googleapis.com",
         "play-fe.googleapis.com",
         "android.clients.google.com",
-        "andorid.clients.google.com",
         "market.android.com",
         "ota.googlezip.net",
         "apple.com",
@@ -287,7 +284,8 @@
       "domains": [
         "instagram.com",
         "cdninstagram.com",
-        "threads.com"
+        "threads.net",
+        "ig.me"
       ],
       "cidrs": []
     },
@@ -374,11 +372,11 @@
       "category": "social",
       "priority": 5,
       "domains": [
-        "Kwai.com",
+        "kwai.com",
         "kwcdn.com",
-        "Kwai-pro.com",
+        "kwai-pro.com",
         "yximgs.com",
-        "Kwaipros.com"
+        "kwaipros.com"
       ],
       "cidrs": []
     },
@@ -628,6 +626,363 @@
         "dropboxusercontent.com",
         "dropboxstatic.com",
         "db.tt"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "signal",
+      "label": "Signal",
+      "section": "SIGNAL",
+      "category": "messaging",
+      "priority": 1,
+      "domains": [
+        "signal.org",
+        "signal.art",
+        "whispersystems.org"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "viber",
+      "label": "Viber",
+      "section": "VIBER",
+      "category": "messaging",
+      "priority": 1,
+      "domains": [
+        "viber.com",
+        "vbrpl.io"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "wechat",
+      "label": "WeChat",
+      "section": "WECHAT",
+      "category": "messaging",
+      "priority": 1,
+      "domains": [
+        "wechat.com",
+        "weixin.qq.com",
+        "wechatapp.com",
+        "wx.qq.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "skype",
+      "label": "Skype",
+      "section": "SKYPE",
+      "category": "messaging",
+      "priority": 1,
+      "domains": [
+        "skype.com",
+        "skypeassets.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "gmail",
+      "label": "Gmail",
+      "section": "GMAIL",
+      "category": "productivity",
+      "priority": 3,
+      "domains": [
+        "mail.google.com",
+        "gmail.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "microsoft-365",
+      "label": "Microsoft 365",
+      "section": "MICROSOFT 365 / OUTLOOK",
+      "category": "productivity",
+      "priority": 3,
+      "domains": [
+        "outlook.com",
+        "outlook.office.com",
+        "outlook.office365.com",
+        "office.com",
+        "office365.com",
+        "microsoftonline.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "disney",
+      "label": "Disney+",
+      "section": "DISNEY+",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "disneyplus.com",
+        "dssott.com",
+        "disney-plus.net",
+        "bamgrid.com",
+        "disneystreaming.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "prime-video",
+      "label": "Prime Video",
+      "section": "PRIME VIDEO",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "primevideo.com",
+        "aiv-delivery.net",
+        "aiv-cdn.net",
+        "pv-cdn.net",
+        "amazonvideo.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "hbo-max",
+      "label": "HBO Max",
+      "section": "HBO MAX",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "max.com",
+        "hbomax.com",
+        "hbo.com",
+        "hbomaxcdn.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "apple-tv",
+      "label": "Apple TV+",
+      "section": "APPLE TV+",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "tv.apple.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "deezer",
+      "label": "Deezer",
+      "section": "DEEZER",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "deezer.com",
+        "dzcdn.net"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "imo",
+      "label": "IMO",
+      "section": "IMO",
+      "category": "messaging",
+      "priority": 1,
+      "domains": [
+        "imo.im",
+        "imoim.app",
+        "imoim.net"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "botim",
+      "label": "Botim",
+      "section": "BOTIM",
+      "category": "messaging",
+      "priority": 1,
+      "domains": [
+        "botim.me",
+        "botim.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "bein-sports",
+      "label": "beIN Sports",
+      "section": "BEIN SPORTS / TOD",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "bein.com",
+        "beinsports.com",
+        "beinconnect.com",
+        "tod.tv"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "osn",
+      "label": "OSN+",
+      "section": "OSN+",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "osnplus.com",
+        "osn.com",
+        "osnplus.net"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "starzplay",
+      "label": "Starzplay",
+      "section": "STARZPLAY",
+      "category": "streaming",
+      "priority": 6,
+      "domains": [
+        "starzplay.com",
+        "starz.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "roblox",
+      "label": "Roblox",
+      "section": "ROBLOX",
+      "category": "gaming",
+      "priority": 4,
+      "domains": [
+        "roblox.com",
+        "rbxcdn.com",
+        "robloxlabs.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "minecraft",
+      "label": "Minecraft",
+      "section": "MINECRAFT",
+      "category": "gaming",
+      "priority": 4,
+      "domains": [
+        "minecraft.net",
+        "minecraftservices.com",
+        "mojang.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "riot-games",
+      "label": "Riot Games",
+      "section": "RIOT GAMES",
+      "category": "gaming",
+      "priority": 4,
+      "domains": [
+        "riotgames.com",
+        "riotcdn.net",
+        "leagueoflegends.com",
+        "playvalorant.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "genshin-impact",
+      "label": "Genshin Impact",
+      "section": "GENSHIN / HOYOVERSE",
+      "category": "gaming",
+      "priority": 4,
+      "domains": [
+        "hoyoverse.com",
+        "mihoyo.com",
+        "yuanshen.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "battle-net",
+      "label": "Battle.net",
+      "section": "BATTLE.NET / BLIZZARD",
+      "category": "gaming",
+      "priority": 4,
+      "domains": [
+        "battle.net",
+        "blizzard.com",
+        "battlenet.com.cn"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "cod-warzone",
+      "label": "COD Warzone",
+      "section": "COD WARZONE",
+      "category": "gaming",
+      "priority": 4,
+      "domains": [
+        "callofduty.com",
+        "activision.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "nordvpn",
+      "label": "NordVPN",
+      "section": "VPN — NORDVPN",
+      "category": "vpn",
+      "priority": 8,
+      "domains": [
+        "nordvpn.com",
+        "nordcdn.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "expressvpn",
+      "label": "ExpressVPN",
+      "section": "VPN — EXPRESSVPN",
+      "category": "vpn",
+      "priority": 8,
+      "domains": [
+        "expressvpn.com",
+        "xvservice.net"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "protonvpn",
+      "label": "ProtonVPN",
+      "section": "VPN — PROTONVPN",
+      "category": "vpn",
+      "priority": 8,
+      "domains": [
+        "protonvpn.com",
+        "proton.me"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "surfshark",
+      "label": "Surfshark",
+      "section": "VPN — SURFSHARK",
+      "category": "vpn",
+      "priority": 8,
+      "domains": [
+        "surfshark.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "windscribe",
+      "label": "Windscribe",
+      "section": "VPN — WINDSCRIBE",
+      "category": "vpn",
+      "priority": 8,
+      "domains": [
+        "windscribe.com"
+      ],
+      "cidrs": []
+    },
+    {
+      "slug": "cloudflare-warp",
+      "label": "Cloudflare WARP",
+      "section": "VPN — CLOUDFLARE WARP",
+      "category": "vpn",
+      "priority": 8,
+      "domains": [
+        "cloudflareclient.com"
       ],
       "cidrs": []
     }
