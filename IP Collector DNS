@@ -1,3 +1,9 @@
+# ============================================================
+#  AUTO-GENERATED from "DNS Generator/catalog.json" — DO NOT EDIT BY HAND.
+#  Add/remove apps in catalog.json, then run:
+#      python3 "DNS Generator/generate.py"
+# ============================================================
+
 # SAMM skipped start
 /ip dns
 set address-list-extra-time=1d allow-remote-requests=yes cache-max-ttl=1d \
@@ -6,6 +12,7 @@ set address-list-extra-time=1d allow-remote-requests=yes cache-max-ttl=1d \
 /ip firewall nat
 add action=redirect chain=dstnat comment="NAT DNS to Local Router" dst-port=53 protocol=udp
 # SAMM skipped end
+
 
 /ip dns set address-list-extra-time=1d
 
@@ -49,13 +56,9 @@ add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes nam
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=maxmind.com type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=myip.ms type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=browserleaks.com type=FWD
-add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=whoer.net type=FWD
-add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=ipchicken.com type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=ipburger.com type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=2ip.io type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=iplocation.io type=FWD
-
-
 # ===================== YOUTUBE / GOOGLE VIDEO =====================
 add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=youtube.com type=FWD
 add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=youtu.be type=FWD
@@ -67,7 +70,6 @@ add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=yo
 add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=youtubegaming.com type=FWD
 add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=music.youtube.com type=FWD
 add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=youtubei.googleapis.com type=FWD
-
 # ===================== TIKTOK / BYTEDANCE =====================
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=akamaized.net type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=bytecdn.cn type=FWD
@@ -90,7 +92,6 @@ add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=tikt
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=worldfcdn.com type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=wsdvs.com type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=www.tiktok.com type=FWD
-
 # ===================== TELEGRAM (FULL) =====================
 add address-list="Telegram IPs" comment="Telegram IPs" match-subdomain=yes name=telegram.org type=FWD
 add address-list="Telegram IPs" comment="Telegram IPs" match-subdomain=yes name=telegram.me type=FWD
@@ -99,14 +100,12 @@ add address-list="Telegram IPs" comment="Telegram IPs" match-subdomain=yes name=
 add address-list="Telegram IPs" comment="Telegram IPs" match-subdomain=yes name=cdn.telegram.org type=FWD
 add address-list="Telegram IPs" comment="Telegram IPs" match-subdomain=yes name=telesco.pe type=FWD
 add address-list="Telegram IPs" comment="Telegram IPs" match-subdomain=yes name=telegram-cdn.org type=FWD
-
 # ===================== SNAPCHAT =====================
 add address-list="Snapchat IPs" comment="Snapchat IPs" match-subdomain=yes name=snapchat.com type=FWD
 add address-list="Snapchat IPs" comment="Snapchat IPs" match-subdomain=yes name=snap.com type=FWD
 add address-list="Snapchat IPs" comment="Snapchat IPs" match-subdomain=yes name=sc-cdn.net type=FWD
 add address-list="Snapchat IPs" comment="Snapchat IPs" match-subdomain=yes name=app-analytics.snapchat.com type=FWD
 add address-list="Snapchat IPs" comment="Snapchat IPs" match-subdomain=yes name=feelinsonice.com type=FWD
-
 # ===================== TWITTER / X =====================
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=x.com type=FWD
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=twitter.com type=FWD
@@ -114,7 +113,6 @@ add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes nam
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=twttr.com type=FWD
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=video.twimg.com type=FWD
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=abs.twimg.com type=FWD
-
 # ===================== NETFLIX / SHAHID / DISNEY / PRIME =====================
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=netflix.com type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=netflix.net type=FWD
@@ -129,13 +127,11 @@ add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdoma
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=dssott.com type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=primevideo.com type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=aiv-delivery.net type=FWD
-
 # ===================== APP STORES / UPDATES =====================
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play.google.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play.googleapis.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play-fe.googleapis.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=googleusercontent.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play.google.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=android.clients.google.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=andorid.clients.google.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=market.android.com type=FWD
@@ -159,7 +155,6 @@ add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=update
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=download.windowsupdate.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=msftncsi.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=msftconnecttest.com type=FWD
-
 # ===================== META / FACEBOOK / INSTAGRAM =====================
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebook.com type=FWD
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebook.net type=FWD
@@ -183,7 +178,6 @@ add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=
 add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=instagram.com type=FWD
 add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=cdninstagram.com type=FWD
 add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=threads.com type=FWD
-
 # ===================== WHATSAPP =====================
 add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.com type=FWD
 add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.net type=FWD
@@ -197,7 +191,6 @@ add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=
 add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp-plus.net type=FWD
 add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.tv type=FWD
 add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.info type=FWD
-
 # ===================== AI SERVICES =====================
 add address-list="AI IPs" comment="AI IPs" match-subdomain=yes name=anthropic.com type=FWD
 add address-list="AI IPs" comment="AI IPs" match-subdomain=yes name=api.openai.com type=FWD
@@ -228,21 +221,18 @@ add address-list="AI IPs" comment="AI IPs" match-subdomain=yes name=stability.ai
 add address-list="AI IPs" comment="AI IPs" match-subdomain=yes name=suno.ai type=FWD
 add address-list="AI IPs" comment="AI IPs" match-subdomain=yes name=windsurf.ai type=FWD
 add address-list="AI IPs" comment="AI IPs" match-subdomain=yes name=x.ai type=FWD
-
 # ===================== Likee =====================
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=likee.com type=FWD
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=like.video type=FWD
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=likee.video type=FWD
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=likeevideo.ru type=FWD
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=like-video.com type=FWD
-
 # ===================== Kwai =====================
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwai.com type=FWD
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwcdn.com type=FWD
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwai-pro.com type=FWD
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=yximgs.com type=FWD
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwaipros.com type=FWD
-
 
 /ip firewall address-list
 add address=91.108.56.0/22 list="Telegram IPs"
@@ -256,97 +246,63 @@ add address=91.108.20.0/22 list="Telegram IPs"
 add address=185.76.151.0/24 list="Telegram IPs"
 
 /ip firewall mangle
-# Traffic Monitor
+# Traffic Monitor — wipe previous SAMM counters before re-adding
 remove [find where comment~"Traffic"]
-remove [find where comment~"IPs"]
-# ===================== SPEEDTEST / IP CHECK =====================
+# SpeedTest
 add action=passthrough chain=prerouting comment="SpeedTest Traffic Down" src-address-list="SpeedTest IPs"
 add action=passthrough chain=prerouting comment="SpeedTest Traffic Up" dst-address-list="SpeedTest IPs"
-
-# ===================== YOUTUBE / GOOGLE VIDEO =====================
+# Youtube
 add action=passthrough chain=prerouting comment="Youtube Traffic Down" src-address-list="Youtube IPs"
 add action=passthrough chain=prerouting comment="Youtube Traffic Up" dst-address-list="Youtube IPs"
-
-# ===================== TIKTOK / BYTEDANCE =====================
+# Tiktok
 add action=passthrough chain=prerouting comment="Tiktok Traffic Down" src-address-list="Tiktok IPs"
 add action=passthrough chain=prerouting comment="Tiktok Traffic Up" dst-address-list="Tiktok IPs"
-
-# ===================== TELEGRAM (FULL) =====================
+# Telegram
 add action=passthrough chain=prerouting comment="Telegram Traffic Down" src-address-list="Telegram IPs"
 add action=passthrough chain=prerouting comment="Telegram Traffic Up" dst-address-list="Telegram IPs"
-
-# ===================== SNAPCHAT =====================
+# Snapchat
 add action=passthrough chain=prerouting comment="Snapchat Traffic Down" src-address-list="Snapchat IPs"
 add action=passthrough chain=prerouting comment="Snapchat Traffic Up" dst-address-list="Snapchat IPs"
-
-# ===================== TWITTER / X =====================
+# Twitter/X
 add action=passthrough chain=prerouting comment="Twitter/X Traffic Down" src-address-list="Twitter/X IPs"
 add action=passthrough chain=prerouting comment="Twitter/X Traffic Up" dst-address-list="Twitter/X IPs"
-
-# ===================== NETFLIX / SHAHID / DISNEY / PRIME =====================
+# Shahid/Netflix
 add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Down" src-address-list="Shahid/Netflix IPs"
 add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Up" dst-address-list="Shahid/Netflix IPs"
-
-# ===================== APP STORES / UPDATES =====================
+# Store
 add action=passthrough chain=prerouting comment="Store Traffic Down" src-address-list="Store IPs"
 add action=passthrough chain=prerouting comment="Store Traffic Up" dst-address-list="Store IPs"
-
-# ===================== META / FACEBOOK / INSTAGRAM =====================
+# Facebook
 add action=passthrough chain=prerouting comment="Facebook Traffic Down" src-address-list="Facebook IPs"
 add action=passthrough chain=prerouting comment="Facebook Traffic Up" dst-address-list="Facebook IPs"
+# Instagram
 add action=passthrough chain=prerouting comment="Instagram Traffic Down" src-address-list="Instagram IPs"
 add action=passthrough chain=prerouting comment="Instagram Traffic Up" dst-address-list="Instagram IPs"
-
-# ===================== WHATSAPP =====================
+# Whatsapp
 add action=passthrough chain=prerouting comment="Whatsapp Traffic Down" src-address-list="Whatsapp IPs"
 add action=passthrough chain=prerouting comment="Whatsapp Traffic Up" dst-address-list="Whatsapp IPs"
-
-# ===================== AI SERVICES =====================
+# AI
 add action=passthrough chain=prerouting comment="AI Traffic Down" src-address-list="AI IPs"
 add action=passthrough chain=prerouting comment="AI Traffic Up" dst-address-list="AI IPs"
-
-# ===================== LIKEE =====================
+# Likee
 add action=passthrough chain=prerouting comment="Likee Traffic Down" src-address-list="Likee IPs"
 add action=passthrough chain=prerouting comment="Likee Traffic Up" dst-address-list="Likee IPs"
-
-# ===================== Kwai =====================
+# Kwai
 add action=passthrough chain=prerouting comment="Kwai Traffic Down" src-address-list="Kwai IPs"
 add action=passthrough chain=prerouting comment="Kwai Traffic Up" dst-address-list="Kwai IPs"
 
-
 # ===================== GAMES =====================
-# ----- Call of Duty Mobile Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="COD Mobile IPs" address-list-timeout=1d protocol=tcp dst-port=3013,18082,65010,65050 comment="COD Mobile IPs" dst-address-type=!local
-
-# ----- Free Fire Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Free Fire IPs" address-list-timeout=1d protocol=tcp dst-port=39003,39698,39779 comment="Free Fire IPs" dst-address-type=!local
-
-# ----- PUBG Mobile Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="PUBG Mobile IPs" address-list-timeout=1d protocol=tcp dst-port=10012,17500 comment="PUBG Mobile IPs" dst-address-type=!local
-
-# ----- Mobile Legends Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Mobile Legends IPs" address-list-timeout=1d protocol=tcp dst-port=5001,5003,9001,30000-30200 comment="Mobile Legends IPs" dst-address-type=!local
-
-# ----- Rules of Survival Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Rules of Survival IPs" address-list-timeout=1d protocol=udp dst-port=24000-24050 comment="Rules of Survival IPs" dst-address-type=!local
-
-# ----- Clash of Clans Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Clash of Clans IPs" address-list-timeout=1d protocol=tcp dst-port=9330-9340 comment="Clash of Clans IPs" dst-address-type=!local
-
-# ----- Dragon Nest Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Dragon Nest IPs" address-list-timeout=1d protocol=tcp dst-port=10514 comment="Dragon Nest IPs" dst-address-type=!local
-
-# ----- Clash Royale Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Clash Royale IPs" address-list-timeout=1d protocol=tcp dst-port=9330-9340 comment="Clash Royale IPs" dst-address-type=!local
-
-# ----- Arena of Valor Detection -----
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Arena of Valor IPs" address-list-timeout=1d protocol=tcp dst-port=10001-10094 comment="Arena of Valor IPs" dst-address-type=!local
-..
-..
-..
 
 #by Mohammed Haidar
 #+961 81507933
 #Beirut Lebanon
-
 
