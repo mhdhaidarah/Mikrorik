@@ -81,13 +81,22 @@ def build(catalog):
     out.append("/ip firewall mangle")
     out.append("# Traffic Monitor — wipe previous SAMM counters before re-adding")
     out.append('remove [find where comment~"Traffic"]')
+    def counters(label):
+        lst = f'{label} IPs'
+        out.append(f'# {label}')
+        out.append(f'add action=passthrough chain=prerouting '
+                   f'comment="{label} Traffic Down" src-address-list="{lst}"')
+        out.append(f'add action=passthrough chain=prerouting '
+                   f'comment="{label} Traffic Up" dst-address-list="{lst}"')
+
     for a in apps:
-        lst = f'{a["label"]} IPs'
-        out.append(f'# {a["label"]}')
-        out.append(f'add action=passthrough chain=prerouting '
-                   f'comment="{a["label"]} Traffic Down" src-address-list="{lst}"')
-        out.append(f'add action=passthrough chain=prerouting '
-                   f'comment="{a["label"]} Traffic Up" dst-address-list="{lst}"')
+        counters(a["label"])
+    # Games that opt into measurement get the same Up/Down counters.
+    game_counters = [g for g in games if g.get("counter")]
+    if game_counters:
+        out.append("# --- game traffic counters ---")
+        for g in game_counters:
+            counters(g["label"])
     out.append("")
 
     # ---- Games: port-based collectors ----

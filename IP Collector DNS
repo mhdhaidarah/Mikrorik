@@ -18,7 +18,6 @@ add action=redirect chain=dstnat comment="NAT DNS to Local Router" dst-port=53 p
 
 /ip dns static
 # ===================== SPEEDTEST / IP CHECK =====================
-add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=aiv-delivery.net type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=c.speedtest.net type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=wifiman.com type=FWD
 add address-list="SpeedTest IPs" comment="SpeedTest IPs" match-subdomain=yes name=check-host.net type=FWD
@@ -71,18 +70,15 @@ add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=yo
 add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=music.youtube.com type=FWD
 add address-list="Youtube IPs" comment="Youtube IPs" match-subdomain=yes name=youtubei.googleapis.com type=FWD
 # ===================== TIKTOK / BYTEDANCE =====================
-add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=akamaized.net type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=bytecdn.cn type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=byted.org type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=bytedance.com type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=byteoversea.com type=FWD
-add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=footprint.net type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=ibyteimg.com type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=ibytedtos.com type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=muscdn.com type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=musemuse.cn type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=musical.ly type=FWD
-add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=myqcloud.com type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=tiktok.com type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=tiktok.net type=FWD
 add address-list="Tiktok IPs" comment="Tiktok IPs" match-subdomain=yes name=tiktok.org type=FWD
@@ -131,7 +127,6 @@ add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdoma
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play.google.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play.googleapis.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play-fe.googleapis.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=googleusercontent.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=android.clients.google.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=andorid.clients.google.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=market.android.com type=FWD
@@ -233,6 +228,84 @@ add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwcdn.co
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwai-pro.com type=FWD
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=yximgs.com type=FWD
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwaipros.com type=FWD
+# ===================== DISCORD =====================
+add address-list="Discord IPs" comment="Discord IPs" match-subdomain=yes name=discord.com type=FWD
+add address-list="Discord IPs" comment="Discord IPs" match-subdomain=yes name=discordapp.com type=FWD
+add address-list="Discord IPs" comment="Discord IPs" match-subdomain=yes name=discord.gg type=FWD
+add address-list="Discord IPs" comment="Discord IPs" match-subdomain=yes name=discordapp.net type=FWD
+add address-list="Discord IPs" comment="Discord IPs" match-subdomain=yes name=discord.media type=FWD
+# ===================== ZOOM =====================
+add address-list="Zoom IPs" comment="Zoom IPs" match-subdomain=yes name=zoom.us type=FWD
+add address-list="Zoom IPs" comment="Zoom IPs" match-subdomain=yes name=zoom.com type=FWD
+add address-list="Zoom IPs" comment="Zoom IPs" match-subdomain=yes name=zoomgov.com type=FWD
+# ===================== GOOGLE MEET =====================
+add address-list="Google Meet IPs" comment="Google Meet IPs" match-subdomain=yes name=meet.google.com type=FWD
+# ===================== MICROSOFT TEAMS =====================
+add address-list="Microsoft Teams IPs" comment="Microsoft Teams IPs" match-subdomain=yes name=teams.microsoft.com type=FWD
+add address-list="Microsoft Teams IPs" comment="Microsoft Teams IPs" match-subdomain=yes name=teams.live.com type=FWD
+add address-list="Microsoft Teams IPs" comment="Microsoft Teams IPs" match-subdomain=yes name=teams.cloud.microsoft type=FWD
+# ===================== TWITCH =====================
+add address-list="Twitch IPs" comment="Twitch IPs" match-subdomain=yes name=twitch.tv type=FWD
+add address-list="Twitch IPs" comment="Twitch IPs" match-subdomain=yes name=ttvnw.net type=FWD
+add address-list="Twitch IPs" comment="Twitch IPs" match-subdomain=yes name=jtvnw.net type=FWD
+add address-list="Twitch IPs" comment="Twitch IPs" match-subdomain=yes name=twitchcdn.net type=FWD
+# ===================== SPOTIFY =====================
+add address-list="Spotify IPs" comment="Spotify IPs" match-subdomain=yes name=spotify.com type=FWD
+add address-list="Spotify IPs" comment="Spotify IPs" match-subdomain=yes name=scdn.co type=FWD
+add address-list="Spotify IPs" comment="Spotify IPs" match-subdomain=yes name=spotifycdn.com type=FWD
+# ===================== SOUNDCLOUD =====================
+add address-list="SoundCloud IPs" comment="SoundCloud IPs" match-subdomain=yes name=soundcloud.com type=FWD
+add address-list="SoundCloud IPs" comment="SoundCloud IPs" match-subdomain=yes name=sndcdn.com type=FWD
+# ===================== ANGHAMI =====================
+add address-list="Anghami IPs" comment="Anghami IPs" match-subdomain=yes name=anghami.com type=FWD
+add address-list="Anghami IPs" comment="Anghami IPs" match-subdomain=yes name=anghcdn.co type=FWD
+# ===================== REDDIT =====================
+add address-list="Reddit IPs" comment="Reddit IPs" match-subdomain=yes name=reddit.com type=FWD
+add address-list="Reddit IPs" comment="Reddit IPs" match-subdomain=yes name=redd.it type=FWD
+add address-list="Reddit IPs" comment="Reddit IPs" match-subdomain=yes name=redditstatic.com type=FWD
+add address-list="Reddit IPs" comment="Reddit IPs" match-subdomain=yes name=redditmedia.com type=FWD
+# ===================== PINTEREST =====================
+add address-list="Pinterest IPs" comment="Pinterest IPs" match-subdomain=yes name=pinterest.com type=FWD
+add address-list="Pinterest IPs" comment="Pinterest IPs" match-subdomain=yes name=pinimg.com type=FWD
+# ===================== LINKEDIN =====================
+add address-list="LinkedIn IPs" comment="LinkedIn IPs" match-subdomain=yes name=linkedin.com type=FWD
+add address-list="LinkedIn IPs" comment="LinkedIn IPs" match-subdomain=yes name=licdn.com type=FWD
+add address-list="LinkedIn IPs" comment="LinkedIn IPs" match-subdomain=yes name=lnkd.in type=FWD
+# ===================== STEAM =====================
+add address-list="Steam IPs" comment="Steam IPs" match-subdomain=yes name=steampowered.com type=FWD
+add address-list="Steam IPs" comment="Steam IPs" match-subdomain=yes name=steamcommunity.com type=FWD
+add address-list="Steam IPs" comment="Steam IPs" match-subdomain=yes name=steamcontent.com type=FWD
+add address-list="Steam IPs" comment="Steam IPs" match-subdomain=yes name=steamstatic.com type=FWD
+add address-list="Steam IPs" comment="Steam IPs" match-subdomain=yes name=steamserver.net type=FWD
+# ===================== EPIC GAMES =====================
+add address-list="Epic Games IPs" comment="Epic Games IPs" match-subdomain=yes name=epicgames.com type=FWD
+add address-list="Epic Games IPs" comment="Epic Games IPs" match-subdomain=yes name=unrealengine.com type=FWD
+add address-list="Epic Games IPs" comment="Epic Games IPs" match-subdomain=yes name=fortnite.com type=FWD
+add address-list="Epic Games IPs" comment="Epic Games IPs" match-subdomain=yes name=epicgames.dev type=FWD
+# ===================== PLAYSTATION NETWORK =====================
+add address-list="PlayStation Network IPs" comment="PlayStation Network IPs" match-subdomain=yes name=playstation.com type=FWD
+add address-list="PlayStation Network IPs" comment="PlayStation Network IPs" match-subdomain=yes name=playstation.net type=FWD
+add address-list="PlayStation Network IPs" comment="PlayStation Network IPs" match-subdomain=yes name=sonyentertainmentnetwork.com type=FWD
+# ===================== XBOX LIVE =====================
+add address-list="Xbox Live IPs" comment="Xbox Live IPs" match-subdomain=yes name=xbox.com type=FWD
+add address-list="Xbox Live IPs" comment="Xbox Live IPs" match-subdomain=yes name=xboxlive.com type=FWD
+add address-list="Xbox Live IPs" comment="Xbox Live IPs" match-subdomain=yes name=xboxservices.com type=FWD
+# ===================== GOOGLE DRIVE =====================
+add address-list="Google Drive IPs" comment="Google Drive IPs" match-subdomain=yes name=drive.google.com type=FWD
+add address-list="Google Drive IPs" comment="Google Drive IPs" match-subdomain=yes name=drive.usercontent.google.com type=FWD
+# ===================== ONEDRIVE =====================
+add address-list="OneDrive IPs" comment="OneDrive IPs" match-subdomain=yes name=onedrive.com type=FWD
+add address-list="OneDrive IPs" comment="OneDrive IPs" match-subdomain=yes name=onedrive.live.com type=FWD
+add address-list="OneDrive IPs" comment="OneDrive IPs" match-subdomain=yes name=1drv.com type=FWD
+add address-list="OneDrive IPs" comment="OneDrive IPs" match-subdomain=yes name=storage.live.com type=FWD
+# ===================== ICLOUD DRIVE =====================
+add address-list="iCloud Drive IPs" comment="iCloud Drive IPs" match-subdomain=yes name=icloud-content.com type=FWD
+add address-list="iCloud Drive IPs" comment="iCloud Drive IPs" match-subdomain=yes name=icloud.com.cn type=FWD
+# ===================== DROPBOX =====================
+add address-list="Dropbox IPs" comment="Dropbox IPs" match-subdomain=yes name=dropbox.com type=FWD
+add address-list="Dropbox IPs" comment="Dropbox IPs" match-subdomain=yes name=dropboxusercontent.com type=FWD
+add address-list="Dropbox IPs" comment="Dropbox IPs" match-subdomain=yes name=dropboxstatic.com type=FWD
+add address-list="Dropbox IPs" comment="Dropbox IPs" match-subdomain=yes name=db.tt type=FWD
 
 /ip firewall address-list
 add address=91.108.56.0/22 list="Telegram IPs"
@@ -290,6 +363,91 @@ add action=passthrough chain=prerouting comment="Likee Traffic Up" dst-address-l
 # Kwai
 add action=passthrough chain=prerouting comment="Kwai Traffic Down" src-address-list="Kwai IPs"
 add action=passthrough chain=prerouting comment="Kwai Traffic Up" dst-address-list="Kwai IPs"
+# Discord
+add action=passthrough chain=prerouting comment="Discord Traffic Down" src-address-list="Discord IPs"
+add action=passthrough chain=prerouting comment="Discord Traffic Up" dst-address-list="Discord IPs"
+# Zoom
+add action=passthrough chain=prerouting comment="Zoom Traffic Down" src-address-list="Zoom IPs"
+add action=passthrough chain=prerouting comment="Zoom Traffic Up" dst-address-list="Zoom IPs"
+# Google Meet
+add action=passthrough chain=prerouting comment="Google Meet Traffic Down" src-address-list="Google Meet IPs"
+add action=passthrough chain=prerouting comment="Google Meet Traffic Up" dst-address-list="Google Meet IPs"
+# Microsoft Teams
+add action=passthrough chain=prerouting comment="Microsoft Teams Traffic Down" src-address-list="Microsoft Teams IPs"
+add action=passthrough chain=prerouting comment="Microsoft Teams Traffic Up" dst-address-list="Microsoft Teams IPs"
+# Twitch
+add action=passthrough chain=prerouting comment="Twitch Traffic Down" src-address-list="Twitch IPs"
+add action=passthrough chain=prerouting comment="Twitch Traffic Up" dst-address-list="Twitch IPs"
+# Spotify
+add action=passthrough chain=prerouting comment="Spotify Traffic Down" src-address-list="Spotify IPs"
+add action=passthrough chain=prerouting comment="Spotify Traffic Up" dst-address-list="Spotify IPs"
+# SoundCloud
+add action=passthrough chain=prerouting comment="SoundCloud Traffic Down" src-address-list="SoundCloud IPs"
+add action=passthrough chain=prerouting comment="SoundCloud Traffic Up" dst-address-list="SoundCloud IPs"
+# Anghami
+add action=passthrough chain=prerouting comment="Anghami Traffic Down" src-address-list="Anghami IPs"
+add action=passthrough chain=prerouting comment="Anghami Traffic Up" dst-address-list="Anghami IPs"
+# Reddit
+add action=passthrough chain=prerouting comment="Reddit Traffic Down" src-address-list="Reddit IPs"
+add action=passthrough chain=prerouting comment="Reddit Traffic Up" dst-address-list="Reddit IPs"
+# Pinterest
+add action=passthrough chain=prerouting comment="Pinterest Traffic Down" src-address-list="Pinterest IPs"
+add action=passthrough chain=prerouting comment="Pinterest Traffic Up" dst-address-list="Pinterest IPs"
+# LinkedIn
+add action=passthrough chain=prerouting comment="LinkedIn Traffic Down" src-address-list="LinkedIn IPs"
+add action=passthrough chain=prerouting comment="LinkedIn Traffic Up" dst-address-list="LinkedIn IPs"
+# Steam
+add action=passthrough chain=prerouting comment="Steam Traffic Down" src-address-list="Steam IPs"
+add action=passthrough chain=prerouting comment="Steam Traffic Up" dst-address-list="Steam IPs"
+# Epic Games
+add action=passthrough chain=prerouting comment="Epic Games Traffic Down" src-address-list="Epic Games IPs"
+add action=passthrough chain=prerouting comment="Epic Games Traffic Up" dst-address-list="Epic Games IPs"
+# PlayStation Network
+add action=passthrough chain=prerouting comment="PlayStation Network Traffic Down" src-address-list="PlayStation Network IPs"
+add action=passthrough chain=prerouting comment="PlayStation Network Traffic Up" dst-address-list="PlayStation Network IPs"
+# Xbox Live
+add action=passthrough chain=prerouting comment="Xbox Live Traffic Down" src-address-list="Xbox Live IPs"
+add action=passthrough chain=prerouting comment="Xbox Live Traffic Up" dst-address-list="Xbox Live IPs"
+# Google Drive
+add action=passthrough chain=prerouting comment="Google Drive Traffic Down" src-address-list="Google Drive IPs"
+add action=passthrough chain=prerouting comment="Google Drive Traffic Up" dst-address-list="Google Drive IPs"
+# OneDrive
+add action=passthrough chain=prerouting comment="OneDrive Traffic Down" src-address-list="OneDrive IPs"
+add action=passthrough chain=prerouting comment="OneDrive Traffic Up" dst-address-list="OneDrive IPs"
+# iCloud Drive
+add action=passthrough chain=prerouting comment="iCloud Drive Traffic Down" src-address-list="iCloud Drive IPs"
+add action=passthrough chain=prerouting comment="iCloud Drive Traffic Up" dst-address-list="iCloud Drive IPs"
+# Dropbox
+add action=passthrough chain=prerouting comment="Dropbox Traffic Down" src-address-list="Dropbox IPs"
+add action=passthrough chain=prerouting comment="Dropbox Traffic Up" dst-address-list="Dropbox IPs"
+# --- game traffic counters ---
+# COD Mobile
+add action=passthrough chain=prerouting comment="COD Mobile Traffic Down" src-address-list="COD Mobile IPs"
+add action=passthrough chain=prerouting comment="COD Mobile Traffic Up" dst-address-list="COD Mobile IPs"
+# Free Fire
+add action=passthrough chain=prerouting comment="Free Fire Traffic Down" src-address-list="Free Fire IPs"
+add action=passthrough chain=prerouting comment="Free Fire Traffic Up" dst-address-list="Free Fire IPs"
+# PUBG Mobile
+add action=passthrough chain=prerouting comment="PUBG Mobile Traffic Down" src-address-list="PUBG Mobile IPs"
+add action=passthrough chain=prerouting comment="PUBG Mobile Traffic Up" dst-address-list="PUBG Mobile IPs"
+# Mobile Legends
+add action=passthrough chain=prerouting comment="Mobile Legends Traffic Down" src-address-list="Mobile Legends IPs"
+add action=passthrough chain=prerouting comment="Mobile Legends Traffic Up" dst-address-list="Mobile Legends IPs"
+# Rules of Survival
+add action=passthrough chain=prerouting comment="Rules of Survival Traffic Down" src-address-list="Rules of Survival IPs"
+add action=passthrough chain=prerouting comment="Rules of Survival Traffic Up" dst-address-list="Rules of Survival IPs"
+# Clash of Clans
+add action=passthrough chain=prerouting comment="Clash of Clans Traffic Down" src-address-list="Clash of Clans IPs"
+add action=passthrough chain=prerouting comment="Clash of Clans Traffic Up" dst-address-list="Clash of Clans IPs"
+# Dragon Nest
+add action=passthrough chain=prerouting comment="Dragon Nest Traffic Down" src-address-list="Dragon Nest IPs"
+add action=passthrough chain=prerouting comment="Dragon Nest Traffic Up" dst-address-list="Dragon Nest IPs"
+# Clash Royale
+add action=passthrough chain=prerouting comment="Clash Royale Traffic Down" src-address-list="Clash Royale IPs"
+add action=passthrough chain=prerouting comment="Clash Royale Traffic Up" dst-address-list="Clash Royale IPs"
+# Arena of Valor
+add action=passthrough chain=prerouting comment="Arena of Valor Traffic Down" src-address-list="Arena of Valor IPs"
+add action=passthrough chain=prerouting comment="Arena of Valor Traffic Up" dst-address-list="Arena of Valor IPs"
 
 # ===================== GAMES =====================
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="COD Mobile IPs" address-list-timeout=1d protocol=tcp dst-port=3013,18082,65010,65050 comment="COD Mobile IPs" dst-address-type=!local
