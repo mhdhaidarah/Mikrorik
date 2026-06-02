@@ -144,6 +144,7 @@ add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes nam
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=twitter.com type=FWD
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=t.co type=FWD
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=twttr.com type=FWD
+add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=twimg.com type=FWD
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=video.twimg.com type=FWD
 add address-list="Twitter/X IPs" comment="Twitter/X IPs" match-subdomain=yes name=abs.twimg.com type=FWD
 # ===================== NETFLIX / SHAHID / DISNEY / PRIME =====================
@@ -156,16 +157,12 @@ add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdoma
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=mbc.net type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=mbcgroup.net type=FWD
 add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=shahidvodcdn.com type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=disneyplus.com type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=dssott.com type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=primevideo.com type=FWD
-add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=aiv-delivery.net type=FWD
+add address-list="Shahid/Netflix IPs" comment="Shahid/Netflix IPs" match-subdomain=yes name=nflxext.com type=FWD
 # ===================== APP STORES / UPDATES =====================
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play.google.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play.googleapis.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=play-fe.googleapis.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=android.clients.google.com type=FWD
-add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=andorid.clients.google.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=market.android.com type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=ota.googlezip.net type=FWD
 add address-list="Store IPs" comment="Store IPs" match-subdomain=yes name=apple.com type=FWD
@@ -209,7 +206,8 @@ add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=thefacebook.com type=FWD
 add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=instagram.com type=FWD
 add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=cdninstagram.com type=FWD
-add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=threads.com type=FWD
+add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=threads.net type=FWD
+add address-list="Instagram IPs" comment="Instagram IPs" match-subdomain=yes name=ig.me type=FWD
 # ===================== WHATSAPP =====================
 add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.com type=FWD
 add address-list="Whatsapp IPs" comment="Whatsapp IPs" match-subdomain=yes name=whatsapp.net type=FWD
@@ -260,11 +258,11 @@ add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=likee.
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=likeevideo.ru type=FWD
 add address-list="Likee IPs" comment="Likee IPs" match-subdomain=yes name=like-video.com type=FWD
 # ===================== Kwai =====================
-add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwai.com type=FWD
+add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwai.com type=FWD
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwcdn.com type=FWD
-add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwai-pro.com type=FWD
+add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwai-pro.com type=FWD
 add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=yximgs.com type=FWD
-add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=Kwaipros.com type=FWD
+add address-list="Kwai IPs" comment="Kwai IPs" match-subdomain=yes name=kwaipros.com type=FWD
 # ===================== DISCORD =====================
 add address-list="Discord IPs" comment="Discord IPs" match-subdomain=yes name=discord.com type=FWD
 add address-list="Discord IPs" comment="Discord IPs" match-subdomain=yes name=discordapp.com type=FWD
@@ -343,6 +341,111 @@ add address-list="Dropbox IPs" comment="Dropbox IPs" match-subdomain=yes name=dr
 add address-list="Dropbox IPs" comment="Dropbox IPs" match-subdomain=yes name=dropboxusercontent.com type=FWD
 add address-list="Dropbox IPs" comment="Dropbox IPs" match-subdomain=yes name=dropboxstatic.com type=FWD
 add address-list="Dropbox IPs" comment="Dropbox IPs" match-subdomain=yes name=db.tt type=FWD
+# ===================== SIGNAL =====================
+add address-list="Signal IPs" comment="Signal IPs" match-subdomain=yes name=signal.org type=FWD
+add address-list="Signal IPs" comment="Signal IPs" match-subdomain=yes name=signal.art type=FWD
+add address-list="Signal IPs" comment="Signal IPs" match-subdomain=yes name=whispersystems.org type=FWD
+# ===================== VIBER =====================
+add address-list="Viber IPs" comment="Viber IPs" match-subdomain=yes name=viber.com type=FWD
+add address-list="Viber IPs" comment="Viber IPs" match-subdomain=yes name=vbrpl.io type=FWD
+# ===================== WECHAT =====================
+add address-list="WeChat IPs" comment="WeChat IPs" match-subdomain=yes name=wechat.com type=FWD
+add address-list="WeChat IPs" comment="WeChat IPs" match-subdomain=yes name=weixin.qq.com type=FWD
+add address-list="WeChat IPs" comment="WeChat IPs" match-subdomain=yes name=wechatapp.com type=FWD
+add address-list="WeChat IPs" comment="WeChat IPs" match-subdomain=yes name=wx.qq.com type=FWD
+# ===================== SKYPE =====================
+add address-list="Skype IPs" comment="Skype IPs" match-subdomain=yes name=skype.com type=FWD
+add address-list="Skype IPs" comment="Skype IPs" match-subdomain=yes name=skypeassets.com type=FWD
+# ===================== GMAIL =====================
+add address-list="Gmail IPs" comment="Gmail IPs" match-subdomain=yes name=mail.google.com type=FWD
+add address-list="Gmail IPs" comment="Gmail IPs" match-subdomain=yes name=gmail.com type=FWD
+# ===================== MICROSOFT 365 / OUTLOOK =====================
+add address-list="Microsoft 365 IPs" comment="Microsoft 365 IPs" match-subdomain=yes name=outlook.com type=FWD
+add address-list="Microsoft 365 IPs" comment="Microsoft 365 IPs" match-subdomain=yes name=outlook.office.com type=FWD
+add address-list="Microsoft 365 IPs" comment="Microsoft 365 IPs" match-subdomain=yes name=outlook.office365.com type=FWD
+add address-list="Microsoft 365 IPs" comment="Microsoft 365 IPs" match-subdomain=yes name=office.com type=FWD
+add address-list="Microsoft 365 IPs" comment="Microsoft 365 IPs" match-subdomain=yes name=office365.com type=FWD
+add address-list="Microsoft 365 IPs" comment="Microsoft 365 IPs" match-subdomain=yes name=microsoftonline.com type=FWD
+# ===================== DISNEY+ =====================
+add address-list="Disney+ IPs" comment="Disney+ IPs" match-subdomain=yes name=disneyplus.com type=FWD
+add address-list="Disney+ IPs" comment="Disney+ IPs" match-subdomain=yes name=dssott.com type=FWD
+add address-list="Disney+ IPs" comment="Disney+ IPs" match-subdomain=yes name=disney-plus.net type=FWD
+add address-list="Disney+ IPs" comment="Disney+ IPs" match-subdomain=yes name=bamgrid.com type=FWD
+add address-list="Disney+ IPs" comment="Disney+ IPs" match-subdomain=yes name=disneystreaming.com type=FWD
+# ===================== PRIME VIDEO =====================
+add address-list="Prime Video IPs" comment="Prime Video IPs" match-subdomain=yes name=primevideo.com type=FWD
+add address-list="Prime Video IPs" comment="Prime Video IPs" match-subdomain=yes name=aiv-delivery.net type=FWD
+add address-list="Prime Video IPs" comment="Prime Video IPs" match-subdomain=yes name=aiv-cdn.net type=FWD
+add address-list="Prime Video IPs" comment="Prime Video IPs" match-subdomain=yes name=pv-cdn.net type=FWD
+add address-list="Prime Video IPs" comment="Prime Video IPs" match-subdomain=yes name=amazonvideo.com type=FWD
+# ===================== HBO MAX =====================
+add address-list="HBO Max IPs" comment="HBO Max IPs" match-subdomain=yes name=max.com type=FWD
+add address-list="HBO Max IPs" comment="HBO Max IPs" match-subdomain=yes name=hbomax.com type=FWD
+add address-list="HBO Max IPs" comment="HBO Max IPs" match-subdomain=yes name=hbo.com type=FWD
+add address-list="HBO Max IPs" comment="HBO Max IPs" match-subdomain=yes name=hbomaxcdn.com type=FWD
+# ===================== APPLE TV+ =====================
+add address-list="Apple TV+ IPs" comment="Apple TV+ IPs" match-subdomain=yes name=tv.apple.com type=FWD
+# ===================== DEEZER =====================
+add address-list="Deezer IPs" comment="Deezer IPs" match-subdomain=yes name=deezer.com type=FWD
+add address-list="Deezer IPs" comment="Deezer IPs" match-subdomain=yes name=dzcdn.net type=FWD
+# ===================== IMO =====================
+add address-list="IMO IPs" comment="IMO IPs" match-subdomain=yes name=imo.im type=FWD
+add address-list="IMO IPs" comment="IMO IPs" match-subdomain=yes name=imoim.app type=FWD
+add address-list="IMO IPs" comment="IMO IPs" match-subdomain=yes name=imoim.net type=FWD
+# ===================== BOTIM =====================
+add address-list="Botim IPs" comment="Botim IPs" match-subdomain=yes name=botim.me type=FWD
+add address-list="Botim IPs" comment="Botim IPs" match-subdomain=yes name=botim.com type=FWD
+# ===================== BEIN SPORTS / TOD =====================
+add address-list="beIN Sports IPs" comment="beIN Sports IPs" match-subdomain=yes name=bein.com type=FWD
+add address-list="beIN Sports IPs" comment="beIN Sports IPs" match-subdomain=yes name=beinsports.com type=FWD
+add address-list="beIN Sports IPs" comment="beIN Sports IPs" match-subdomain=yes name=beinconnect.com type=FWD
+add address-list="beIN Sports IPs" comment="beIN Sports IPs" match-subdomain=yes name=tod.tv type=FWD
+# ===================== OSN+ =====================
+add address-list="OSN+ IPs" comment="OSN+ IPs" match-subdomain=yes name=osnplus.com type=FWD
+add address-list="OSN+ IPs" comment="OSN+ IPs" match-subdomain=yes name=osn.com type=FWD
+add address-list="OSN+ IPs" comment="OSN+ IPs" match-subdomain=yes name=osnplus.net type=FWD
+# ===================== STARZPLAY =====================
+add address-list="Starzplay IPs" comment="Starzplay IPs" match-subdomain=yes name=starzplay.com type=FWD
+add address-list="Starzplay IPs" comment="Starzplay IPs" match-subdomain=yes name=starz.com type=FWD
+# ===================== ROBLOX =====================
+add address-list="Roblox IPs" comment="Roblox IPs" match-subdomain=yes name=roblox.com type=FWD
+add address-list="Roblox IPs" comment="Roblox IPs" match-subdomain=yes name=rbxcdn.com type=FWD
+add address-list="Roblox IPs" comment="Roblox IPs" match-subdomain=yes name=robloxlabs.com type=FWD
+# ===================== MINECRAFT =====================
+add address-list="Minecraft IPs" comment="Minecraft IPs" match-subdomain=yes name=minecraft.net type=FWD
+add address-list="Minecraft IPs" comment="Minecraft IPs" match-subdomain=yes name=minecraftservices.com type=FWD
+add address-list="Minecraft IPs" comment="Minecraft IPs" match-subdomain=yes name=mojang.com type=FWD
+# ===================== RIOT GAMES =====================
+add address-list="Riot Games IPs" comment="Riot Games IPs" match-subdomain=yes name=riotgames.com type=FWD
+add address-list="Riot Games IPs" comment="Riot Games IPs" match-subdomain=yes name=riotcdn.net type=FWD
+add address-list="Riot Games IPs" comment="Riot Games IPs" match-subdomain=yes name=leagueoflegends.com type=FWD
+add address-list="Riot Games IPs" comment="Riot Games IPs" match-subdomain=yes name=playvalorant.com type=FWD
+# ===================== GENSHIN / HOYOVERSE =====================
+add address-list="Genshin Impact IPs" comment="Genshin Impact IPs" match-subdomain=yes name=hoyoverse.com type=FWD
+add address-list="Genshin Impact IPs" comment="Genshin Impact IPs" match-subdomain=yes name=mihoyo.com type=FWD
+add address-list="Genshin Impact IPs" comment="Genshin Impact IPs" match-subdomain=yes name=yuanshen.com type=FWD
+# ===================== BATTLE.NET / BLIZZARD =====================
+add address-list="Battle.net IPs" comment="Battle.net IPs" match-subdomain=yes name=battle.net type=FWD
+add address-list="Battle.net IPs" comment="Battle.net IPs" match-subdomain=yes name=blizzard.com type=FWD
+add address-list="Battle.net IPs" comment="Battle.net IPs" match-subdomain=yes name=battlenet.com.cn type=FWD
+# ===================== COD WARZONE =====================
+add address-list="COD Warzone IPs" comment="COD Warzone IPs" match-subdomain=yes name=callofduty.com type=FWD
+add address-list="COD Warzone IPs" comment="COD Warzone IPs" match-subdomain=yes name=activision.com type=FWD
+# ===================== VPN — NORDVPN =====================
+add address-list="NordVPN IPs" comment="NordVPN IPs" match-subdomain=yes name=nordvpn.com type=FWD
+add address-list="NordVPN IPs" comment="NordVPN IPs" match-subdomain=yes name=nordcdn.com type=FWD
+# ===================== VPN — EXPRESSVPN =====================
+add address-list="ExpressVPN IPs" comment="ExpressVPN IPs" match-subdomain=yes name=expressvpn.com type=FWD
+add address-list="ExpressVPN IPs" comment="ExpressVPN IPs" match-subdomain=yes name=xvservice.net type=FWD
+# ===================== VPN — PROTONVPN =====================
+add address-list="ProtonVPN IPs" comment="ProtonVPN IPs" match-subdomain=yes name=protonvpn.com type=FWD
+add address-list="ProtonVPN IPs" comment="ProtonVPN IPs" match-subdomain=yes name=proton.me type=FWD
+# ===================== VPN — SURFSHARK =====================
+add address-list="Surfshark IPs" comment="Surfshark IPs" match-subdomain=yes name=surfshark.com type=FWD
+# ===================== VPN — WINDSCRIBE =====================
+add address-list="Windscribe IPs" comment="Windscribe IPs" match-subdomain=yes name=windscribe.com type=FWD
+# ===================== VPN — CLOUDFLARE WARP =====================
+add address-list="Cloudflare WARP IPs" comment="Cloudflare WARP IPs" match-subdomain=yes name=cloudflareclient.com type=FWD
 
 /ip firewall address-list
 add address=91.108.56.0/22 list="Telegram IPs"
@@ -457,6 +560,90 @@ add action=passthrough chain=prerouting comment="iCloud Drive Traffic Up" dst-ad
 # Dropbox
 add action=passthrough chain=prerouting comment="Dropbox Traffic Down" src-address-list="Dropbox IPs"
 add action=passthrough chain=prerouting comment="Dropbox Traffic Up" dst-address-list="Dropbox IPs"
+# Signal
+add action=passthrough chain=prerouting comment="Signal Traffic Down" src-address-list="Signal IPs"
+add action=passthrough chain=prerouting comment="Signal Traffic Up" dst-address-list="Signal IPs"
+# Viber
+add action=passthrough chain=prerouting comment="Viber Traffic Down" src-address-list="Viber IPs"
+add action=passthrough chain=prerouting comment="Viber Traffic Up" dst-address-list="Viber IPs"
+# WeChat
+add action=passthrough chain=prerouting comment="WeChat Traffic Down" src-address-list="WeChat IPs"
+add action=passthrough chain=prerouting comment="WeChat Traffic Up" dst-address-list="WeChat IPs"
+# Skype
+add action=passthrough chain=prerouting comment="Skype Traffic Down" src-address-list="Skype IPs"
+add action=passthrough chain=prerouting comment="Skype Traffic Up" dst-address-list="Skype IPs"
+# Gmail
+add action=passthrough chain=prerouting comment="Gmail Traffic Down" src-address-list="Gmail IPs"
+add action=passthrough chain=prerouting comment="Gmail Traffic Up" dst-address-list="Gmail IPs"
+# Microsoft 365
+add action=passthrough chain=prerouting comment="Microsoft 365 Traffic Down" src-address-list="Microsoft 365 IPs"
+add action=passthrough chain=prerouting comment="Microsoft 365 Traffic Up" dst-address-list="Microsoft 365 IPs"
+# Disney+
+add action=passthrough chain=prerouting comment="Disney+ Traffic Down" src-address-list="Disney+ IPs"
+add action=passthrough chain=prerouting comment="Disney+ Traffic Up" dst-address-list="Disney+ IPs"
+# Prime Video
+add action=passthrough chain=prerouting comment="Prime Video Traffic Down" src-address-list="Prime Video IPs"
+add action=passthrough chain=prerouting comment="Prime Video Traffic Up" dst-address-list="Prime Video IPs"
+# HBO Max
+add action=passthrough chain=prerouting comment="HBO Max Traffic Down" src-address-list="HBO Max IPs"
+add action=passthrough chain=prerouting comment="HBO Max Traffic Up" dst-address-list="HBO Max IPs"
+# Apple TV+
+add action=passthrough chain=prerouting comment="Apple TV+ Traffic Down" src-address-list="Apple TV+ IPs"
+add action=passthrough chain=prerouting comment="Apple TV+ Traffic Up" dst-address-list="Apple TV+ IPs"
+# Deezer
+add action=passthrough chain=prerouting comment="Deezer Traffic Down" src-address-list="Deezer IPs"
+add action=passthrough chain=prerouting comment="Deezer Traffic Up" dst-address-list="Deezer IPs"
+# IMO
+add action=passthrough chain=prerouting comment="IMO Traffic Down" src-address-list="IMO IPs"
+add action=passthrough chain=prerouting comment="IMO Traffic Up" dst-address-list="IMO IPs"
+# Botim
+add action=passthrough chain=prerouting comment="Botim Traffic Down" src-address-list="Botim IPs"
+add action=passthrough chain=prerouting comment="Botim Traffic Up" dst-address-list="Botim IPs"
+# beIN Sports
+add action=passthrough chain=prerouting comment="beIN Sports Traffic Down" src-address-list="beIN Sports IPs"
+add action=passthrough chain=prerouting comment="beIN Sports Traffic Up" dst-address-list="beIN Sports IPs"
+# OSN+
+add action=passthrough chain=prerouting comment="OSN+ Traffic Down" src-address-list="OSN+ IPs"
+add action=passthrough chain=prerouting comment="OSN+ Traffic Up" dst-address-list="OSN+ IPs"
+# Starzplay
+add action=passthrough chain=prerouting comment="Starzplay Traffic Down" src-address-list="Starzplay IPs"
+add action=passthrough chain=prerouting comment="Starzplay Traffic Up" dst-address-list="Starzplay IPs"
+# Roblox
+add action=passthrough chain=prerouting comment="Roblox Traffic Down" src-address-list="Roblox IPs"
+add action=passthrough chain=prerouting comment="Roblox Traffic Up" dst-address-list="Roblox IPs"
+# Minecraft
+add action=passthrough chain=prerouting comment="Minecraft Traffic Down" src-address-list="Minecraft IPs"
+add action=passthrough chain=prerouting comment="Minecraft Traffic Up" dst-address-list="Minecraft IPs"
+# Riot Games
+add action=passthrough chain=prerouting comment="Riot Games Traffic Down" src-address-list="Riot Games IPs"
+add action=passthrough chain=prerouting comment="Riot Games Traffic Up" dst-address-list="Riot Games IPs"
+# Genshin Impact
+add action=passthrough chain=prerouting comment="Genshin Impact Traffic Down" src-address-list="Genshin Impact IPs"
+add action=passthrough chain=prerouting comment="Genshin Impact Traffic Up" dst-address-list="Genshin Impact IPs"
+# Battle.net
+add action=passthrough chain=prerouting comment="Battle.net Traffic Down" src-address-list="Battle.net IPs"
+add action=passthrough chain=prerouting comment="Battle.net Traffic Up" dst-address-list="Battle.net IPs"
+# COD Warzone
+add action=passthrough chain=prerouting comment="COD Warzone Traffic Down" src-address-list="COD Warzone IPs"
+add action=passthrough chain=prerouting comment="COD Warzone Traffic Up" dst-address-list="COD Warzone IPs"
+# NordVPN
+add action=passthrough chain=prerouting comment="NordVPN Traffic Down" src-address-list="NordVPN IPs"
+add action=passthrough chain=prerouting comment="NordVPN Traffic Up" dst-address-list="NordVPN IPs"
+# ExpressVPN
+add action=passthrough chain=prerouting comment="ExpressVPN Traffic Down" src-address-list="ExpressVPN IPs"
+add action=passthrough chain=prerouting comment="ExpressVPN Traffic Up" dst-address-list="ExpressVPN IPs"
+# ProtonVPN
+add action=passthrough chain=prerouting comment="ProtonVPN Traffic Down" src-address-list="ProtonVPN IPs"
+add action=passthrough chain=prerouting comment="ProtonVPN Traffic Up" dst-address-list="ProtonVPN IPs"
+# Surfshark
+add action=passthrough chain=prerouting comment="Surfshark Traffic Down" src-address-list="Surfshark IPs"
+add action=passthrough chain=prerouting comment="Surfshark Traffic Up" dst-address-list="Surfshark IPs"
+# Windscribe
+add action=passthrough chain=prerouting comment="Windscribe Traffic Down" src-address-list="Windscribe IPs"
+add action=passthrough chain=prerouting comment="Windscribe Traffic Up" dst-address-list="Windscribe IPs"
+# Cloudflare WARP
+add action=passthrough chain=prerouting comment="Cloudflare WARP Traffic Down" src-address-list="Cloudflare WARP IPs"
+add action=passthrough chain=prerouting comment="Cloudflare WARP Traffic Up" dst-address-list="Cloudflare WARP IPs"
 # --- game traffic counters ---
 # COD Mobile
 add action=passthrough chain=prerouting comment="COD Mobile Traffic Down" src-address-list="COD Mobile IPs"
@@ -599,6 +786,90 @@ add action=passthrough chain=prerouting comment="iCloud Drive Traffic Up" dst-ad
 # Dropbox
 add action=passthrough chain=prerouting comment="Dropbox Traffic Down" src-address-list="Dropbox IPs"
 add action=passthrough chain=prerouting comment="Dropbox Traffic Up" dst-address-list="Dropbox IPs"
+# Signal
+add action=passthrough chain=prerouting comment="Signal Traffic Down" src-address-list="Signal IPs"
+add action=passthrough chain=prerouting comment="Signal Traffic Up" dst-address-list="Signal IPs"
+# Viber
+add action=passthrough chain=prerouting comment="Viber Traffic Down" src-address-list="Viber IPs"
+add action=passthrough chain=prerouting comment="Viber Traffic Up" dst-address-list="Viber IPs"
+# WeChat
+add action=passthrough chain=prerouting comment="WeChat Traffic Down" src-address-list="WeChat IPs"
+add action=passthrough chain=prerouting comment="WeChat Traffic Up" dst-address-list="WeChat IPs"
+# Skype
+add action=passthrough chain=prerouting comment="Skype Traffic Down" src-address-list="Skype IPs"
+add action=passthrough chain=prerouting comment="Skype Traffic Up" dst-address-list="Skype IPs"
+# Gmail
+add action=passthrough chain=prerouting comment="Gmail Traffic Down" src-address-list="Gmail IPs"
+add action=passthrough chain=prerouting comment="Gmail Traffic Up" dst-address-list="Gmail IPs"
+# Microsoft 365
+add action=passthrough chain=prerouting comment="Microsoft 365 Traffic Down" src-address-list="Microsoft 365 IPs"
+add action=passthrough chain=prerouting comment="Microsoft 365 Traffic Up" dst-address-list="Microsoft 365 IPs"
+# Disney+
+add action=passthrough chain=prerouting comment="Disney+ Traffic Down" src-address-list="Disney+ IPs"
+add action=passthrough chain=prerouting comment="Disney+ Traffic Up" dst-address-list="Disney+ IPs"
+# Prime Video
+add action=passthrough chain=prerouting comment="Prime Video Traffic Down" src-address-list="Prime Video IPs"
+add action=passthrough chain=prerouting comment="Prime Video Traffic Up" dst-address-list="Prime Video IPs"
+# HBO Max
+add action=passthrough chain=prerouting comment="HBO Max Traffic Down" src-address-list="HBO Max IPs"
+add action=passthrough chain=prerouting comment="HBO Max Traffic Up" dst-address-list="HBO Max IPs"
+# Apple TV+
+add action=passthrough chain=prerouting comment="Apple TV+ Traffic Down" src-address-list="Apple TV+ IPs"
+add action=passthrough chain=prerouting comment="Apple TV+ Traffic Up" dst-address-list="Apple TV+ IPs"
+# Deezer
+add action=passthrough chain=prerouting comment="Deezer Traffic Down" src-address-list="Deezer IPs"
+add action=passthrough chain=prerouting comment="Deezer Traffic Up" dst-address-list="Deezer IPs"
+# IMO
+add action=passthrough chain=prerouting comment="IMO Traffic Down" src-address-list="IMO IPs"
+add action=passthrough chain=prerouting comment="IMO Traffic Up" dst-address-list="IMO IPs"
+# Botim
+add action=passthrough chain=prerouting comment="Botim Traffic Down" src-address-list="Botim IPs"
+add action=passthrough chain=prerouting comment="Botim Traffic Up" dst-address-list="Botim IPs"
+# beIN Sports
+add action=passthrough chain=prerouting comment="beIN Sports Traffic Down" src-address-list="beIN Sports IPs"
+add action=passthrough chain=prerouting comment="beIN Sports Traffic Up" dst-address-list="beIN Sports IPs"
+# OSN+
+add action=passthrough chain=prerouting comment="OSN+ Traffic Down" src-address-list="OSN+ IPs"
+add action=passthrough chain=prerouting comment="OSN+ Traffic Up" dst-address-list="OSN+ IPs"
+# Starzplay
+add action=passthrough chain=prerouting comment="Starzplay Traffic Down" src-address-list="Starzplay IPs"
+add action=passthrough chain=prerouting comment="Starzplay Traffic Up" dst-address-list="Starzplay IPs"
+# Roblox
+add action=passthrough chain=prerouting comment="Roblox Traffic Down" src-address-list="Roblox IPs"
+add action=passthrough chain=prerouting comment="Roblox Traffic Up" dst-address-list="Roblox IPs"
+# Minecraft
+add action=passthrough chain=prerouting comment="Minecraft Traffic Down" src-address-list="Minecraft IPs"
+add action=passthrough chain=prerouting comment="Minecraft Traffic Up" dst-address-list="Minecraft IPs"
+# Riot Games
+add action=passthrough chain=prerouting comment="Riot Games Traffic Down" src-address-list="Riot Games IPs"
+add action=passthrough chain=prerouting comment="Riot Games Traffic Up" dst-address-list="Riot Games IPs"
+# Genshin Impact
+add action=passthrough chain=prerouting comment="Genshin Impact Traffic Down" src-address-list="Genshin Impact IPs"
+add action=passthrough chain=prerouting comment="Genshin Impact Traffic Up" dst-address-list="Genshin Impact IPs"
+# Battle.net
+add action=passthrough chain=prerouting comment="Battle.net Traffic Down" src-address-list="Battle.net IPs"
+add action=passthrough chain=prerouting comment="Battle.net Traffic Up" dst-address-list="Battle.net IPs"
+# COD Warzone
+add action=passthrough chain=prerouting comment="COD Warzone Traffic Down" src-address-list="COD Warzone IPs"
+add action=passthrough chain=prerouting comment="COD Warzone Traffic Up" dst-address-list="COD Warzone IPs"
+# NordVPN
+add action=passthrough chain=prerouting comment="NordVPN Traffic Down" src-address-list="NordVPN IPs"
+add action=passthrough chain=prerouting comment="NordVPN Traffic Up" dst-address-list="NordVPN IPs"
+# ExpressVPN
+add action=passthrough chain=prerouting comment="ExpressVPN Traffic Down" src-address-list="ExpressVPN IPs"
+add action=passthrough chain=prerouting comment="ExpressVPN Traffic Up" dst-address-list="ExpressVPN IPs"
+# ProtonVPN
+add action=passthrough chain=prerouting comment="ProtonVPN Traffic Down" src-address-list="ProtonVPN IPs"
+add action=passthrough chain=prerouting comment="ProtonVPN Traffic Up" dst-address-list="ProtonVPN IPs"
+# Surfshark
+add action=passthrough chain=prerouting comment="Surfshark Traffic Down" src-address-list="Surfshark IPs"
+add action=passthrough chain=prerouting comment="Surfshark Traffic Up" dst-address-list="Surfshark IPs"
+# Windscribe
+add action=passthrough chain=prerouting comment="Windscribe Traffic Down" src-address-list="Windscribe IPs"
+add action=passthrough chain=prerouting comment="Windscribe Traffic Up" dst-address-list="Windscribe IPs"
+# Cloudflare WARP
+add action=passthrough chain=prerouting comment="Cloudflare WARP Traffic Down" src-address-list="Cloudflare WARP IPs"
+add action=passthrough chain=prerouting comment="Cloudflare WARP Traffic Up" dst-address-list="Cloudflare WARP IPs"
 # COD Mobile
 add action=passthrough chain=prerouting comment="COD Mobile Traffic Down" src-address-list="COD Mobile IPs"
 add action=passthrough chain=prerouting comment="COD Mobile Traffic Up" dst-address-list="COD Mobile IPs"
