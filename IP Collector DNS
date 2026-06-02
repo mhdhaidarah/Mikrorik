@@ -9,10 +9,47 @@
 set address-list-extra-time=1d allow-remote-requests=yes cache-max-ttl=1d \
     cache-size=10000KiB max-concurrent-queries=1000 servers=\
     8.8.8.8,8.8.4.4,1.1.1.1
-/ip firewall nat
-add action=redirect chain=dstnat comment="NAT DNS to Local Router" dst-port=53 protocol=udp
-# SAMM skipped end
 
+# Force all client DNS through this router so the collectors see it
+/ip firewall nat
+add action=redirect chain=dstnat comment="NAT DNS to Local Router (UDP)" dst-port=53 protocol=udp
+add action=redirect chain=dstnat comment="NAT DNS to Local Router (TCP)" dst-port=53 protocol=tcp
+
+# Collect DNS-over-HTTPS endpoint IPs (so we can block them below)
+/ip dns static
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dns.google type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=cloudflare-dns.com type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=mozilla.cloudflare-dns.com type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=family.cloudflare-dns.com type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=security.cloudflare-dns.com type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=chrome.cloudflare-dns.com type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dns.quad9.net type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dns11.quad9.net type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dns.adguard.com type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dns-family.adguard.com type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=doh.opendns.com type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=doh.cleanbrowsing.org type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dns.nextdns.io type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=doh.dns.sb type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dns.alidns.com type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=doh.pub type=FWD
+add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dns.controld.com type=FWD
+
+# Block encrypted DNS (DoT/DoH) — REVIEW: these append to the
+# forward chain; make sure they sit ABOVE any blanket accept.
+/ip firewall filter
+add action=drop chain=forward comment="Block DoT (DNS over TLS)" protocol=tcp dst-port=853
+add action=drop chain=forward comment="Block DoT (DNS over TLS, UDP)" protocol=udp dst-port=853
+add action=drop chain=forward comment="Block DoH (DNS over HTTPS)" protocol=tcp dst-port=443 dst-address-list="DoH Servers"
+
+# >>> ACCURACY NOTE: if you run a 'fasttrack-connection' rule, established
+#     flows BYPASS these mangle counters and the SAMM QoS queue tree. To fix,
+#     add accept rules for the monitored lists ABOVE your fasttrack rule, e.g.:
+#       /ip firewall filter
+#       add chain=forward action=accept connection-state=established,related \
+#           src-address-list="Youtube IPs"   comment="no-fasttrack: monitored"
+#     (repeat per list, or maintain one combined list). Left commented on purpose.
+# SAMM skipped end
 
 /ip dns set address-list-extra-time=1d
 
@@ -459,6 +496,136 @@ add action=passthrough chain=prerouting comment="Arena of Valor Traffic Up" dst-
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Dragon Nest IPs" address-list-timeout=1d protocol=tcp dst-port=10514 comment="Dragon Nest IPs" dst-address-type=!local
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Clash Royale IPs" address-list-timeout=1d protocol=tcp dst-port=9330-9340 comment="Clash Royale IPs" dst-address-type=!local
 /ip firewall mangle add chain=prerouting action=add-dst-to-address-list address-list="Arena of Valor IPs" address-list-timeout=1d protocol=tcp dst-port=10001-10094 comment="Arena of Valor IPs" dst-address-type=!local
+
+# ===================== IPv6 COUNTERS (optional — requires IPv6 enabled) =====================
+/ipv6 firewall mangle
+remove [find where comment~"Traffic"]
+# SpeedTest
+add action=passthrough chain=prerouting comment="SpeedTest Traffic Down" src-address-list="SpeedTest IPs"
+add action=passthrough chain=prerouting comment="SpeedTest Traffic Up" dst-address-list="SpeedTest IPs"
+# Youtube
+add action=passthrough chain=prerouting comment="Youtube Traffic Down" src-address-list="Youtube IPs"
+add action=passthrough chain=prerouting comment="Youtube Traffic Up" dst-address-list="Youtube IPs"
+# Tiktok
+add action=passthrough chain=prerouting comment="Tiktok Traffic Down" src-address-list="Tiktok IPs"
+add action=passthrough chain=prerouting comment="Tiktok Traffic Up" dst-address-list="Tiktok IPs"
+# Telegram
+add action=passthrough chain=prerouting comment="Telegram Traffic Down" src-address-list="Telegram IPs"
+add action=passthrough chain=prerouting comment="Telegram Traffic Up" dst-address-list="Telegram IPs"
+# Snapchat
+add action=passthrough chain=prerouting comment="Snapchat Traffic Down" src-address-list="Snapchat IPs"
+add action=passthrough chain=prerouting comment="Snapchat Traffic Up" dst-address-list="Snapchat IPs"
+# Twitter/X
+add action=passthrough chain=prerouting comment="Twitter/X Traffic Down" src-address-list="Twitter/X IPs"
+add action=passthrough chain=prerouting comment="Twitter/X Traffic Up" dst-address-list="Twitter/X IPs"
+# Shahid/Netflix
+add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Down" src-address-list="Shahid/Netflix IPs"
+add action=passthrough chain=prerouting comment="Shahid/Netflix Traffic Up" dst-address-list="Shahid/Netflix IPs"
+# Store
+add action=passthrough chain=prerouting comment="Store Traffic Down" src-address-list="Store IPs"
+add action=passthrough chain=prerouting comment="Store Traffic Up" dst-address-list="Store IPs"
+# Facebook
+add action=passthrough chain=prerouting comment="Facebook Traffic Down" src-address-list="Facebook IPs"
+add action=passthrough chain=prerouting comment="Facebook Traffic Up" dst-address-list="Facebook IPs"
+# Instagram
+add action=passthrough chain=prerouting comment="Instagram Traffic Down" src-address-list="Instagram IPs"
+add action=passthrough chain=prerouting comment="Instagram Traffic Up" dst-address-list="Instagram IPs"
+# Whatsapp
+add action=passthrough chain=prerouting comment="Whatsapp Traffic Down" src-address-list="Whatsapp IPs"
+add action=passthrough chain=prerouting comment="Whatsapp Traffic Up" dst-address-list="Whatsapp IPs"
+# AI
+add action=passthrough chain=prerouting comment="AI Traffic Down" src-address-list="AI IPs"
+add action=passthrough chain=prerouting comment="AI Traffic Up" dst-address-list="AI IPs"
+# Likee
+add action=passthrough chain=prerouting comment="Likee Traffic Down" src-address-list="Likee IPs"
+add action=passthrough chain=prerouting comment="Likee Traffic Up" dst-address-list="Likee IPs"
+# Kwai
+add action=passthrough chain=prerouting comment="Kwai Traffic Down" src-address-list="Kwai IPs"
+add action=passthrough chain=prerouting comment="Kwai Traffic Up" dst-address-list="Kwai IPs"
+# Discord
+add action=passthrough chain=prerouting comment="Discord Traffic Down" src-address-list="Discord IPs"
+add action=passthrough chain=prerouting comment="Discord Traffic Up" dst-address-list="Discord IPs"
+# Zoom
+add action=passthrough chain=prerouting comment="Zoom Traffic Down" src-address-list="Zoom IPs"
+add action=passthrough chain=prerouting comment="Zoom Traffic Up" dst-address-list="Zoom IPs"
+# Google Meet
+add action=passthrough chain=prerouting comment="Google Meet Traffic Down" src-address-list="Google Meet IPs"
+add action=passthrough chain=prerouting comment="Google Meet Traffic Up" dst-address-list="Google Meet IPs"
+# Microsoft Teams
+add action=passthrough chain=prerouting comment="Microsoft Teams Traffic Down" src-address-list="Microsoft Teams IPs"
+add action=passthrough chain=prerouting comment="Microsoft Teams Traffic Up" dst-address-list="Microsoft Teams IPs"
+# Twitch
+add action=passthrough chain=prerouting comment="Twitch Traffic Down" src-address-list="Twitch IPs"
+add action=passthrough chain=prerouting comment="Twitch Traffic Up" dst-address-list="Twitch IPs"
+# Spotify
+add action=passthrough chain=prerouting comment="Spotify Traffic Down" src-address-list="Spotify IPs"
+add action=passthrough chain=prerouting comment="Spotify Traffic Up" dst-address-list="Spotify IPs"
+# SoundCloud
+add action=passthrough chain=prerouting comment="SoundCloud Traffic Down" src-address-list="SoundCloud IPs"
+add action=passthrough chain=prerouting comment="SoundCloud Traffic Up" dst-address-list="SoundCloud IPs"
+# Anghami
+add action=passthrough chain=prerouting comment="Anghami Traffic Down" src-address-list="Anghami IPs"
+add action=passthrough chain=prerouting comment="Anghami Traffic Up" dst-address-list="Anghami IPs"
+# Reddit
+add action=passthrough chain=prerouting comment="Reddit Traffic Down" src-address-list="Reddit IPs"
+add action=passthrough chain=prerouting comment="Reddit Traffic Up" dst-address-list="Reddit IPs"
+# Pinterest
+add action=passthrough chain=prerouting comment="Pinterest Traffic Down" src-address-list="Pinterest IPs"
+add action=passthrough chain=prerouting comment="Pinterest Traffic Up" dst-address-list="Pinterest IPs"
+# LinkedIn
+add action=passthrough chain=prerouting comment="LinkedIn Traffic Down" src-address-list="LinkedIn IPs"
+add action=passthrough chain=prerouting comment="LinkedIn Traffic Up" dst-address-list="LinkedIn IPs"
+# Steam
+add action=passthrough chain=prerouting comment="Steam Traffic Down" src-address-list="Steam IPs"
+add action=passthrough chain=prerouting comment="Steam Traffic Up" dst-address-list="Steam IPs"
+# Epic Games
+add action=passthrough chain=prerouting comment="Epic Games Traffic Down" src-address-list="Epic Games IPs"
+add action=passthrough chain=prerouting comment="Epic Games Traffic Up" dst-address-list="Epic Games IPs"
+# PlayStation Network
+add action=passthrough chain=prerouting comment="PlayStation Network Traffic Down" src-address-list="PlayStation Network IPs"
+add action=passthrough chain=prerouting comment="PlayStation Network Traffic Up" dst-address-list="PlayStation Network IPs"
+# Xbox Live
+add action=passthrough chain=prerouting comment="Xbox Live Traffic Down" src-address-list="Xbox Live IPs"
+add action=passthrough chain=prerouting comment="Xbox Live Traffic Up" dst-address-list="Xbox Live IPs"
+# Google Drive
+add action=passthrough chain=prerouting comment="Google Drive Traffic Down" src-address-list="Google Drive IPs"
+add action=passthrough chain=prerouting comment="Google Drive Traffic Up" dst-address-list="Google Drive IPs"
+# OneDrive
+add action=passthrough chain=prerouting comment="OneDrive Traffic Down" src-address-list="OneDrive IPs"
+add action=passthrough chain=prerouting comment="OneDrive Traffic Up" dst-address-list="OneDrive IPs"
+# iCloud Drive
+add action=passthrough chain=prerouting comment="iCloud Drive Traffic Down" src-address-list="iCloud Drive IPs"
+add action=passthrough chain=prerouting comment="iCloud Drive Traffic Up" dst-address-list="iCloud Drive IPs"
+# Dropbox
+add action=passthrough chain=prerouting comment="Dropbox Traffic Down" src-address-list="Dropbox IPs"
+add action=passthrough chain=prerouting comment="Dropbox Traffic Up" dst-address-list="Dropbox IPs"
+# COD Mobile
+add action=passthrough chain=prerouting comment="COD Mobile Traffic Down" src-address-list="COD Mobile IPs"
+add action=passthrough chain=prerouting comment="COD Mobile Traffic Up" dst-address-list="COD Mobile IPs"
+# Free Fire
+add action=passthrough chain=prerouting comment="Free Fire Traffic Down" src-address-list="Free Fire IPs"
+add action=passthrough chain=prerouting comment="Free Fire Traffic Up" dst-address-list="Free Fire IPs"
+# PUBG Mobile
+add action=passthrough chain=prerouting comment="PUBG Mobile Traffic Down" src-address-list="PUBG Mobile IPs"
+add action=passthrough chain=prerouting comment="PUBG Mobile Traffic Up" dst-address-list="PUBG Mobile IPs"
+# Mobile Legends
+add action=passthrough chain=prerouting comment="Mobile Legends Traffic Down" src-address-list="Mobile Legends IPs"
+add action=passthrough chain=prerouting comment="Mobile Legends Traffic Up" dst-address-list="Mobile Legends IPs"
+# Rules of Survival
+add action=passthrough chain=prerouting comment="Rules of Survival Traffic Down" src-address-list="Rules of Survival IPs"
+add action=passthrough chain=prerouting comment="Rules of Survival Traffic Up" dst-address-list="Rules of Survival IPs"
+# Clash of Clans
+add action=passthrough chain=prerouting comment="Clash of Clans Traffic Down" src-address-list="Clash of Clans IPs"
+add action=passthrough chain=prerouting comment="Clash of Clans Traffic Up" dst-address-list="Clash of Clans IPs"
+# Dragon Nest
+add action=passthrough chain=prerouting comment="Dragon Nest Traffic Down" src-address-list="Dragon Nest IPs"
+add action=passthrough chain=prerouting comment="Dragon Nest Traffic Up" dst-address-list="Dragon Nest IPs"
+# Clash Royale
+add action=passthrough chain=prerouting comment="Clash Royale Traffic Down" src-address-list="Clash Royale IPs"
+add action=passthrough chain=prerouting comment="Clash Royale Traffic Up" dst-address-list="Clash Royale IPs"
+# Arena of Valor
+add action=passthrough chain=prerouting comment="Arena of Valor Traffic Down" src-address-list="Arena of Valor IPs"
+add action=passthrough chain=prerouting comment="Arena of Valor Traffic Up" dst-address-list="Arena of Valor IPs"
 
 #by Mohammed Haidar
 #+961 81507933

@@ -5,6 +5,34 @@
     "contact": "+961 81507933",
     "location": "Beirut Lebanon"
   },
+  "settings": {
+    "ipv6_counters": true,
+    "anti_bypass": {
+      "force_dns_tcp": true,
+      "block_dot": true,
+      "block_doh": true,
+      "fasttrack_note": true,
+      "doh_servers": [
+        "dns.google",
+        "cloudflare-dns.com",
+        "mozilla.cloudflare-dns.com",
+        "family.cloudflare-dns.com",
+        "security.cloudflare-dns.com",
+        "chrome.cloudflare-dns.com",
+        "dns.quad9.net",
+        "dns11.quad9.net",
+        "dns.adguard.com",
+        "dns-family.adguard.com",
+        "doh.opendns.com",
+        "doh.cleanbrowsing.org",
+        "dns.nextdns.io",
+        "doh.dns.sb",
+        "dns.alidns.com",
+        "doh.pub",
+        "dns.controld.com"
+      ]
+    }
+  },
   "apps": [
     {
       "slug": "speedtest",
