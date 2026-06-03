@@ -52,6 +52,28 @@ def build_preamble(settings):
             o.append(f'add address-list="DoH Servers" comment="DoH Servers" '
                      f'match-subdomain=yes name={h} type=FWD')
 
+    # OS connectivity-check passthrough. Forcing client DNS through this router
+    # routes each OS's "is there internet?" probe through us; if any probe host
+    # gets collected/mangled the device shows a false "No internet access" /
+    # captive-portal popup despite working internet. Windows checks an EXACT IP
+    # (pin it via 'static'); Apple just needs to reach the real CDN (resolve via
+    # 'forward', never pin). An exact entry here also overrides any
+    # match-subdomain collector (e.g. apple.com sweeping in captive.apple.com).
+    cp = (settings or {}).get("connectivity_passthrough", {})
+    if cp.get("enabled", True):
+        statics = cp.get("static", [])
+        forwards = cp.get("forward", [])
+        if statics or forwards:
+            o += ["", "# OS connectivity probes — answer/forward cleanly so devices see 'Internet access'",
+                  "/ip dns static"]
+            for s in statics:
+                o.append(f'add name={s["host"]} address={s["ip"]} '
+                         f'comment="connectivity probe — do not collect"')
+            fwd_to = cp.get("forward_to", "8.8.8.8")
+            for f in forwards:
+                o.append(f'add name={f["host"]} type=FWD forward-to={fwd_to} '
+                         f'comment="connectivity probe — do not collect"')
+
     # Drop encrypted DNS so clients fall back to plaintext via this router.
     if ab.get("block_dot") or ab.get("block_doh"):
         o += ["", "# Block encrypted DNS (DoT/DoH) — REVIEW: these append to the",

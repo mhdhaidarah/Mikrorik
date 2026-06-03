@@ -7,6 +7,17 @@
   },
   "settings": {
     "ipv6_counters": true,
+    "connectivity_passthrough": {
+      "note": "OS connectivity-check hosts must NOT be collected/mangled, or the device shows a false 'No internet access' / captive-portal popup despite working internet. Windows checks an EXACT IP -> pin it via 'static'. Apple just needs to reach the real CDN -> resolve via 'forward', never pin. Android's check hosts (gstatic / generate_204) aren't collected, so nothing is needed there. An exact entry here also OVERRIDES any match-subdomain collector (e.g. apple.com sweeping in captive.apple.com). Do NOT add msftncsi.com / msftconnecttest.com to any app.",
+      "enabled": true,
+      "forward_to": "8.8.8.8",
+      "static": [
+        { "host": "dns.msftncsi.com", "ip": "131.107.255.255", "why": "Windows NCSI DNS probe — exact IP required" }
+      ],
+      "forward": [
+        { "host": "captive.apple.com", "why": "iOS/iPadOS/macOS captive probe; apple.com match-subdomain would otherwise collect it" }
+      ]
+    },
     "anti_bypass": {
       "force_dns_tcp": true,
       "block_dot": true,
@@ -280,9 +291,7 @@
       "domains": [
         "windowsupdate.com",
         "update.microsoft.com",
-        "download.windowsupdate.com",
-        "msftncsi.com",
-        "msftconnecttest.com"
+        "download.windowsupdate.com"
       ],
       "cidrs": []
     },

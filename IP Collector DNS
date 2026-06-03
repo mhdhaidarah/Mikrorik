@@ -35,6 +35,11 @@ add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dn
 add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=doh.pub type=FWD
 add address-list="DoH Servers" comment="DoH Servers" match-subdomain=yes name=dns.controld.com type=FWD
 
+# OS connectivity probes — answer/forward cleanly so devices see 'Internet access'
+/ip dns static
+add name=dns.msftncsi.com address=131.107.255.255 comment="connectivity probe — do not collect"
+add name=captive.apple.com type=FWD forward-to=8.8.8.8 comment="connectivity probe — do not collect"
+
 # Block encrypted DNS (DoT/DoH) — REVIEW: these append to the
 # forward chain; make sure they sit ABOVE any blanket accept.
 /ip firewall filter
@@ -186,8 +191,6 @@ add address-list="Microsoft Store IPs" comment="Microsoft Store IPs" match-subdo
 add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=windowsupdate.com type=FWD
 add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=update.microsoft.com type=FWD
 add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=download.windowsupdate.com type=FWD
-add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=msftncsi.com type=FWD
-add address-list="Windows Update IPs" comment="Windows Update IPs" match-subdomain=yes name=msftconnecttest.com type=FWD
 # ===================== META / FACEBOOK / INSTAGRAM =====================
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebook.com type=FWD
 add address-list="Facebook IPs" comment="Facebook IPs" match-subdomain=yes name=facebook.net type=FWD
