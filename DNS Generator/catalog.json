@@ -627,6 +627,17 @@
       "cidrs": []
     },
     {
+      "slug": "jawaker",
+      "label": "Jawaker",
+      "section": "JAWAKER",
+      "category": "gaming",
+      "priority": 4,
+      "domains": [
+        "jawaker.com"
+      ],
+      "cidrs": []
+    },
+    {
       "slug": "google-drive",
       "label": "Google Drive",
       "section": "GOOGLE DRIVE",

@@ -332,6 +332,8 @@ add address-list="PlayStation Network IPs" comment="PlayStation Network IPs" mat
 add address-list="Xbox Live IPs" comment="Xbox Live IPs" match-subdomain=yes name=xbox.com type=FWD
 add address-list="Xbox Live IPs" comment="Xbox Live IPs" match-subdomain=yes name=xboxlive.com type=FWD
 add address-list="Xbox Live IPs" comment="Xbox Live IPs" match-subdomain=yes name=xboxservices.com type=FWD
+# ===================== JAWAKER =====================
+add address-list="Jawaker IPs" comment="Jawaker IPs" match-subdomain=yes name=jawaker.com type=FWD
 # ===================== GOOGLE DRIVE =====================
 add address-list="Google Drive IPs" comment="Google Drive IPs" match-subdomain=yes name=drive.google.com type=FWD
 add address-list="Google Drive IPs" comment="Google Drive IPs" match-subdomain=yes name=drive.usercontent.google.com type=FWD
@@ -567,6 +569,9 @@ add action=passthrough chain=prerouting comment="PlayStation Network Traffic Up"
 # Xbox Live
 add action=passthrough chain=prerouting comment="Xbox Live Traffic Down" src-address-list="Xbox Live IPs"
 add action=passthrough chain=prerouting comment="Xbox Live Traffic Up" dst-address-list="Xbox Live IPs"
+# Jawaker
+add action=passthrough chain=prerouting comment="Jawaker Traffic Down" src-address-list="Jawaker IPs"
+add action=passthrough chain=prerouting comment="Jawaker Traffic Up" dst-address-list="Jawaker IPs"
 # Google Drive
 add action=passthrough chain=prerouting comment="Google Drive Traffic Down" src-address-list="Google Drive IPs"
 add action=passthrough chain=prerouting comment="Google Drive Traffic Up" dst-address-list="Google Drive IPs"
@@ -805,6 +810,9 @@ add action=passthrough chain=prerouting comment="PlayStation Network Traffic Up"
 # Xbox Live
 add action=passthrough chain=prerouting comment="Xbox Live Traffic Down" src-address-list="Xbox Live IPs"
 add action=passthrough chain=prerouting comment="Xbox Live Traffic Up" dst-address-list="Xbox Live IPs"
+# Jawaker
+add action=passthrough chain=prerouting comment="Jawaker Traffic Down" src-address-list="Jawaker IPs"
+add action=passthrough chain=prerouting comment="Jawaker Traffic Up" dst-address-list="Jawaker IPs"
 # Google Drive
 add action=passthrough chain=prerouting comment="Google Drive Traffic Down" src-address-list="Google Drive IPs"
 add action=passthrough chain=prerouting comment="Google Drive Traffic Up" dst-address-list="Google Drive IPs"
