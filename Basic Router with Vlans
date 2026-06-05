@@ -1,0 +1,119 @@
+```rsc
+# ============================================================
+# MikroTik Full Network Bootstrap Script
+# Single Bridge: LAN | Tagged VLANs per zone
+# Author: Securytik Config Generator
+# ============================================================
+
+# ------------------------------------------------------------
+# INTERFACE LISTS
+# ------------------------------------------------------------
+/interface list
+add name=WAN_List comment="WAN uplink interfaces"
+add name=LAN_List comment="All LAN VLAN interfaces"
+
+# ------------------------------------------------------------
+# SINGLE BRIDGE
+# ------------------------------------------------------------
+/interface bridge
+add name=LAN comment="Main LAN bridge - all VLANs" vlan-filtering=yes
+
+# ------------------------------------------------------------
+# VLAN INTERFACES (on bridge LAN)
+# ------------------------------------------------------------
+/interface vlan
+add name=LAN_Mgmt   interface=LAN vlan-id=1   comment="Management - VLAN1   - 192.168.100.0/24"
+add name=LAN_Server interface=LAN vlan-id=99  comment="Server     - VLAN99  - 192.168.99.0/24"
+add name=LAN_Office interface=LAN vlan-id=110 comment="Office     - VLAN110 - 192.168.110.0/24"
+add name=LAN_Staff  interface=LAN vlan-id=120 comment="Staff      - VLAN120 - 192.168.120.0/24"
+add name=LAN_Guest  interface=LAN vlan-id=130 comment="Guest      - VLAN130 - 192.168.130.0/24"
+
+# ------------------------------------------------------------
+# IP ADDRESSES (gateway on each VLAN interface)
+# ------------------------------------------------------------
+/ip address
+add address=192.168.100.1/24 interface=LAN_Mgmt   comment="GW - Management"
+add address=192.168.99.1/24  interface=LAN_Server  comment="GW - Server"
+add address=192.168.110.1/24 interface=LAN_Office  comment="GW - Office"
+add address=192.168.120.1/24 interface=LAN_Staff   comment="GW - Staff"
+add address=192.168.130.1/24 interface=LAN_Guest   comment="GW - Guest"
+
+# ------------------------------------------------------------
+# ADD VLAN INTERFACES TO LAN_List
+# ------------------------------------------------------------
+/interface list member
+add interface=LAN_Mgmt   list=LAN_List comment="LAN - Management"
+add interface=LAN_Server list=LAN_List comment="LAN - Server"
+add interface=LAN_Office list=LAN_List comment="LAN - Office"
+add interface=LAN_Staff  list=LAN_List comment="LAN - Staff"
+add interface=LAN_Guest  list=LAN_List comment="LAN - Guest"
+
+# ------------------------------------------------------------
+# DHCP POOLS
+# ------------------------------------------------------------
+/ip pool
+add name=Pool_Mgmt   ranges=192.168.100.10-192.168.100.254 comment="Pool - Management"
+add name=Pool_Server ranges=192.168.99.10-192.168.99.254   comment="Pool - Server"
+add name=Pool_Office ranges=192.168.110.10-192.168.110.254 comment="Pool - Office"
+add name=Pool_Staff  ranges=192.168.120.10-192.168.120.254 comment="Pool - Staff"
+add name=Pool_Guest  ranges=192.168.130.10-192.168.130.254 comment="Pool - Guest"
+
+# ------------------------------------------------------------
+# DHCP SERVERS (named same as subnet/VLAN interface)
+# ------------------------------------------------------------
+/ip dhcp-server
+add name=LAN_Mgmt   interface=LAN_Mgmt   address-pool=Pool_Mgmt   lease-time=1d disabled=no comment="DHCP - Management"
+add name=LAN_Server interface=LAN_Server  address-pool=Pool_Server  lease-time=1d disabled=no comment="DHCP - Server"
+add name=LAN_Office interface=LAN_Office  address-pool=Pool_Office  lease-time=8h disabled=no comment="DHCP - Office"
+add name=LAN_Staff  interface=LAN_Staff   address-pool=Pool_Staff   lease-time=8h disabled=no comment="DHCP - Staff"
+add name=LAN_Guest  interface=LAN_Guest   address-pool=Pool_Guest   lease-time=2h disabled=no comment="DHCP - Guest"
+
+# ------------------------------------------------------------
+# DHCP NETWORK (gateway + DNS per subnet)
+# ------------------------------------------------------------
+/ip dhcp-server network
+add address=192.168.100.0/24 gateway=192.168.100.1 dns-server=192.168.100.1 comment="Network - Management"
+add address=192.168.99.0/24  gateway=192.168.99.1  dns-server=192.168.99.1  comment="Network - Server"
+add address=192.168.110.0/24 gateway=192.168.110.1 dns-server=192.168.110.1 comment="Network - Office"
+add address=192.168.120.0/24 gateway=192.168.120.1 dns-server=192.168.120.1 comment="Network - Staff"
+add address=192.168.130.0/24 gateway=192.168.130.1 dns-server=192.168.130.1 comment="Network - Guest"
+
+# ------------------------------------------------------------
+# DNS (RouterOS as resolver + upstream forwarders)
+# ------------------------------------------------------------
+/ip dns
+set allow-remote-requests=yes servers=8.8.8.8,8.8.4.4,1.1.1.1 comment="DNS - Google + Cloudflare upstream"
+/ip dns set allow-remote-requests=yes
+
+# ------------------------------------------------------------
+# NAT MASQUERADE (out WAN_List)
+# ------------------------------------------------------------
+/ip firewall nat
+add chain=srcnat out-interface-list=WAN_List action=masquerade comment="NAT - Masquerade all LAN out WAN"
+
+# ------------------------------------------------------------
+# NTP CLIENT (Beirut timezone)
+# ------------------------------------------------------------
+/system clock
+set time-zone-name=Asia/Beirut
+
+/ip ntp client
+set enabled=yes servers=time.google.com comment="NTP - Google time server"
+
+/ip ntp server
+set enabled=yes broadcast=no manycast=no comment="NTP - Serve time to LAN clients"
+
+# ------------------------------------------------------------
+# SIMPLE QUEUES (unlimited, one per subnet)
+# ------------------------------------------------------------
+/queue simple
+add name=SQ_Mgmt   target=192.168.100.0/24 max-limit=0/0 comment="Queue - Management"
+add name=SQ_Server target=192.168.99.0/24  max-limit=0/0 comment="Queue - Server"
+add name=SQ_Office target=192.168.110.0/24 max-limit=0/0 comment="Queue - Office"
+add name=SQ_Staff  target=192.168.120.0/24 max-limit=0/0 comment="Queue - Staff"
+add name=SQ_Guest  target=192.168.130.0/24 max-limit=0/0 comment="Queue - Guest"
+
+# ============================================================
+# END OF SCRIPT
+# ============================================================
+```
