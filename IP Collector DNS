@@ -8,9 +8,7 @@
 /ip dns
 set address-list-extra-time=1d allow-remote-requests=yes cache-max-ttl=1d \
     cache-size=10000KiB max-concurrent-queries=1000 servers=\
-    8.8.8.8,8.8.4.4,1.1.1.1,\
-    2001:4860:4860::8888,2001:4860:4860::8844,\
-    2606:4700:4700::1111,2606:4700:4700::1001
+    8.8.8.8,8.8.4.4,1.1.1.1,2001:4860:4860::8888,2001:4860:4860::8844,2606:4700:4700::1111,2606:4700:4700::1001
 
 # Force all client DNS through this router so the collectors see it
 /ip firewall nat
