@@ -1,4 +1,3 @@
-```rsc
 # ============================================================
 # MikroTik Full Network Bootstrap Script
 # Single Bridge: LAN | Tagged VLANs per zone
@@ -116,4 +115,3 @@ add name=SQ_Guest  target=192.168.130.0/24 max-limit=0/0 comment="Queue - Guest"
 # ============================================================
 # END OF SCRIPT
 # ============================================================
-```
