@@ -8,73 +8,95 @@
 # INTERFACE LISTS
 # ------------------------------------------------------------
 /interface list
-add name=WAN_List comment="WAN uplink interfaces"
-add name=LAN_List comment="All LAN VLAN interfaces"
+add name=WAN-List comment="WAN uplink interfaces"
+add name=LAN-List comment="All LAN VLAN interfaces"
+
+# ------------------------------------------------------------
+# WAN (ether1) - member + DHCP client
+# Removes any existing client on ether1 first to avoid duplicates
+# ------------------------------------------------------------
+/interface list member
+add interface=ether1 list=WAN-List comment="WAN-Uplink"
+
+/ip dhcp-client
+remove [find interface=ether1]
+add interface=ether1 disabled=no use-peer-dns=no add-default-route=yes comment="WAN-DHCP"
 
 # ------------------------------------------------------------
 # SINGLE BRIDGE
 # ------------------------------------------------------------
 /interface bridge
-add name=LAN comment="Main LAN bridge - all VLANs" vlan-filtering=yes
+add name=LAN comment="Main LAN bridge-all VLANs" vlan-filtering=yes
 
 # ------------------------------------------------------------
 # VLAN INTERFACES (on bridge LAN)
 # ------------------------------------------------------------
 /interface vlan
-add name=LAN_Server interface=LAN vlan-id=99  comment="Server     - VLAN99  - 192.168.99.0/24"
-add name=LAN_Office interface=LAN vlan-id=110 comment="Office     - VLAN110 - 192.168.110.0/24"
-add name=LAN_Staff  interface=LAN vlan-id=120 comment="Staff      - VLAN120 - 192.168.120.0/24"
-add name=LAN_Guest  interface=LAN vlan-id=130 comment="Guest      - VLAN130 - 192.168.130.0/24"
+add name=LAN-Server interface=LAN vlan-id=99  comment="Server-VLAN99-192.168.99.0/24"
+add name=LAN-Office interface=LAN vlan-id=110 comment="Office-VLAN110-192.168.110.0/24"
+add name=LAN-Staff  interface=LAN vlan-id=120 comment="Staff-VLAN120-192.168.120.0/24"
+add name=LAN-Guest  interface=LAN vlan-id=130 comment="Guest-VLAN130-192.168.130.0/24"
+
+# ------------------------------------------------------------
+# BRIDGE VLAN TABLE (tag VLANs on bridge-add ports here later)
+# tagged=LAN keeps VLANs on the bridge itself (router-on-a-stick).
+# Add access/trunk ports per VLAN as needed (tagged= / untagged=).
+# ------------------------------------------------------------
+/interface bridge vlan
+add bridge=LAN vlan-ids=99  tagged=LAN comment="VLAN-Server"
+add bridge=LAN vlan-ids=110 tagged=LAN comment="VLAN-Office"
+add bridge=LAN vlan-ids=120 tagged=LAN comment="VLAN-Staff"
+add bridge=LAN vlan-ids=130 tagged=LAN comment="VLAN-Guest"
 
 # ------------------------------------------------------------
 # IP ADDRESSES (gateway on each VLAN interface)
 # ------------------------------------------------------------
 /ip address
-add address=192.168.100.1/24 interface=LAN   comment="GW - Management"
-add address=192.168.99.1/24  interface=LAN_Server  comment="GW - Server"
-add address=192.168.110.1/24 interface=LAN_Office  comment="GW - Office"
-add address=192.168.120.1/24 interface=LAN_Staff   comment="GW - Staff"
-add address=192.168.130.1/24 interface=LAN_Guest   comment="GW - Guest"
+add address=192.168.100.1/24 interface=LAN   comment="GW-Management"
+add address=192.168.99.1/24  interface=LAN-Server  comment="GW-Server"
+add address=192.168.110.1/24 interface=LAN-Office  comment="GW-Office"
+add address=192.168.120.1/24 interface=LAN-Staff   comment="GW-Staff"
+add address=192.168.130.1/24 interface=LAN-Guest   comment="GW-Guest"
 
 # ------------------------------------------------------------
-# ADD VLAN INTERFACES TO LAN_List
+# ADD VLAN INTERFACES TO LAN-List
 # ------------------------------------------------------------
 /interface list member
-add interface=LAN   list=LAN_List comment="LAN - Management"
-add interface=LAN_Server list=LAN_List comment="LAN - Server"
-add interface=LAN_Office list=LAN_List comment="LAN - Office"
-add interface=LAN_Staff  list=LAN_List comment="LAN - Staff"
-add interface=LAN_Guest  list=LAN_List comment="LAN - Guest"
+add interface=LAN   list=LAN-List comment="LAN-Management"
+add interface=LAN-Server list=LAN-List comment="LAN-Server"
+add interface=LAN-Office list=LAN-List comment="LAN-Office"
+add interface=LAN-Staff  list=LAN-List comment="LAN-Staff"
+add interface=LAN-Guest  list=LAN-List comment="LAN-Guest"
 
 # ------------------------------------------------------------
 # DHCP POOLS
 # ------------------------------------------------------------
 /ip pool
-add name=Pool_Mgmt   ranges=192.168.100.10-192.168.100.254 comment="Pool - Management"
-add name=Pool_Server ranges=192.168.99.10-192.168.99.254   comment="Pool - Server"
-add name=Pool_Office ranges=192.168.110.10-192.168.110.254 comment="Pool - Office"
-add name=Pool_Staff  ranges=192.168.120.10-192.168.120.254 comment="Pool - Staff"
-add name=Pool_Guest  ranges=192.168.130.10-192.168.130.254 comment="Pool - Guest"
+add name=Pool-Mgmt   ranges=192.168.100.10-192.168.100.254 comment="Pool-Management"
+add name=Pool-Server ranges=192.168.99.10-192.168.99.254   comment="Pool-Server"
+add name=Pool-Office ranges=192.168.110.10-192.168.110.254 comment="Pool-Office"
+add name=Pool-Staff  ranges=192.168.120.10-192.168.120.254 comment="Pool-Staff"
+add name=Pool-Guest  ranges=192.168.130.10-192.168.130.254 comment="Pool-Guest"
 
 # ------------------------------------------------------------
 # DHCP SERVERS (named same as subnet/VLAN interface)
 # ------------------------------------------------------------
 /ip dhcp-server
-add name=LAN_Mgmt   interface=LAN   address-pool=Pool_Mgmt   lease-time=1d disabled=no comment="DHCP - Management"
-add name=LAN_Server interface=LAN_Server  address-pool=Pool_Server  lease-time=1d disabled=no comment="DHCP - Server"
-add name=LAN_Office interface=LAN_Office  address-pool=Pool_Office  lease-time=8h disabled=no comment="DHCP - Office"
-add name=LAN_Staff  interface=LAN_Staff   address-pool=Pool_Staff   lease-time=8h disabled=no comment="DHCP - Staff"
-add name=LAN_Guest  interface=LAN_Guest   address-pool=Pool_Guest   lease-time=2h disabled=no comment="DHCP - Guest"
+add name=LAN-Mgmt   interface=LAN   address-pool=Pool-Mgmt   lease-time=1d disabled=no comment="DHCP-Management"
+add name=LAN-Server interface=LAN-Server  address-pool=Pool-Server  lease-time=1d disabled=no comment="DHCP-Server"
+add name=LAN-Office interface=LAN-Office  address-pool=Pool-Office  lease-time=8h disabled=no comment="DHCP-Office"
+add name=LAN-Staff  interface=LAN-Staff   address-pool=Pool-Staff   lease-time=8h disabled=no comment="DHCP-Staff"
+add name=LAN-Guest  interface=LAN-Guest   address-pool=Pool-Guest   lease-time=2h disabled=no comment="DHCP-Guest"
 
 # ------------------------------------------------------------
 # DHCP NETWORK (gateway + DNS per subnet)
 # ------------------------------------------------------------
 /ip dhcp-server network
-add address=192.168.100.0/24 gateway=192.168.100.1 dns-server=192.168.100.1 comment="Network - Management"
-add address=192.168.99.0/24  gateway=192.168.99.1  dns-server=192.168.99.1  comment="Network - Server"
-add address=192.168.110.0/24 gateway=192.168.110.1 dns-server=192.168.110.1 comment="Network - Office"
-add address=192.168.120.0/24 gateway=192.168.120.1 dns-server=192.168.120.1 comment="Network - Staff"
-add address=192.168.130.0/24 gateway=192.168.130.1 dns-server=192.168.130.1 comment="Network - Guest"
+add address=192.168.100.0/24 gateway=192.168.100.1 dns-server=192.168.100.1 comment="Network-Management"
+add address=192.168.99.0/24  gateway=192.168.99.1  dns-server=192.168.99.1  comment="Network-Server"
+add address=192.168.110.0/24 gateway=192.168.110.1 dns-server=192.168.110.1 comment="Network-Office"
+add address=192.168.120.0/24 gateway=192.168.120.1 dns-server=192.168.120.1 comment="Network-Staff"
+add address=192.168.130.0/24 gateway=192.168.130.1 dns-server=192.168.130.1 comment="Network-Guest"
 
 # ------------------------------------------------------------
 # DNS (RouterOS as resolver + upstream forwarders)
@@ -83,10 +105,81 @@ add address=192.168.130.0/24 gateway=192.168.130.1 dns-server=192.168.130.1 comm
 set allow-remote-requests=yes servers=8.8.8.8,8.8.4.4,1.1.1.1
 
 # ------------------------------------------------------------
-# NAT MASQUERADE (out WAN_List)
+# NAT MASQUERADE (out WAN-List)
 # ------------------------------------------------------------
 /ip firewall nat
-add chain=srcnat out-interface-list=WAN_List action=masquerade comment="NAT - Masquerade all LAN out WAN"
+add chain=srcnat out-interface-list=WAN-List action=masquerade comment="NAT-Masquerade all LAN out WAN"
+
+# ------------------------------------------------------------
+# ADDRESS LISTS
+# ------------------------------------------------------------
+/ip firewall address-list
+add list=MGMT address=192.168.100.0/24 comment="Trusted mgmt subnet"
+
+# ------------------------------------------------------------
+# FIREWALL FILTER-INPUT (router protection)
+# ------------------------------------------------------------
+/ip firewall filter
+add chain=input action=accept connection-state=established,related comment="IN-est/rel"
+add chain=input action=drop  connection-state=invalid comment="IN-drop invalid"
+add chain=input action=accept protocol=icmp comment="IN-ICMP"
+add chain=input action=accept dst-port=53 protocol=udp in-interface-list=LAN-List comment="IN-DNS udp (LAN)"
+add chain=input action=accept dst-port=53 protocol=tcp in-interface-list=LAN-List comment="IN-DNS tcp (LAN)"
+add chain=input action=accept dst-port=67-68 protocol=udp in-interface-list=LAN-List comment="IN-DHCP (LAN)"
+add chain=input action=accept dst-port=22 protocol=tcp src-address-list=MGMT comment="IN-SSH (MGMT)"
+add chain=input action=accept dst-port=8291 protocol=tcp src-address-list=MGMT comment="IN-Winbox (MGMT)"
+add chain=input action=accept dst-port=5678 protocol=udp src-address-list=MGMT comment="IN-MNDP/discovery (MGMT)"
+add chain=input action=drop  in-interface-list=WAN-List comment="IN-drop all from WAN"
+add chain=input action=drop  comment="IN-drop everything else"
+
+# ------------------------------------------------------------
+# FIREWALL FILTER-FORWARD (inter-VLAN + internet)
+# Guest isolated; LAN zones reach internet; tighten per policy later.
+# ------------------------------------------------------------
+add chain=forward action=accept connection-state=established,related comment="FWD-est/rel"
+add chain=forward action=drop  connection-state=invalid comment="FWD-drop invalid"
+add chain=forward action=accept connection-state=new in-interface-list=LAN-List out-interface-list=WAN-List comment="FWD-LAN to WAN"
+add chain=forward action=accept in-interface=LAN-Server out-interface-list=LAN-List comment="FWD-Server to LAN (adjust later)"
+add chain=forward action=drop  in-interface=LAN-Guest out-interface-list=LAN-List comment="FWD-Guest isolated from LAN"
+add chain=forward action=drop  out-interface=LAN-Guest in-interface-list=LAN-List comment="FWD-block LAN to Guest"
+add chain=forward action=drop  comment="FWD-drop everything else"
+
+# ------------------------------------------------------------
+# IP SERVICES (disable telnet/ftp/api/www; SSH+Winbox LAN-only)
+# ------------------------------------------------------------
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set api disabled=yes
+set api-ssl disabled=yes
+set ssh   disabled=no  address=192.168.100.0/24 port=22
+set winbox disabled=no  address=192.168.100.0/24 port=8291
+set www-ssl disabled=yes
+
+# ------------------------------------------------------------
+# MAC SERVER / DISCOVERY (LAN only)
+# ------------------------------------------------------------
+/tool mac-server
+set allowed-interface-list=LAN-List
+/tool mac-server mac-winbox
+set allowed-interface-list=LAN-List
+/tool mac-server ping
+set enabled=yes
+/ip neighbor discovery-settings
+set discover-interface-list=LAN-List
+
+# ------------------------------------------------------------
+# BANDWIDTH TEST / ROMON / PROXY OFF
+# ------------------------------------------------------------
+/tool bandwidth-server
+set enabled=no
+/ip proxy
+set enabled=no
+/ip socks
+set enabled=no
+/ip upnp
+set enabled=no
 
 # ------------------------------------------------------------
 # NTP CLIENT (Beirut timezone)
@@ -104,11 +197,11 @@ set enabled=yes broadcast=no manycast=no
 # SIMPLE QUEUES (unlimited, one per subnet)
 # ------------------------------------------------------------
 /queue simple
-add name=SQ_Mgmt   target=192.168.100.0/24 max-limit=0/0 comment="Queue - Management"
-add name=SQ_Server target=192.168.99.0/24  max-limit=0/0 comment="Queue - Server"
-add name=SQ_Office target=192.168.110.0/24 max-limit=0/0 comment="Queue - Office"
-add name=SQ_Staff  target=192.168.120.0/24 max-limit=0/0 comment="Queue - Staff"
-add name=SQ_Guest  target=192.168.130.0/24 max-limit=0/0 comment="Queue - Guest"
+add name=SQ-Mgmt   target=192.168.100.0/24 max-limit=0/0 comment="Queue-Management"
+add name=SQ-Server target=192.168.99.0/24  max-limit=0/0 comment="Queue-Server"
+add name=SQ-Office target=192.168.110.0/24 max-limit=0/0 comment="Queue-Office"
+add name=SQ-Staff  target=192.168.120.0/24 max-limit=0/0 comment="Queue-Staff"
+add name=SQ-Guest  target=192.168.130.0/24 max-limit=0/0 comment="Queue-Guest"
 
 # ============================================================
 # END OF SCRIPT
