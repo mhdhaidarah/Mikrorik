@@ -30,11 +30,15 @@ def build_preamble(settings):
     via the wizard); it's for manual full-file users who want clients forced
     through this router so the collectors actually see the lookups."""
     ab = (settings or {}).get("anti_bypass", {})
+    # Resolvers: Google + Cloudflare, IPv4 then IPv6. RouterOS uses the IPv6
+    # entries only when the router actually has IPv6 upstream; harmless otherwise.
     o = ["# SAMM skipped start",
          "/ip dns",
          "set address-list-extra-time=1d allow-remote-requests=yes cache-max-ttl=1d \\",
          "    cache-size=10000KiB max-concurrent-queries=1000 servers=\\",
-         "    8.8.8.8,8.8.4.4,1.1.1.1"]
+         "    8.8.8.8,8.8.4.4,1.1.1.1,\\",
+         "    2001:4860:4860::8888,2001:4860:4860::8844,\\",
+         "    2606:4700:4700::1111,2606:4700:4700::1001"]
 
     # Force DNS through the router (UDP always; TCP closes a common bypass).
     o += ["", "# Force all client DNS through this router so the collectors see it",
