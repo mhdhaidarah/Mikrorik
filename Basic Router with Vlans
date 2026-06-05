@@ -80,8 +80,7 @@ add address=192.168.130.0/24 gateway=192.168.130.1 dns-server=192.168.130.1 comm
 # DNS (RouterOS as resolver + upstream forwarders)
 # ------------------------------------------------------------
 /ip dns
-set allow-remote-requests=yes servers=8.8.8.8,8.8.4.4,1.1.1.1 comment="DNS - Google + Cloudflare upstream"
-/ip dns set allow-remote-requests=yes
+set allow-remote-requests=yes servers=8.8.8.8,8.8.4.4,1.1.1.1
 
 # ------------------------------------------------------------
 # NAT MASQUERADE (out WAN_List)
@@ -95,11 +94,11 @@ add chain=srcnat out-interface-list=WAN_List action=masquerade comment="NAT - Ma
 /system clock
 set time-zone-name=Asia/Beirut
 
-/ip ntp client
-set enabled=yes servers=time.google.com comment="NTP - Google time server"
+/system ntp client
+set enabled=yes servers=time.google.com
 
-/ip ntp server
-set enabled=yes broadcast=no manycast=no comment="NTP - Serve time to LAN clients"
+/system ntp server
+set enabled=yes broadcast=no manycast=no
 
 # ------------------------------------------------------------
 # SIMPLE QUEUES (unlimited, one per subnet)
