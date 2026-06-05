@@ -177,6 +177,34 @@ def build(catalog):
                 f'dst-port={g["ports"]} comment="{lst}" dst-address-type=!local')
         out.append("")
 
+    # ---- Download packet marks (disabled — manual QoS starting point) ----
+    # One mark-packet rule per app/website on the DOWNLOAD (to-client)
+    # direction, mirroring the Up/Down counter set (all apps + measured games).
+    # Wrapped in a '# SAMM skipped' block on purpose: SAMM's parser drops
+    # everything between the markers, so it never pushes, wipes, or counts
+    # these — they exist purely for manual full-file users who paste the .rsc
+    # straight onto RouterOS and want a QoS queue-tree seed. Created DISABLED
+    # so nothing changes until the operator enables a rule and attaches a queue.
+    if settings.get("download_packet_marks", True):
+        out.append("# SAMM skipped start")
+        out.append(banner("DOWNLOAD PACKET MARKS (disabled — manual QoS only)"))
+        out.append("/ip firewall mangle")
+
+        def dmark(label):
+            lst = f'{label} IPs'
+            out.append(
+                f'add action=mark-packet chain=prerouting '
+                f'comment="{label} Download Mark" disabled=yes '
+                f'new-packet-mark="{label} download" passthrough=yes '
+                f'src-address-list="{lst}"')
+
+        for a in apps:
+            dmark(a["label"])
+        for g in game_counters:
+            dmark(g["label"])
+        out.append("# SAMM skipped end")
+        out.append("")
+
     # ---- IPv6 counters (optional) ----
     # Mirror of the v4 counters on the IPv6 firewall. SAMM ignores all /ipv6
     # lines today, so this is additive; it benefits manual users now and sets

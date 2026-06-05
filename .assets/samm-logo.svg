@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SAMM">
+  <defs>
+    <linearGradient id="samm-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0b1220"/>
+    </linearGradient>
+    <radialGradient id="samm-glow" cx="0.5" cy="0.5" r="0.55">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.32"/>
+      <stop offset="70%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="samm-s" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#samm-bg)"/>
+  <rect width="64" height="64" rx="14" fill="url(#samm-glow)"/>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.25"
+        fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1"/>
+  <path fill="none" stroke="url(#samm-s)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"
+        d="M44 21 C44 16.5 39 14 32 14 C25 14 20 17 20 24 C20 32 44 32 44 40 C44 47.5 39 50 32 50 C25 50 20 47.5 20 43"/>
+</svg>
