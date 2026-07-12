@@ -1,6 +1,7 @@
 /user-manager limitation
 add name=1M rate-limit-rx=1000000B rate-limit-tx=1000000B
 add name=2M rate-limit-rx=2000000B rate-limit-tx=2000000B
+add name=3M rate-limit-rx=3000000B rate-limit-tx=3000000B
 add name=4M rate-limit-rx=4000000B rate-limit-tx=4000000B
 add name=6M rate-limit-rx=6000000B rate-limit-tx=6000000B
 add name=10M rate-limit-rx=10000000B rate-limit-tx=10000000B
