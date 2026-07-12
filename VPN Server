@@ -1,0 +1,204 @@
+# ============================================================================
+#  VPN Server  —  dual-stack WireGuard + L2TP for remote clients
+#  SecuryTik / SICO template  (RouterOS 7.x, tested-style on CHR 7.23)
+# ----------------------------------------------------------------------------
+#  WAN: ether1 obtains IPv4 + IPv6 DYNAMICALLY from the provider (DHCP / SLAAC).
+#       The public IP is provided/kept by the VPS host — it is NOT written here.
+#       >>> YOU: make sure ether1 is connected and has its address BEFORE / right
+#           after import, then the client-endpoint is filled automatically (see
+#           the wg-set-endpoint script at the very bottom). Re-run that script if
+#           the WAN IP ever changes.
+#
+#  Goal: hand remote clients a dual-stack tunnel (IPv4 + IPv6). Clients need no
+#        IPv6 of their own — they get a ULA over the tunnel and are NAT66'd out
+#        of ether1. Works only while ether1 itself has IPv6 egress.
+#
+#  This is a MODEL: 5 WireGuard clients + 5 L2TP clients are pre-created. Copy a
+#  block and bump the numbers when you need more. No hardening beyond the CHR.
+#
+#  ---- Port-forward map (each client is reachable on Winbox 8291 + SSH 22) ----
+#      8 = Winbox(8291)   2 = SSH(22)   middle digit 2 = WireGuard / 3 = L2TP
+#      last digit = client host number (2..6)
+#
+#        client            tunnel IP     Winbox    SSH
+#        wg-client-1        10.20.0.2      8202     2202
+#        wg-client-2        10.20.0.3      8203     2203
+#        wg-client-3        10.20.0.4      8204     2204
+#        wg-client-4        10.20.0.5      8205     2205
+#        wg-client-5        10.20.0.6      8206     2206
+#        l2tp-client-1      10.30.0.2      8302     2302
+#        l2tp-client-2      10.30.0.3      8303     2303
+#        l2tp-client-3      10.30.0.4      8304     2304
+#        l2tp-client-4      10.30.0.5      8305     2305
+#        l2tp-client-5      10.30.0.6      8306     2306
+#      Router's own Winbox is on 7313 (SSH/telnet/ftp/www/api are off).
+#
+#  ---- Internet kill-switches (DISABLED by default) --------------------------
+#      Four forward drop rules (WG v4, WG v6, L2TP v4, L2TP v6) are created
+#      DISABLED. Enable a pair to stop that VPN's clients using the server's
+#      internet while STILL letting the port-forwards (inbound mgmt) reach them —
+#      same idea as the CHR's final "Block Internet" rule, but per-VPN & optional.
+#      (Two rules per VPN because IPv4 and IPv6 are separate tables.)
+# ============================================================================
+
+/system identity set name="VPN-Server"
+/system clock set time-zone-autodetect=yes
+/system ntp client set enabled=yes
+/system ntp client servers add address=time.cloudflare.com
+
+# ---- WAN (ether1) : dynamic IPv4 + IPv6 from the provider -------------------
+/interface ethernet set [ find default-name=ether1 ] comment="WAN uplink - dynamic IPv4+IPv6 from provider"
+/ip dhcp-client add interface=ether1 use-peer-dns=no add-default-route=yes comment="WAN IPv4 (dynamic)"
+# IPv6: accept the provider's address. Most VPS hosts hand IPv6 via SLAAC/RA; the
+# dhcp6 client covers DHCPv6-address setups. Keep whichever your provider uses.
+/ipv6 settings set accept-router-advertisements=yes
+/ipv6 dhcp-client add interface=ether1 request=address add-default-route=yes use-peer-dns=no comment="WAN IPv6 (dynamic; harmless if provider uses SLAAC)"
+
+/ip dns set servers=1.1.1.1,1.0.0.1 allow-remote-requests=no
+
+# ---- Service exposure (matches the CHR; nothing extra) ----------------------
+/ip service set telnet disabled=yes
+/ip service set ftp disabled=yes
+/ip service set www disabled=yes
+/ip service set ssh disabled=yes
+/ip service set api disabled=yes
+/ip service set api-ssl disabled=yes
+/ip service set winbox port=7313
+
+# ============================================================================
+#  WireGuard  —  dual-stack (10.20.0.0/24  +  fc10::/64)
+# ============================================================================
+/interface wireguard add name=wireguard-clients listen-port=51820 mtu=1420 \
+    private-key="0LTorknrKPbDuUTjszUG3FswpSZ0+E8LQ7A/ruvr8mA=" \
+    comment="Dual-stack WireGuard server (public key: ZeNHIv0p/pujTM9KO23nIwtOevnoGIouvjdHizS0/Xg=)"
+/ip address add address=10.20.0.1/24 interface=wireguard-clients comment="WireGuard IPv4 gateway"
+/ipv6 address add address=fc10::1/64 interface=wireguard-clients advertise=no comment="WireGuard IPv6 gateway (ULA)"
+
+# Each peer carries the CLIENT's keypair so Winbox can export the config + QR.
+# client-endpoint is filled by the wg-set-endpoint script (bottom) from the live WAN IP.
+/interface wireguard peers
+add interface=wireguard-clients name=wg-client-1 comment="WireGuard client 1 (host .2)" \
+    private-key="MLoarnvPCnFjna8LJdyUOFbpjLAfZCAuuZDGPRQZlkQ=" public-key="2YHsy02TBWIoCjI6J3E6qmvB/L9MJklW7GXWtOJ/k0o=" \
+    preshared-key="ZlNRBlmfMT1ABvX4Rkq+joHDz6gXvUm5AFxvRJr5/rY=" \
+    allowed-address=10.20.0.2/32,fc10::2/128 client-address=10.20.0.2/24,fc10::2/64 \
+    client-allowed-address=0.0.0.0/0,::/0 client-dns=1.1.1.1,2606:4700:4700::1111 persistent-keepalive=25s
+add interface=wireguard-clients name=wg-client-2 comment="WireGuard client 2 (host .3)" \
+    private-key="mEG3pWMnZlXjPQlvckK4VKLedx0GFdy4acRB5yRJDVU=" public-key="8wOlt2iiX5K5seWb/8EiyK6Bpc916m2sQdVZsYa1q2Y=" \
+    preshared-key="Nov/xkjqGYOnmW4Cq4NKOVzNhoFvcbYsISPGcQAW5PU=" \
+    allowed-address=10.20.0.3/32,fc10::3/128 client-address=10.20.0.3/24,fc10::3/64 \
+    client-allowed-address=0.0.0.0/0,::/0 client-dns=1.1.1.1,2606:4700:4700::1111 persistent-keepalive=25s
+add interface=wireguard-clients name=wg-client-3 comment="WireGuard client 3 (host .4)" \
+    private-key="SFSTdKJH8ZzMthajJsDLUhEgWD81WHaNuh5p7tV5YFg=" public-key="5RHkkG1zwblpkhONnK4a0068R/xPuE/sb3y0FEktATQ=" \
+    preshared-key="54ppRRNmLuJWZS6MbirO0xYqWQDgin4s2Ga9tuvHoQk=" \
+    allowed-address=10.20.0.4/32,fc10::4/128 client-address=10.20.0.4/24,fc10::4/64 \
+    client-allowed-address=0.0.0.0/0,::/0 client-dns=1.1.1.1,2606:4700:4700::1111 persistent-keepalive=25s
+add interface=wireguard-clients name=wg-client-4 comment="WireGuard client 4 (host .5)" \
+    private-key="2L7tChp3dc9PHgp3vUu7L8D8OWJElxWKuVzK9TQZw1o=" public-key="clAII51l/5LFIngUz9PiIJK+Xg4VSREfy443ors77HI=" \
+    preshared-key="UAr7dNpUgvykmeJsKHGwOC3fHnovbpVw8mN+D1IgZMY=" \
+    allowed-address=10.20.0.5/32,fc10::5/128 client-address=10.20.0.5/24,fc10::5/64 \
+    client-allowed-address=0.0.0.0/0,::/0 client-dns=1.1.1.1,2606:4700:4700::1111 persistent-keepalive=25s
+add interface=wireguard-clients name=wg-client-5 comment="WireGuard client 5 (host .6)" \
+    private-key="EITiLhyn3X2M5UDbTVQy8xlKXmsiZeSOj83Bj66vkWk=" public-key="moQKyd+DQDQGRhkuLpSn0gIqvOSFsrKjfVjqYZf3MQ8=" \
+    preshared-key="U2YPwYzCMfhSokFF/Off4QYvXpxSPLOPovFn/psrxZw=" \
+    allowed-address=10.20.0.6/32,fc10::6/128 client-address=10.20.0.6/24,fc10::6/64 \
+    client-allowed-address=0.0.0.0/0,::/0 client-dns=1.1.1.1,2606:4700:4700::1111 persistent-keepalive=25s
+
+# ============================================================================
+#  L2TP  —  dual-stack (10.30.0.0/24  +  a fc11:0:0:N::/64 per client)
+# ============================================================================
+/ppp profile add name=L2TP-Clients local-address=10.30.0.1 rate-limit=10M/10M \
+    use-encryption=yes only-one=yes change-tcp-mss=yes use-ipv6=yes \
+    comment="L2TP dual-stack client profile"
+/interface l2tp-server server set enabled=yes default-profile=L2TP-Clients \
+    keepalive-timeout=60 one-session-per-host=yes use-ipsec=no \
+    comment="Plain L2TP (keepalive 60s so xl2tpd clients are not killed early)"
+
+# Each secret pins a v4 address and delegates a /64 ULA (fc11:0:0:N::/64) for v6.
+# CHANGE THE PASSWORDS before production.
+/ppp secret
+add name=l2tp-client-1 password=changeme-1 profile=L2TP-Clients service=l2tp \
+    remote-address=10.30.0.2 remote-ipv6-prefix=fc11:0:0:2::/64 comment="L2TP client 1 (host .2)"
+add name=l2tp-client-2 password=changeme-2 profile=L2TP-Clients service=l2tp \
+    remote-address=10.30.0.3 remote-ipv6-prefix=fc11:0:0:3::/64 comment="L2TP client 2 (host .3)"
+add name=l2tp-client-3 password=changeme-3 profile=L2TP-Clients service=l2tp \
+    remote-address=10.30.0.4 remote-ipv6-prefix=fc11:0:0:4::/64 comment="L2TP client 3 (host .4)"
+add name=l2tp-client-4 password=changeme-4 profile=L2TP-Clients service=l2tp \
+    remote-address=10.30.0.5 remote-ipv6-prefix=fc11:0:0:5::/64 comment="L2TP client 4 (host .5)"
+add name=l2tp-client-5 password=changeme-5 profile=L2TP-Clients service=l2tp \
+    remote-address=10.30.0.6 remote-ipv6-prefix=fc11:0:0:6::/64 comment="L2TP client 5 (host .6)"
+
+# ============================================================================
+#  NAT
+# ============================================================================
+/ip firewall nat
+# --- outbound: NAT every client subnet out of the WAN (dynamic IP -> masquerade) ---
+add chain=srcnat action=masquerade out-interface=ether1 comment="NAT client IPv4 to internet"
+# --- inbound: port-forwards, Winbox(8291)+SSH(22) per client (see the map on top) ---
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8202 to-addresses=10.20.0.2 to-ports=8291 comment="wg-client-1 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2202 to-addresses=10.20.0.2 to-ports=22   comment="wg-client-1 SSH"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8203 to-addresses=10.20.0.3 to-ports=8291 comment="wg-client-2 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2203 to-addresses=10.20.0.3 to-ports=22   comment="wg-client-2 SSH"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8204 to-addresses=10.20.0.4 to-ports=8291 comment="wg-client-3 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2204 to-addresses=10.20.0.4 to-ports=22   comment="wg-client-3 SSH"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8205 to-addresses=10.20.0.5 to-ports=8291 comment="wg-client-4 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2205 to-addresses=10.20.0.5 to-ports=22   comment="wg-client-4 SSH"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8206 to-addresses=10.20.0.6 to-ports=8291 comment="wg-client-5 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2206 to-addresses=10.20.0.6 to-ports=22   comment="wg-client-5 SSH"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8302 to-addresses=10.30.0.2 to-ports=8291 comment="l2tp-client-1 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2302 to-addresses=10.30.0.2 to-ports=22   comment="l2tp-client-1 SSH"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8303 to-addresses=10.30.0.3 to-ports=8291 comment="l2tp-client-2 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2303 to-addresses=10.30.0.3 to-ports=22   comment="l2tp-client-2 SSH"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8304 to-addresses=10.30.0.4 to-ports=8291 comment="l2tp-client-3 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2304 to-addresses=10.30.0.4 to-ports=22   comment="l2tp-client-3 SSH"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8305 to-addresses=10.30.0.5 to-ports=8291 comment="l2tp-client-4 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2305 to-addresses=10.30.0.5 to-ports=22   comment="l2tp-client-4 SSH"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8306 to-addresses=10.30.0.6 to-ports=8291 comment="l2tp-client-5 Winbox"
+add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2306 to-addresses=10.30.0.6 to-ports=22   comment="l2tp-client-5 SSH"
+
+/ipv6 firewall nat
+add chain=srcnat action=masquerade out-interface=ether1 comment="NAT66 client IPv6 (fc10::/64 + fc11::/48) to internet"
+
+# ============================================================================
+#  Firewall  (mirrors the CHR: minimal, no extra hardening)
+# ============================================================================
+/ip firewall filter
+add chain=input action=accept connection-state=established,related comment="Allow established/related"
+add chain=input action=accept protocol=tcp dst-port=7313 comment="Allow Winbox mgmt"
+add chain=input action=accept protocol=icmp limit=2,5:packet comment="Allow ping (rate-limited)"
+add chain=input action=accept protocol=udp dst-port=51820 comment="Allow WireGuard"
+add chain=input action=accept protocol=udp dst-port=1701 comment="Allow L2TP"
+add chain=input action=drop connection-state=new comment="Block other new input"
+# forward: let the inbound port-forwards reach the connected clients
+add chain=forward action=accept connection-nat-state=dstnat comment="Allow inbound port-forwards to clients"
+# ---- DISABLED internet kill-switches (enable a pair to cut that VPN's internet) ----
+add chain=forward action=drop disabled=yes connection-state=new out-interface=ether1 src-address=10.20.0.0/24 comment="[OFF] Cut WireGuard clients internet (IPv4). Port-forwards still work."
+add chain=forward action=drop disabled=yes connection-state=new out-interface=ether1 src-address=10.30.0.0/24 comment="[OFF] Cut L2TP clients internet (IPv4). Port-forwards still work."
+
+/ipv6 firewall filter
+add chain=forward action=drop disabled=yes connection-state=new out-interface=ether1 src-address=fc10::/64 comment="[OFF] Cut WireGuard clients internet (IPv6)."
+add chain=forward action=drop disabled=yes connection-state=new out-interface=ether1 src-address=fc11::/48 comment="[OFF] Cut L2TP clients internet (IPv6)."
+
+# ============================================================================
+#  Fill the WireGuard client-endpoint from the live WAN IP (for QR export).
+#  Runs once now; re-run after a WAN IP change:  /system script run wg-set-endpoint
+# ============================================================================
+/system script add name=wg-set-endpoint policy=read,write,test \
+    comment="Stamp the current WAN IPv4 into all WireGuard peers' client-endpoint" source={
+  :local wan ""
+  :local dc [/ip dhcp-client find where interface="ether1"]
+  :if ([:len $dc] > 0) do={ :set wan [/ip dhcp-client get [:pick $dc 0] address] }
+  :if ([:len $wan] = 0) do={
+    :local ad [/ip address find where interface="ether1"]
+    :if ([:len $ad] > 0) do={ :set wan [/ip address get [:pick $ad 0] address] }
+  }
+  :if ([:len $wan] = 0) do={
+    :put "ether1 has no IPv4 yet. Connect the WAN, then run: /system script run wg-set-endpoint"
+  } else={
+    :set wan [:pick $wan 0 [:find $wan "/"]]
+    :foreach p in=[/interface wireguard peers find where interface="wireguard-clients"] do={
+      /interface wireguard peers set $p client-endpoint=$wan
+    }
+    :put ("WireGuard client-endpoint set to " . $wan . " on all peers.")
+  }
+}
+/system script run wg-set-endpoint
