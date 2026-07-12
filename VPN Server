@@ -109,9 +109,10 @@ add interface=wireguard-clients name=wg-client-5 comment="WireGuard client 5 (ho
 /ppp profile add name=L2TP-Clients local-address=10.30.0.1 rate-limit=10M/10M \
     use-encryption=yes only-one=yes change-tcp-mss=yes use-ipv6=yes \
     comment="L2TP dual-stack client profile"
+# Plain L2TP. keepalive-timeout=60 so xl2tpd clients are not killed early.
+# (This is a settings singleton — it has no 'comment' property, unlike list items.)
 /interface l2tp-server server set enabled=yes default-profile=L2TP-Clients \
-    keepalive-timeout=60 one-session-per-host=yes use-ipsec=no \
-    comment="Plain L2TP (keepalive 60s so xl2tpd clients are not killed early)"
+    keepalive-timeout=60 one-session-per-host=yes use-ipsec=no
 
 # Each secret pins a v4 address and delegates a /64 ULA (fc11:0:0:N::/64) for v6.
 # CHANGE THE PASSWORDS before production.
