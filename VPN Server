@@ -148,6 +148,17 @@ add name=l2tp-client-5 password=changeme-5 profile=L2TP-Clients service=l2tp \
 /ip firewall nat
 # --- outbound: NAT every client subnet out of the WAN (dynamic IP -> masquerade) ---
 add chain=srcnat action=masquerade out-interface=ether1 comment="NAT client IPv4 to internet"
+# --- port-forward RETURN PATH (needed for the dst-nat rules below to actually work) ---
+# When someone hits a port-forward, the client receives it with the original internet
+# source IP; if the client does not route back through this server it replies out its own
+# WAN and the connection breaks. These masquerade the INBOUND-to-client connections so the
+# client always sees them coming from the server and replies through the tunnel.
+# This does NOT touch the client's own outbound internet: that is a separate connection
+# (dst = internet, masqueraded out ether1 above); these only match NEW connections whose
+# destination is a client subnet, i.e. the port-forwards. So client VPN internet is
+# unaffected — only inbound access to the clients is fixed.
+add chain=srcnat action=masquerade dst-address=10.20.0.0/24 comment="port-forward return path (WireGuard)"
+add chain=srcnat action=masquerade dst-address=10.30.0.0/24 comment="port-forward return path (L2TP)"
 # --- inbound: port-forwards, Winbox(8291)+SSH(22) per client (see the map on top) ---
 add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8202 to-addresses=10.20.0.2 to-ports=8291 comment="wg-client-1 Winbox"
 add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2202 to-addresses=10.20.0.2 to-ports=22   comment="wg-client-1 SSH"
