@@ -104,7 +104,7 @@ add interface=wireguard-clients name=wg-client-5 comment="WireGuard client 5 (ho
     client-allowed-address=0.0.0.0/0,::/0 client-dns=1.1.1.1,2606:4700:4700::1111 persistent-keepalive=25s
 
 # ============================================================================
-#  L2TP  —  dual-stack (10.30.0.0/24  +  a fc11:0:0:N::/64 per client)
+#  L2TP  —  dual-stack (10.30.0.0/24  +  one fc11::/64, fc11::N per client)
 # ============================================================================
 /ppp profile add name=L2TP-Clients local-address=10.30.0.1 rate-limit=10M/10M \
     use-encryption=yes only-one=yes change-tcp-mss=yes use-ipv6=yes \
@@ -114,33 +114,35 @@ add interface=wireguard-clients name=wg-client-5 comment="WireGuard client 5 (ho
 /interface l2tp-server server set enabled=yes default-profile=L2TP-Clients \
     keepalive-timeout=60 one-session-per-host=yes use-ipsec=no
 
-# Each secret pins a v4 address and delegates a /64 ULA (fc11:0:0:N::/64) for v6.
+# Each secret pins a v4 address AND a single IPv6 in the shared fc11::/64. 'ipv6-routes'
+# routes that /128 to the client over its ppp link on connect (no prefix delegation), so
+# every client lives in one fc11::/64: 10.30.0.N -> fc11::N (client-1=fc11::2, ...).
 # CHANGE THE PASSWORDS before production.
 /ppp secret
 add name=l2tp-client-1 password=changeme-1 profile=L2TP-Clients service=l2tp \
-    remote-address=10.30.0.2 remote-ipv6-prefix=fc11:0:0:2::/64 comment="L2TP client 1 (host .2)"
+    remote-address=10.30.0.2 ipv6-routes="fc11::2/128" comment="L2TP client 1 (fc11::2)"
 add name=l2tp-client-2 password=changeme-2 profile=L2TP-Clients service=l2tp \
-    remote-address=10.30.0.3 remote-ipv6-prefix=fc11:0:0:3::/64 comment="L2TP client 2 (host .3)"
+    remote-address=10.30.0.3 ipv6-routes="fc11::3/128" comment="L2TP client 2 (fc11::3)"
 add name=l2tp-client-3 password=changeme-3 profile=L2TP-Clients service=l2tp \
-    remote-address=10.30.0.4 remote-ipv6-prefix=fc11:0:0:4::/64 comment="L2TP client 3 (host .4)"
+    remote-address=10.30.0.4 ipv6-routes="fc11::4/128" comment="L2TP client 3 (fc11::4)"
 add name=l2tp-client-4 password=changeme-4 profile=L2TP-Clients service=l2tp \
-    remote-address=10.30.0.5 remote-ipv6-prefix=fc11:0:0:5::/64 comment="L2TP client 4 (host .5)"
+    remote-address=10.30.0.5 ipv6-routes="fc11::5/128" comment="L2TP client 4 (fc11::5)"
 add name=l2tp-client-5 password=changeme-5 profile=L2TP-Clients service=l2tp \
-    remote-address=10.30.0.6 remote-ipv6-prefix=fc11:0:0:6::/64 comment="L2TP client 5 (host .6)"
+    remote-address=10.30.0.6 ipv6-routes="fc11::6/128" comment="L2TP client 5 (fc11::6)"
 
 # ---- IPv6 on the L2TP CLIENT side (important) ------------------------------
-# The ppp link itself always shows only a link-local (fe80::) on both ends — that
-# is normal; the global fc11 address rides on top of it. The server advertises the
-# per-client prefix (remote-ipv6-prefix), so:
-#   * Ubuntu / phone clients auto-configure a fc11 address by SLAAC — nothing to do.
-#   * A MikroTik client is a router and will NOT auto-configure it, so it must set
-#     the fc11 address + a default v6 route MANUALLY. Run this ON THE CLIENT, using
-#     the /64 that matches the user you dialled with (l2tp-client-N -> fc11:0:0:N:: —
-#     client-1=fc11:0:0:2, client-2=fc11:0:0:3, ...):
-#       /ipv6 address add address=fc11:0:0:2::2/64 interface=<l2tp-out-iface> advertise=no
+# The ppp link itself always shows only a link-local (fe80::) on both ends — that is
+# normal; the global fc11 address rides on top of it. The server routes each client's
+# fc11::N/128 (above) over the tunnel, but the client must still CONFIGURE that address
+# and a default v6 route itself:
+#   * Ubuntu / phones: add the address + default route (or let your netplan/NM do it).
+#   * A MikroTik client is a router and won't auto-configure it — run this ON THE CLIENT,
+#     using the fc11::N that matches the user you dialled with (l2tp-client-N -> fc11::N+1,
+#     i.e. client-1=fc11::2, client-2=fc11::3, ...):
+#       /ipv6 address add address=fc11::2/64 interface=<l2tp-out-iface> advertise=no
 #       /ipv6 route   add dst-address=::/0 gateway=<l2tp-out-iface>
 #     After that the client's IPv6 exits through this server (NAT66). Verify with:
-#       /ping 2001:4860:4860::8888 src-address=fc11:0:0:2::2
+#       /ping 2001:4860:4860::8888 src-address=fc11::2
 
 # ============================================================================
 #  NAT
@@ -182,7 +184,7 @@ add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=8306 t
 add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=2306 to-addresses=10.30.0.6 to-ports=22   comment="l2tp-client-5 SSH"
 
 /ipv6 firewall nat
-add chain=srcnat action=masquerade out-interface=ether1 comment="NAT66 client IPv6 (fc10::/64 + fc11::/48) to internet"
+add chain=srcnat action=masquerade out-interface=ether1 comment="NAT66 client IPv6 (fc10::/64 + fc11::/64) to internet"
 
 # ============================================================================
 #  Firewall  (mirrors the CHR: minimal, no extra hardening)
@@ -202,7 +204,7 @@ add chain=forward action=drop disabled=yes connection-state=new out-interface=et
 
 /ipv6 firewall filter
 add chain=forward action=drop disabled=yes connection-state=new out-interface=ether1 src-address=fc10::/64 comment="[OFF] Cut WireGuard clients internet (IPv6)."
-add chain=forward action=drop disabled=yes connection-state=new out-interface=ether1 src-address=fc11::/48 comment="[OFF] Cut L2TP clients internet (IPv6)."
+add chain=forward action=drop disabled=yes connection-state=new out-interface=ether1 src-address=fc11::/64 comment="[OFF] Cut L2TP clients internet (IPv6)."
 
 # ============================================================================
 #  Fill the WireGuard client-endpoint from the live WAN IP (for QR export).
