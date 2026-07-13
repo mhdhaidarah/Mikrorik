@@ -128,6 +128,20 @@ add name=l2tp-client-4 password=changeme-4 profile=L2TP-Clients service=l2tp \
 add name=l2tp-client-5 password=changeme-5 profile=L2TP-Clients service=l2tp \
     remote-address=10.30.0.6 remote-ipv6-prefix=fc11:0:0:6::/64 comment="L2TP client 5 (host .6)"
 
+# ---- IPv6 on the L2TP CLIENT side (important) ------------------------------
+# The ppp link itself always shows only a link-local (fe80::) on both ends — that
+# is normal; the global fc11 address rides on top of it. The server advertises the
+# per-client prefix (remote-ipv6-prefix), so:
+#   * Ubuntu / phone clients auto-configure a fc11 address by SLAAC — nothing to do.
+#   * A MikroTik client is a router and will NOT auto-configure it, so it must set
+#     the fc11 address + a default v6 route MANUALLY. Run this ON THE CLIENT, using
+#     the /64 that matches the user you dialled with (l2tp-client-N -> fc11:0:0:N:: —
+#     client-1=fc11:0:0:2, client-2=fc11:0:0:3, ...):
+#       /ipv6 address add address=fc11:0:0:2::2/64 interface=<l2tp-out-iface> advertise=no
+#       /ipv6 route   add dst-address=::/0 gateway=<l2tp-out-iface>
+#     After that the client's IPv6 exits through this server (NAT66). Verify with:
+#       /ping 2001:4860:4860::8888 src-address=fc11:0:0:2::2
+
 # ============================================================================
 #  NAT
 # ============================================================================
