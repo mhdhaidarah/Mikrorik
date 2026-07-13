@@ -46,13 +46,24 @@
 /system ntp client set enabled=yes
 /system ntp client servers add address=time.cloudflare.com
 
-# ---- WAN (ether1) : dynamic IPv4 + IPv6 from the provider -------------------
-/interface ethernet set [ find default-name=ether1 ] comment="WAN uplink - dynamic IPv4+IPv6 from provider"
+# ---- WAN (ether1) : IPv4 dynamic, IPv6 STATIC ------------------------------
+/interface ethernet set [ find default-name=ether1 ] comment="WAN uplink"
 /ip dhcp-client add interface=ether1 use-peer-dns=no add-default-route=yes comment="WAN IPv4 (dynamic)"
-# IPv6: accept the provider's address. Most VPS hosts hand IPv6 via SLAAC/RA; the
-# dhcp6 client covers DHCPv6-address setups. Keep whichever your provider uses.
-/ipv6 settings set accept-router-advertisements=yes
-/ipv6 dhcp-client add interface=ether1 request=address add-default-route=yes use-peer-dns=no comment="WAN IPv6 (dynamic; harmless if provider uses SLAAC)"
+
+# IPv6 is set STATICALLY on purpose. Accepting Router Advertisements globally
+# (accept-router-advertisements=yes) is what let a connected CLIENT advertise itself as a
+# router and HIJACK the server's default route — the server then lost its own internet.
+# So this template does NOT accept RAs; you set the server's own IPv6, and the default
+# route out ether1 is added for you just below.
+#
+# >>> YOU MUST set the server's IPv6 address (the one your provider gave you) on ether1.
+#     Uncomment and edit this line with YOUR address/prefix:
+# /ipv6 address add address=2604:a880:0:1010::10/64 interface=ether1 advertise=no
+#
+# Default IPv6 route out ether1 (added automatically). If your provider hands you a
+# specific v6 gateway (e.g. the ::1 of your block on DigitalOcean/Linode), change the
+# gateway below to that address; leave gateway=ether1 only if your v6 is routed on-link.
+/ipv6 route add dst-address=::/0 gateway=ether1 comment="WAN IPv6 default"
 
 /ip dns set servers=1.1.1.1,1.0.0.1 allow-remote-requests=no
 
@@ -138,11 +149,25 @@ add name=l2tp-client-5 password=changeme-5 profile=L2TP-Clients service=l2tp \
 #   * Ubuntu / phones: add the address + default route (or let your netplan/NM do it).
 #   * A MikroTik client is a router and won't auto-configure it — run this ON THE CLIENT,
 #     using the fc11::N that matches the user you dialled with (l2tp-client-N -> fc11::N+1,
-#     i.e. client-1=fc11::2, client-2=fc11::3, ...):
-#       /ipv6 address add address=fc11::2/64 interface=<l2tp-out-iface> advertise=no
-#       /ipv6 route   add dst-address=::/0 gateway=<l2tp-out-iface>
+#     i.e. client-1=fc11::2, client-2=fc11::3, ...). Replace <l2tp-out-iface> with the
+#     client's l2tp-out interface name:
+#
+#     1) Full IPv4 tunnel — make sure the l2tp-client sends the client's default route
+#        through this server (set add-default-route=yes on the client's dial-out):
+#          /interface l2tp-client set <l2tp-out-iface> add-default-route=yes
+#
+#     2) IPv6 address + default route on the tunnel:
+#          /ipv6 address add address=fc11::2/64 interface=<l2tp-out-iface> advertise=no
+#          /ipv6 route   add dst-address=::/0 gateway=<l2tp-out-iface>
+#
+#     3) IMPORTANT — stop the client from advertising itself as a router on the tunnel.
+#        A MikroTik client sends Router Advertisements by default; without this line it
+#        would inject a default route into THIS server and the server would lose its own
+#        internet. This makes the client say "I am not a router":
+#          /ipv6 nd add interface=<l2tp-out-iface> ra-lifetime=0s
+#
 #     After that the client's IPv6 exits through this server (NAT66). Verify with:
-#       /ping 2001:4860:4860::8888 src-address=fc11::2
+#          /ping 2001:4860:4860::8888 src-address=fc11::2
 
 # ============================================================================
 #  NAT
