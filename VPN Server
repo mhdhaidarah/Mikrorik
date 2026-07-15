@@ -248,10 +248,13 @@ add chain=forward action=drop disabled=yes connection-state=new out-interface=et
     :put "ether1 has no IPv4 yet. Connect the WAN, then run: /system script run wg-set-endpoint"
   } else={
     :set wan [:pick $wan 0 [:find $wan "/"]]
+    # WireGuard endpoints MUST be host:port. Pull the interface's own listen-port
+    # and append it, so the exported client config / QR gets a usable Endpoint.
+    :local wgport [/interface wireguard get [find where name="wireguard-clients"] listen-port]
     :foreach p in=[/interface wireguard peers find where interface="wireguard-clients"] do={
-      /interface wireguard peers set $p client-endpoint=$wan
+      /interface wireguard peers set $p client-endpoint=($wan . ":" . $wgport)
     }
-    :put ("WireGuard client-endpoint set to " . $wan . " on all peers.")
+    :put ("WireGuard client-endpoint set to " . $wan . ":" . $wgport . " on all peers.")
   }
 }
 /system script run wg-set-endpoint
