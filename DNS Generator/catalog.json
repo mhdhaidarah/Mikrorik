@@ -1045,6 +1045,17 @@
         "cloudflareclient.com"
       ],
       "cidrs": []
+    },
+    {
+      "slug": "sham-cash",
+      "label": "Sham Cash",
+      "section": "SHAM CASH",
+      "category": "finance",
+      "priority": 1,
+      "domains": [
+        "shamcash.sy"
+      ],
+      "cidrs": []
     }
   ],
   "games": [

@@ -455,6 +455,8 @@ add address-list="Surfshark IPs" comment="Surfshark IPs" match-subdomain=yes nam
 add address-list="Windscribe IPs" comment="Windscribe IPs" match-subdomain=yes name=windscribe.com type=FWD
 # ===================== VPN — CLOUDFLARE WARP =====================
 add address-list="Cloudflare WARP IPs" comment="Cloudflare WARP IPs" match-subdomain=yes name=cloudflareclient.com type=FWD
+# ===================== SHAM CASH =====================
+add address-list="Sham Cash IPs" comment="Sham Cash IPs" match-subdomain=yes name=shamcash.sy type=FWD
 
 /ip firewall address-list
 add address=91.108.56.0/22 list="Telegram IPs"
@@ -668,6 +670,9 @@ add action=passthrough chain=prerouting comment="Windscribe Traffic Up" dst-addr
 # Cloudflare WARP
 add action=passthrough chain=prerouting comment="Cloudflare WARP Traffic Down" src-address-list="Cloudflare WARP IPs"
 add action=passthrough chain=prerouting comment="Cloudflare WARP Traffic Up" dst-address-list="Cloudflare WARP IPs"
+# Sham Cash
+add action=passthrough chain=prerouting comment="Sham Cash Traffic Down" src-address-list="Sham Cash IPs"
+add action=passthrough chain=prerouting comment="Sham Cash Traffic Up" dst-address-list="Sham Cash IPs"
 # --- game traffic counters ---
 # COD Mobile
 add action=passthrough chain=prerouting comment="COD Mobile Traffic Down" src-address-list="COD Mobile IPs"
@@ -777,6 +782,7 @@ add action=mark-packet chain=prerouting comment="ProtonVPN Download Mark" disabl
 add action=mark-packet chain=prerouting comment="Surfshark Download Mark" disabled=yes new-packet-mark="Surfshark download" passthrough=yes src-address-list="Surfshark IPs"
 add action=mark-packet chain=prerouting comment="Windscribe Download Mark" disabled=yes new-packet-mark="Windscribe download" passthrough=yes src-address-list="Windscribe IPs"
 add action=mark-packet chain=prerouting comment="Cloudflare WARP Download Mark" disabled=yes new-packet-mark="Cloudflare WARP download" passthrough=yes src-address-list="Cloudflare WARP IPs"
+add action=mark-packet chain=prerouting comment="Sham Cash Download Mark" disabled=yes new-packet-mark="Sham Cash download" passthrough=yes src-address-list="Sham Cash IPs"
 add action=mark-packet chain=prerouting comment="COD Mobile Download Mark" disabled=yes new-packet-mark="COD Mobile download" passthrough=yes src-address-list="COD Mobile IPs"
 add action=mark-packet chain=prerouting comment="Free Fire Download Mark" disabled=yes new-packet-mark="Free Fire download" passthrough=yes src-address-list="Free Fire IPs"
 add action=mark-packet chain=prerouting comment="PUBG Mobile Download Mark" disabled=yes new-packet-mark="PUBG Mobile download" passthrough=yes src-address-list="PUBG Mobile IPs"
@@ -989,6 +995,9 @@ add action=passthrough chain=prerouting comment="Windscribe Traffic Up" dst-addr
 # Cloudflare WARP
 add action=passthrough chain=prerouting comment="Cloudflare WARP Traffic Down" src-address-list="Cloudflare WARP IPs"
 add action=passthrough chain=prerouting comment="Cloudflare WARP Traffic Up" dst-address-list="Cloudflare WARP IPs"
+# Sham Cash
+add action=passthrough chain=prerouting comment="Sham Cash Traffic Down" src-address-list="Sham Cash IPs"
+add action=passthrough chain=prerouting comment="Sham Cash Traffic Up" dst-address-list="Sham Cash IPs"
 # COD Mobile
 add action=passthrough chain=prerouting comment="COD Mobile Traffic Down" src-address-list="COD Mobile IPs"
 add action=passthrough chain=prerouting comment="COD Mobile Traffic Up" dst-address-list="COD Mobile IPs"
