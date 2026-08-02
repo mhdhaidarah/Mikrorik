@@ -226,9 +226,50 @@ def build(catalog):
     return "\n".join(out) + "\n"
 
 
+# The categories SAMM knows how to render. A category is not free-form: SAMM
+# groups the App Filter and QoS screens by it (_APP_CAT_ORDER), gives each one a
+# translated heading (_app_cat_label) and a chip colour. Ship a category SAMM
+# has never heard of and the apps in it fall to the bottom of the list with an
+# untinted chip and a Title-Cased fallback heading — it looks like a rendering
+# bug, and nothing here would have told you. So validate on the way out, and
+# when you add one, add it to SAMM in the same change.
+CATEGORIES = {
+    "messaging", "finance", "conferencing", "ai", "social", "streaming",
+    "gaming", "store", "productivity", "download", "vpn", "speedtest", "other",
+}
+PRIORITY_RANGE = range(1, 9)      # SAMM QoS has eight slots
+
+
+def validate(catalog):
+    """Fail loudly on anything SAMM could not render. Cheap, and it catches the
+    typo'd category / out-of-range priority that otherwise ships silently."""
+    errors, seen = [], set()
+    for a in catalog["apps"] + catalog.get("games", []):
+        slug = a.get("slug", "<missing slug>")
+        if not a.get("slug") or not a.get("label"):
+            errors.append(f"{slug}: slug and label are both required")
+        if slug in seen:
+            errors.append(f"{slug}: duplicate slug")
+        seen.add(slug)
+        cat = a.get("category")
+        if cat not in CATEGORIES:
+            errors.append(
+                f"{slug}: category {cat!r} is not one SAMM renders — "
+                f"add it to _APP_CAT_ORDER, _app_cat_label and the QoS chip "
+                f"colours in SAMM first, then list it in CATEGORIES here")
+        if a.get("priority") not in PRIORITY_RANGE:
+            errors.append(f"{slug}: priority {a.get('priority')!r} is outside 1-8")
+    for a in catalog["apps"]:
+        if not a.get("domains"):
+            errors.append(f"{a.get('slug')}: an app with no domains collects nothing")
+    if errors:
+        raise SystemExit("catalog.json is not valid:\n  - " + "\n  - ".join(errors))
+
+
 def main():
     with open(CATALOG, encoding="utf-8") as f:
         catalog = json.load(f)
+    validate(catalog)
     text = build(catalog)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(text)

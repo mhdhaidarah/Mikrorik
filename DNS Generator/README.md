@@ -40,11 +40,36 @@ This regenerates `../IP Collector DNS` from `catalog.json`. Commit both.
 }
 ```
 
+### Categories
+
+`category` is **not free-form** — SAMM groups the App Filter and QoS screens by
+it, and each one needs a display order, a translated heading and a chip colour
+on the SAMM side. A category SAMM has never seen renders as an untinted chip at
+the bottom of the list under a Title-Cased fallback heading, which looks like a
+rendering bug rather than a missing entry.
+
+    messaging   finance   conferencing   ai       social    streaming
+    gaming      store     productivity   download vpn       speedtest   other
+
+`priority` is the default SAMM QoS slot, **1–8**, 1 being the most protected.
+
+The generator validates both and refuses to write on a typo, a duplicate slug,
+an app with no domains, or a category it does not recognise — so a mistake
+fails at generate time instead of shipping to every router.
+
+**Adding a NEW category is a two-repo change.** Add it to `CATEGORIES` in
+`generate.py` *and* to SAMM's `_APP_CAT_ORDER`, `_app_cat_label` and QoS chip
+colours (`app/admin/routes.py`, `app/admin/templates/_mikrotik_qos.html`).
+
 ### To add an app
 1. Copy an existing entry in `catalog.json`, change `label`, `domains`,
    `category`, `priority`.
-2. Run the generator.
+2. Run the generator — it validates the catalog before writing.
 3. Commit `catalog.json` + the regenerated `IP Collector DNS`.
+4. Publish the mirror so GitHub-blocked installs get it too. SAMM reads GitHub
+   raw **first** and only falls back to `dl.securytik.com` when GitHub is
+   unreachable, so an unpushed commit means "Update from repo" keeps returning
+   the old catalog even though the mirror is current.
 
 The IPs themselves are **not** stored here — they're collected live on each
 router from real DNS lookups. The catalog only defines *which* apps to watch.
