@@ -1,0 +1,15 @@
+/ip firewall filter
+add action=add-src-to-address-list address-list=Port-Scan \
+    address-list-timeout=1d chain=forward comment="Port scan on the Foward cha\
+    in added for 1 day in the address list Port-Scan" in-interface=ether1 \
+    protocol=tcp psd=21,3s,3,1
+add action=drop chain=forward comment=\
+    "Drop Port Scan address list for Forward Chain" src-address-list=\
+    Port-Scan
+add action=add-src-to-address-list address-list=Port-Scan \
+    address-list-timeout=1d chain=input comment="Port scan on the Input chain \
+    added for 1 day in the address list Port-Scan" in-interface=ether1 \
+    protocol=tcp psd=21,3s,3,1
+add action=drop chain=input comment=\
+    "Drop Port Scan address list for Input Chain" src-address-list=Port-Scan
+#by Maher Hdad
