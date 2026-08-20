@@ -8,3 +8,4 @@ add action=accept chain=syn-attack connection-state=new limit=400,5:packet \
 add action=drop chain=syn-attack connection-state=new protocol=tcp tcp-flags=\
     syn
 add action=return chain=syn-attack connection-state=new tcp-flags=""
+#by Maher Hdad
