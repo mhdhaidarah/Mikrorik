@@ -1,0 +1,28 @@
+/ip firewall filter
+add action=jump chain=input comment="Block Brute Force Attack SSH" dst-port=\
+  22 in-interface=ether1 jump-target="Black List (SSH) Chain" protocol=tcp
+ add action=add-src-to-address-list address-list="Black List (SSH) Stage 1" \
+  address-list-timeout=1m chain="Black List (SSH) Chain" comment=\
+  "Add initial attempt to Black List (SSH) Stage 1" connection-state=new \
+  in-interface=ether1 log=yes log-prefix="Add_Black list (SSH) S1"
+ add action=add-src-to-address-list address-list="Black List (SSH) Stage 2" \
+  address-list-timeout=1m chain="Black List (SSH) Chain" comment=\
+  "Add Successive attempts to Black List (SSH) Stage 2" connection-state=\
+  new in-interface=ether1 log=yes log-prefix="Add_Black list (SSH) S2" \
+  src-address-list="Black List (SSH) Stage 1"
+ add action=add-src-to-address-list address-list="Black List (SSH) Stage 3" \
+  address-list-timeout=1m chain="Black List (SSH) Chain" comment=\
+  "Add Successive attempts to Black List (SSH) Stage 3" connection-state=\
+  new in-interface=ether1 log=yes log-prefix="Add_Black list (SSH) S3" \
+  src-address-list="Black List (SSH) Stage 2"
+ add action=add-src-to-address-list address-list="Black List (SSH)" \
+  address-list-timeout=4w2d chain="Black List (SSH) Chain" comment="Transfer\
+  \_repeated attempts from Black List (SSH) Stage 3 to Black List (SSH)" \
+  connection-state=new in-interface=ether1 log=yes log-prefix=\
+  "Add_Black list (SSH)" src-address-list="Black List (SSH) Stage 3"
+ add action=drop chain=input comment="Drop anyone in Black List (SSH)" \
+  in-interface=ether1 log=yes log-prefix="BL_Black List (SSH)" \
+  src-address-list="Black List (SSH)"
+ add action=return chain="Black List (SSH) Chain" comment=\
+  "Return from Black List (SSH) chain"
+#by Maher Hdad
