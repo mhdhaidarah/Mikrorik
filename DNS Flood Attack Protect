@@ -1,0 +1,30 @@
+/ip firewall address-list
+add list=DNS-CLIENTS address=10.0.0.0/8
+add list=DNS-CLIENTS address=172.16.0.0/12
+add list=DNS-CLIENTS address=192.168.0.0/16
+
+/ip firewall raw
+# 1 - not addressed to this router = transit, leave it alone
+add chain=prerouting action=accept protocol=udp dst-port=53 dst-address-type=!local \
+    comment="DNS-1 transit"
+add chain=prerouting action=accept protocol=tcp dst-port=53 dst-address-type=!local
+
+# 2 - sources already flagged as flooding
+add chain=prerouting action=drop protocol=udp dst-port=53 src-address-list=DNS-FLOOD \
+    comment="DNS-2 flagged"
+
+# 3 - trusted clients, rate limited PER SOURCE
+add chain=prerouting action=accept protocol=udp dst-port=53 src-address-list=DNS-CLIENTS \
+    dst-limit=25,50,src-address/1m comment="DNS-3 trusted per-host limit"
+add chain=prerouting action=accept protocol=tcp dst-port=53 src-address-list=DNS-CLIENTS \
+    dst-limit=10,20,src-address/1m
+
+# 4 - trusted but over the limit -> flag it
+add chain=prerouting action=add-src-to-address-list protocol=udp dst-port=53 \
+    src-address-list=DNS-CLIENTS address-list=DNS-FLOOD address-list-timeout=10m \
+    comment="DNS-4 flag flooders"
+
+# 5 - anything else asking us for DNS. Fail closed.
+add chain=prerouting action=drop protocol=udp dst-port=53 comment="DNS-5 no open resolver"
+add chain=prerouting action=drop protocol=tcp dst-port=53
+#by Mohammed Haidar
