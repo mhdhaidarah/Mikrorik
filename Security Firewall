@@ -1,5 +1,5 @@
 # ============================================================================
-# Security Firewall - everything from the Security * files in one paste.
+# Security Firewall - the UNIVERSAL Security blocks in one paste.
 # Universal: no interface name, no interface list. Paste on a fresh router,
 # or on top of an existing config (rules append).
 #
@@ -8,9 +8,13 @@
 #     can lock you out.
 #   * Order matters and is already correct - do not reshuffle the blocks.
 #
-# Each block also ships as its own numbered file (Security 01..11) if you
-# want only some of them. Port Knocking is a separate optional file - it is
-# an alternative to the SSH brute-force block here, so it is NOT bundled.
+# Each block also ships as its own numbered file (Security 01..10) if you
+# want only some of them. Three files are deliberately NOT bundled because
+# they need per-site input:
+#   * Security 11 (Unsolicited Forward Drop) - needs your WAN interface.
+#   * Security 12 (DHCP Alert / snooping)    - per-bridge, needs trusted-port
+#     decisions and turns off bridge fast-path; paste it separately.
+#   * Port Knocking - an alternative to the SSH brute-force block here.
 # ============================================================================
 
 # --- 1. Router hardening (turn off unused attack surface) -------------------

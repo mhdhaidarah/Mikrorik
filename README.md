@@ -43,13 +43,17 @@ addresses, interfaces and credentials to your network before applying.
 
 ### Security scripts
 
-Two ways to use them, **same result either way**:
+Two ways to use them:
 
-* **`Security Firewall`** — one file with everything, conflict-checked on real
-  RouterOS. Paste it and you are done.
-* **`Security 01…11`** — the same protections as separate files, numbered in a
-  sensible paste order. Order does not actually affect the result (each is
-  order-independent), the numbers just show the natural sequence.
+* **`Security Firewall`** — the universal blocks in one paste, conflict-checked
+  on real RouterOS. Covers **Security 01–10**; paste it and those are done.
+* **`Security 01…10`** — the same protections as separate files if you want only
+  some. Order-independent; the numbers just show the natural paste sequence.
+
+Three files stay **separate** because they need per-site input: **Security 11**
+(your WAN interface), **Security 12** (per-bridge DHCP snooping + trusted ports,
+and it turns off bridge fast-path), and **Port Knocking** (an alternative to
+Security 06). Paste those on top as needed.
 
 Every file was import-tested on RouterOS 7.23; the four attack scripts were
 verified with a real attacker (nmap, nping, a DHCP-starvation flood). All are
@@ -71,8 +75,9 @@ the top of each file.**
 | **Security 07 DDoS Connection Rate** | Flags any source opening connections faster than 32/10s and drops it 10m — catches floods the SYN rules miss. |
 | **Security 08 SYN Attack** | `tcp-syncookies` on, plus a `syn-attack` chain: SYN under 400/s **returns** (so it composes with the scan/DDoS detectors), the flood is dropped. *Verified: 1 058 of a flood dropped.* |
 | **Security 09 Port Scan Attack** | PSD scan detector on `input` and `forward`; offenders land in `Port-Scan` for 1 day and are dropped. *Verified against nmap `-sS`.* |
-| **Security 10 DHCP Starvation Attack** | Rate-limits DHCP DISCOVERs so a spoofed-MAC flood can't drain the pool; `conflict-detection` on. *Verified: 14 373 of 14 574 spoofed DISCOVERs dropped, 0 leases lost.* |
+| **Security 10 DHCP Starvation Attack** | Rate-limits DHCP DISCOVERs so a spoofed-MAC flood can't drain the pool, **logs the flood** (`DHCP-FLOOD`, with source MAC) and lets the pool self-heal (`conflict-detection`, optional short lease). Blunt mitigation — the real fix is **authenticated leases** (RADIUS/static). *Verified: flood dropped + logged with source MAC.* |
 | **Security 11 Unsolicited Forward Drop** | Stateful edge — nothing new comes in from the WAN unless port-forwarded. **The one file that needs your WAN interface** (the interface-free form also drops your LAN's outbound UDP), so it's not in `Security Firewall`. |
+| **Security 12 DHCP Alert** | DHCP **snooping** on every bridge: blocks rogue DHCP servers on untrusted ports and logs the offending **port + MAC** (`bridge,warning`). Skips DHCP-client bridges; a real upstream server needs its uplink port `trusted`. Not bundled (per-bridge setup + turns off bridge fast-path). *Verified: rogue blocked & logged, router's own DHCP unaffected.* |
 | **Security Port Knocking** | Hides SSH + WinBox behind a 3-knock sequence (default **7555 → 9555 → 8555**, change them). **An alternative to 06 — use one, not both** — so it's a separate file, not in the bundle. *Verified: knock opened access, no knock stayed shut.* |
 
 ---

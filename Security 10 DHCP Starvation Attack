@@ -1,12 +1,29 @@
-# Change 30,20 if a big network floods on power-up.
+# DHCP starvation = a flood of DISCOVER/REQUEST (usually spoofed client MACs)
+# trying to drain the pool so real clients can't get a lease. This file:
+#   * rate-limits DHCP so the flood can't overwhelm the server,
+#   * LOGS the flood (prefix DHCP-FLOOD) so you SEE the attack, and
+#   * makes the pool self-heal (conflict-detection + optional short lease).
+#
+# The DEFINITIVE fix on a managed network is to AUTHENTICATE the lease so an
+# unknown/spoofed MAC gets nothing: RADIUS (/ip dhcp-server set ... use-radius=yes,
+# as SAMM does) or MAC-bound static leases. Add that where you can - a rate limit
+# only slows a flood, it cannot tell attacker MACs from real ones.
+#
+# Change 30,20 if a big network legitimately floods on power-up.
 /ip firewall filter
-add chain=input action=accept protocol=udp dst-port=67 limit=30,20
-add chain=input action=drop protocol=udp dst-port=67
+add chain=input action=accept protocol=udp dst-port=67 limit=30,20 \
+    comment="DHCP up to the limit is fine"
+add chain=input action=drop protocol=udp dst-port=67 log=yes log-prefix="DHCP-FLOOD" \
+    comment="over the limit = starvation flood: drop + log"
 
 # Only fires if the DHCP server sits on a bridge; harmless otherwise.
 /interface bridge filter
 add chain=input action=accept mac-protocol=ip ip-protocol=udp dst-port=67 limit=30,20
-add chain=input action=drop mac-protocol=ip ip-protocol=udp dst-port=67
+add chain=input action=drop mac-protocol=ip ip-protocol=udp dst-port=67 \
+    log=yes log-prefix="DHCP-FLOOD"
 
+# Self-heal: catch duplicate IPs. Keep leases short so a drained pool recovers
+# fast - uncomment to enforce (skip if your ISP intentionally uses long leases).
 /ip dhcp-server set [find] conflict-detection=yes
+#/ip dhcp-server set [find] lease-time=10m
 #by Mohammed Haidar

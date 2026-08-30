@@ -1,0 +1,52 @@
+# ============================================================================
+# Security 12 DHCP Alert - detect, LOG and BLOCK rogue DHCP servers.
+# (This is DHCP SNOOPING - not the same as the built-in "/ip dhcp-server alert".)
+#
+# Snooping treats any DHCP *server* reply (OFFER / ACK / NAK) that arrives on an
+# UNTRUSTED bridge port as a rogue server, and:
+#     * BLOCKS it - dropped at the port, so a fake server can never hand a
+#       poisoned address / gateway / DNS to your clients, and
+#     * LOGS it (topic bridge,warning - verified on ROS 7.23), naming the PORT
+#       and the MAC, e.g.
+#         ether5: received DHCP server message on untrusted port
+#                 from source IP 6.6.6.6, MAC DE:AD:BE:EF:00:02
+#
+# The router's OWN DHCP server is NOT affected: its offers are generated on the
+# router, not received on a port, so snooping never blocks them (verified).
+#
+# READ BEFORE YOU PASTE
+# 1. Trusted ports. Snooping blocks DHCP-server replies on EVERY port that is
+#    untrusted (the default). So ANY bridge that legitimately RECEIVES DHCP
+#    replies - an upstream/ISP server reached through a port, OR this router's
+#    OWN WAN/mgmt lease if it runs a /ip dhcp-client on a bridge - needs that
+#    one uplink port trusted, or the lease is dropped (a delayed outage / remote
+#    lockout):
+#        /interface bridge port set [find interface=<uplink>] trusted=yes
+#    As a safety net the loop below SKIPS any bridge that itself carries a
+#    /ip dhcp-client, so a bridged-WAN lease is not cut. If your dhcp-client
+#    sits on a VLAN *over* the bridge, trust its uplink port by hand.
+# 2. Performance. Enabling snooping turns OFF bridge fast-path (and hardware
+#    offload on switch chips that don't support snooping) - a CPU/throughput
+#    cost on that bridge. Fine for an edge/CPE; check /interface bridge before
+#    enabling it on a high-throughput core.
+# 3. Version. dhcp-snooping needs RouterOS >= 6.43; the MAC/IP detail in the log
+#    is newer still (present on 7.x). On very old builds the command may error
+#    or block-without-logging.
+# 4. Scope. It only drops on the MikroTik bridge - a rogue and a victim sharing
+#    the SAME dumb switch/AP behind one port still see each other. This is IPv4;
+#    for IPv6 also set dhcpv6-snooping on the same bridges.
+#
+# Generalized: no bridge or port names are hard-coded - it enables snooping on
+# whatever bridges exist (minus dhcp-client bridges). Safe on a router with one
+# bridge, many, or none; re-run after you add a new bridge.
+# ============================================================================
+
+:foreach b in=[/interface bridge find] do={:local bn [/interface bridge get $b name]; :if ([:len [/ip dhcp-client find where interface=$bn]]=0) do={/interface bridge set $b dhcp-snooping=yes}}
+
+# Optional - page yourself when a rogue appears. Uses a DEDICATED logging action
+# (not the shared "remote" one, so existing syslog is untouched) and is guarded
+# so re-pasting won't duplicate it. Set YOUR syslog IP, then uncomment all three:
+#/system logging action add name=dhcpalert target=remote remote=YOUR-SYSLOG-IP
+#:if ([:len [/system logging find where prefix="ROGUE-DHCP"]]=0) do={\
+#  /system logging add topics=bridge,warning action=dhcpalert prefix="ROGUE-DHCP"}
+#by Mohammed Haidar
