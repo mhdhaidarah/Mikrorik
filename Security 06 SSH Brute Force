@@ -1,3 +1,4 @@
+# Alternative to "Security Port Knocking" - both gate SSH/WinBox, so use ONE, not both.
 # Put your own IP in Trusted BEFORE pasting, or you can lock yourself out.
 /ip firewall address-list
 add list=Trusted address=192.168.88.0/24

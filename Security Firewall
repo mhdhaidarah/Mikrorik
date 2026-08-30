@@ -1,0 +1,114 @@
+# ============================================================================
+# Security Firewall - everything from the Security * files in one paste.
+# Universal: no interface name, no interface list. Paste on a fresh router,
+# or on top of an existing config (rules append).
+#
+# BEFORE YOU PASTE:
+#   * Put your own IP in the Trusted list below, or the SSH/brute-force block
+#     can lock you out.
+#   * Order matters and is already correct - do not reshuffle the blocks.
+#
+# Each block also ships as its own numbered file (Security 01..11) if you
+# want only some of them. Port Knocking is a separate optional file - it is
+# an alternative to the SSH brute-force block here, so it is NOT bundled.
+# ============================================================================
+
+# --- 1. Router hardening (turn off unused attack surface) -------------------
+/ip service disable telnet,ftp,www,www-ssl
+/ip ssh set strong-crypto=yes
+/tool bandwidth-server set enabled=no
+/tool mac-server ping set enabled=no
+/ip neighbor discovery-settings set discover-interface-list=none
+/ip proxy set enabled=no
+/ip socks set enabled=no
+
+# --- 2. Trusted + bogon source lists ----------------------------------------
+# Change 192.168.88.0/24 to the network you manage the router from.
+/ip firewall address-list
+add list=Trusted address=192.168.88.0/24
+add list=DNS-CLIENTS address=10.0.0.0/8
+add list=DNS-CLIENTS address=172.16.0.0/12
+add list=DNS-CLIENTS address=192.168.0.0/16
+add list=DNS-CLIENTS address=100.64.0.0/10
+add list=Bogons address=0.0.0.0/8
+add list=Bogons address=127.0.0.0/8
+add list=Bogons address=169.254.0.0/16
+add list=Bogons address=192.0.2.0/24
+add list=Bogons address=198.51.100.0/24
+add list=Bogons address=203.0.113.0/24
+add list=Bogons address=224.0.0.0/4
+add list=Bogons address=240.0.0.0/4
+
+# --- 3. RAW: drop spoofed sources, stop open-resolver abuse -----------------
+/ip firewall raw
+add chain=prerouting action=drop src-address-list=Bogons
+add chain=prerouting action=accept protocol=udp dst-port=53 dst-address-type=!local
+add chain=prerouting action=accept protocol=tcp dst-port=53 dst-address-type=!local
+add chain=prerouting action=drop protocol=udp dst-port=53 src-address-list=DNS-FLOOD
+add chain=prerouting action=drop protocol=tcp dst-port=53 src-address-list=DNS-FLOOD
+add chain=prerouting action=accept protocol=udp dst-port=53 src-address-list=DNS-CLIENTS \
+    dst-limit=25,50,src-address/1m
+add chain=prerouting action=accept protocol=tcp dst-port=53 src-address-list=DNS-CLIENTS \
+    dst-limit=10,20,src-address/1m
+add chain=prerouting action=add-src-to-address-list protocol=udp dst-port=53 \
+    src-address-list=DNS-CLIENTS address-list=DNS-FLOOD address-list-timeout=10m
+add chain=prerouting action=drop protocol=udp dst-port=53
+add chain=prerouting action=drop protocol=tcp dst-port=53
+
+# --- FILTER: order matters. Fast-path, then known-bad drops, then DETECTION
+#     (port-scan / DDoS / brute-force are passthrough and must run before any
+#     accept), then the accepts and rate-limits. Reordering breaks detection.
+/ip firewall filter
+add chain=input action=accept connection-state=established,related,untracked
+add chain=input action=drop connection-state=invalid
+add chain=forward action=accept connection-state=established,related,untracked
+add chain=forward action=drop connection-state=invalid
+add chain=input action=accept protocol=tcp dst-port=22,8291 src-address-list=Trusted
+
+add chain=input action=drop protocol=tcp dst-port=22,8291 src-address-list="SSH Blacklist"
+add chain=input action=drop src-address-list=DDoS
+add chain=forward action=drop src-address-list=DDoS
+add chain=input action=drop src-address-list=Port-Scan
+add chain=forward action=drop src-address-list=Port-Scan
+
+add chain=input action=add-src-to-address-list address-list=Port-Scan \
+    address-list-timeout=1d protocol=tcp psd=21,3s,3,1
+add chain=forward action=add-src-to-address-list address-list=Port-Scan \
+    address-list-timeout=1d protocol=tcp psd=21,3s,3,1
+add chain=input action=jump jump-target=ddos connection-state=new
+add chain=forward action=jump jump-target=ddos connection-state=new
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=22,8291 \
+    connection-state=new src-address-list="SSH Stage 3" \
+    address-list="SSH Blacklist" address-list-timeout=1d
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=22,8291 \
+    connection-state=new src-address-list="SSH Stage 2" \
+    address-list="SSH Stage 3" address-list-timeout=1m
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=22,8291 \
+    connection-state=new src-address-list="SSH Stage 1" \
+    address-list="SSH Stage 2" address-list-timeout=1m
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=22,8291 \
+    connection-state=new address-list="SSH Stage 1" address-list-timeout=1m
+
+add chain=input action=accept protocol=icmp icmp-options=8:0 limit=5,5:packet
+add chain=input action=accept protocol=icmp icmp-options=3:4
+add chain=input action=accept protocol=icmp icmp-options=11:0
+add chain=input action=drop protocol=icmp
+add chain=input action=accept protocol=udp dst-port=67 limit=30,20
+add chain=input action=drop protocol=udp dst-port=67
+add chain=input action=jump jump-target=syn-attack protocol=tcp tcp-flags=syn connection-state=new
+add chain=forward action=jump jump-target=syn-attack protocol=tcp tcp-flags=syn connection-state=new
+
+# helper chains
+add chain=syn-attack action=return protocol=tcp tcp-flags=syn connection-state=new limit=400,5:packet
+add chain=syn-attack action=drop protocol=tcp tcp-flags=syn connection-state=new
+add chain=ddos action=return dst-limit=32,32,src-and-dst-addresses/10s
+add chain=ddos action=add-src-to-address-list address-list=DDoS address-list-timeout=10m
+
+/ip settings set tcp-syncookies=yes
+
+# --- 12. DHCP starvation on a bridge (only fires if the DHCP server is on one)
+/interface bridge filter
+add chain=input action=accept mac-protocol=ip ip-protocol=udp dst-port=67 limit=30,20
+add chain=input action=drop mac-protocol=ip ip-protocol=udp dst-port=67
+/ip dhcp-server set [find] conflict-detection=yes
+#by Mohammed Haidar

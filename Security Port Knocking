@@ -1,3 +1,4 @@
+# Alternative to "Security 06 SSH Brute Force" - both gate SSH/WinBox, so use ONE, not both.
 # Knock 7555 then 9555 then 8555 to open SSH and WinBox for 15 minutes.
 # CHANGE THESE THREE PORTS - everyone reading this repo knows them.
 /ip firewall filter

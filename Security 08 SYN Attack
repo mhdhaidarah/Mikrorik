@@ -1,0 +1,9 @@
+# SYN under the limit RETURNS (passes through) so this composes with the
+# other Security files in any order; only the flood over the limit is dropped.
+/ip settings set tcp-syncookies=yes
+/ip firewall filter
+add chain=input action=jump jump-target=syn-attack protocol=tcp tcp-flags=syn connection-state=new
+add chain=forward action=jump jump-target=syn-attack protocol=tcp tcp-flags=syn connection-state=new
+add chain=syn-attack action=return protocol=tcp tcp-flags=syn connection-state=new limit=400,5:packet
+add chain=syn-attack action=drop protocol=tcp tcp-flags=syn connection-state=new
+#by Mohammed Haidar

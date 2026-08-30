@@ -1,0 +1,12 @@
+# Turns the router into a stateful edge: nothing new comes IN from the WAN
+# unless it was port-forwarded. This is the ONE security file that must know
+# your WAN - the interface-free version also drops your LAN's own outbound
+# UDP. Create a WAN list with your uplink(s), then paste.
+/interface list
+add name=WAN
+/interface list member
+add list=WAN interface=ether1
+/ip firewall filter
+add chain=forward action=drop connection-state=new connection-nat-state=!dstnat \
+    in-interface-list=WAN
+#by Mohammed Haidar

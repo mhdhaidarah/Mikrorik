@@ -43,22 +43,38 @@ addresses, interfaces and credentials to your network before applying.
 
 ### Security scripts
 
-Interface‑independent unless noted — paste on any router, no interface list to build first. Each was import‑tested on RouterOS 7.23, and the four attack scripts were verified with a real attacker (nmap, nping, a DHCP‑starvation flood).
+Two ways to use them, **same result either way**:
+
+* **`Security Firewall`** — one file with everything, conflict-checked on real
+  RouterOS. Paste it and you are done.
+* **`Security 01…11`** — the same protections as separate files, numbered in a
+  sensible paste order. Order does not actually affect the result (each is
+  order-independent), the numbers just show the natural sequence.
+
+Every file was import-tested on RouterOS 7.23; the four attack scripts were
+verified with a real attacker (nmap, nping, a DHCP-starvation flood). All are
+interface-independent — no interface name, no interface list to build first —
+except **11**, which needs to know the WAN and says so.
+
+**Put your own IP in the `Trusted` list before pasting the SSH block, and read
+the top of each file.**
 
 | File | What it does |
 |---|---|
-| **Security Connection Tracking** | The base every firewall needs: accept established/related/untracked, drop invalid, on `input` and `forward`. |
-| **Security SYN Attack** | `tcp-syncookies` on, plus a `syn-attack` chain that accepts 400 SYN/s and drops the rest. *Verified: 1 058 of a 600/s flood dropped, legitimate SYNs still accepted.* |
-| **Security Port Scan Attack** | PSD port‑scan detector on `input` and `forward`; offenders land in `Port-Scan` for 1 day and are dropped. *Verified: an nmap `-sS` scan flagged and dropped.* |
-| **Security SSH Brute Force** | Staged blacklist on SSH **and WinBox** (22, 8291): a `Trusted` list is always allowed, three 1‑minute stages, then a **1‑day** ban. **Put your own IP in `Trusted` before pasting — it drops new management sessions.** |
-| **Security DDoS Connection Rate** | Flags any source opening connections faster than 32/10s and drops it for 10m — catches floods the SYN rules miss. |
-| **Security DNS Flood Attack** | Stops the router being an open resolver: transit passes, `DNS-CLIENTS` (RFC1918 + CGNAT) are rate‑limited per source, flooders flagged 10m, everything else dropped (TCP and UDP). |
-| **Security DHCP Starvation Attack** | Rate‑limits DHCP DISCOVERs so a spoofed‑MAC flood cannot drain the pool; `conflict-detection` on. *Verified: 14 373 of 14 574 spoofed DISCOVERs dropped, 0 leases lost.* |
-| **Security Port Knocking** | Hides SSH + WinBox behind a 3‑knock sequence (default **7555 → 9555 → 8555**, change them), opening them for 15 min. Only new sessions are dropped, so pasting it will not cut your current one. *Verified: knock opened access, no knock stayed shut.* |
-| **Security Router Hardening** | Turns off attack surface with no value: telnet, ftp, www(‑ssl), bandwidth‑server, mac‑ping, neighbour discovery, proxy, socks; SSH strong‑crypto on. API (8728) left on for SAMM. |
-| **Security ICMP Policy** | Rate‑limited ping plus the ICMP types that must never be dropped (fragmentation‑needed, TTL‑exceeded) — safer than dropping all ICMP. |
-| **Security Unsolicited Forward Drop** | One rule: drop new `forward` connections that were not port‑forwarded — a stateful edge without naming an interface. |
-| **Security Bogon Source Drop** | Drops packets whose **source** is a reserved/martian range. RFC1918 and CGNAT are deliberately left out — add them only if every WAN is public. |
+| **Security Firewall** | All of 01–10 in one paste, in the correct order, conflict-free. The all-in-one. |
+| **Security 01 Connection Tracking** | The base every firewall needs: accept established/related/untracked, drop invalid, on `input` and `forward`. |
+| **Security 02 Router Hardening** | Turns off unused attack surface: telnet, ftp, www(-ssl), bandwidth-server, mac-ping, neighbour discovery, proxy, socks; SSH strong-crypto on. API (8728) kept for SAMM. |
+| **Security 03 Bogon Source Drop** | Drops packets whose **source** is a reserved/martian range. RFC1918/CGNAT left out — add them only if every WAN is public. |
+| **Security 04 DNS Flood Attack** | Stops the router being an open resolver: transit passes, `DNS-CLIENTS` (RFC1918 + CGNAT) rate-limited per source, flooders flagged 10m, everything else dropped (TCP + UDP). |
+| **Security 05 ICMP Policy** | Rate-limited ping plus the ICMP types that must never drop (fragmentation-needed, TTL-exceeded). |
+| **Security 06 SSH Brute Force** | Staged blacklist on SSH **and WinBox** (22, 8291): `Trusted` always allowed, three 1-minute stages, then a 1-day ban. *Verified — it will lock you out if your IP isn't in `Trusted`.* |
+| **Security 07 DDoS Connection Rate** | Flags any source opening connections faster than 32/10s and drops it 10m — catches floods the SYN rules miss. |
+| **Security 08 SYN Attack** | `tcp-syncookies` on, plus a `syn-attack` chain: SYN under 400/s **returns** (so it composes with the scan/DDoS detectors), the flood is dropped. *Verified: 1 058 of a flood dropped.* |
+| **Security 09 Port Scan Attack** | PSD scan detector on `input` and `forward`; offenders land in `Port-Scan` for 1 day and are dropped. *Verified against nmap `-sS`.* |
+| **Security 10 DHCP Starvation Attack** | Rate-limits DHCP DISCOVERs so a spoofed-MAC flood can't drain the pool; `conflict-detection` on. *Verified: 14 373 of 14 574 spoofed DISCOVERs dropped, 0 leases lost.* |
+| **Security 11 Unsolicited Forward Drop** | Stateful edge — nothing new comes in from the WAN unless port-forwarded. **The one file that needs your WAN interface** (the interface-free form also drops your LAN's outbound UDP), so it's not in `Security Firewall`. |
+| **Security Port Knocking** | Hides SSH + WinBox behind a 3-knock sequence (default **7555 → 9555 → 8555**, change them). **An alternative to 06 — use one, not both** — so it's a separate file, not in the bundle. *Verified: knock opened access, no knock stayed shut.* |
+
 ---
 
 ## IP Collector DNS + SAMM
