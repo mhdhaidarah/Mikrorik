@@ -1,0 +1,13 @@
+# Knock 7555 then 9555 then 8555 to open SSH and WinBox for 15 minutes.
+# CHANGE THESE THREE PORTS - everyone reading this repo knows them.
+/ip firewall filter
+add chain=input action=accept protocol=tcp dst-port=22,8291 src-address-list=Knocked
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=7555 \
+    address-list=knock1 address-list-timeout=15s
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=9555 \
+    src-address-list=knock1 address-list=knock2 address-list-timeout=15s
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=8555 \
+    src-address-list=knock2 address-list=Knocked address-list-timeout=15m
+# Only NEW sessions are dropped, so pasting this will not cut your own session.
+add chain=input action=drop protocol=tcp dst-port=22,8291 connection-state=new
+#by Mohammed Haidar

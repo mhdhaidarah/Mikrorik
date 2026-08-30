@@ -1,0 +1,7 @@
+# Paste on a router with no firewall rules, or move these to the top of each chain.
+/ip firewall filter
+add chain=input action=accept connection-state=established,related,untracked
+add chain=input action=drop connection-state=invalid
+add chain=forward action=accept connection-state=established,related,untracked
+add chain=forward action=drop connection-state=invalid
+#by Mohammed Haidar

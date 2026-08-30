@@ -33,17 +33,32 @@ addresses, interfaces and credentials to your network before applying.
 | **DNS Generator/** | Python tool + `catalog.json` that generate `IP Collector DNS`. Add an app in one place, regenerate, done. |
 | **Basic Router with Vlans** | Full bootstrap for a single‑bridge, VLAN‑filtered router (Server / Office / Staff / Guest zones) with per‑VLAN gateways. |
 | **Basic ISP PPPoE Hotspot** | PPPoE server + Hotspot starter with RADIUS and a ladder of rate‑limit profiles (1M–30M). |
-| **Multiple PPPoE** | Ten MAC‑VLAN PPPoE clients on one SFP+ uplink, bundled into a `WAN_List` (multi‑session uplinks). |
-| **DMA Radius Connect to Mikrotik** | Wire a MikroTik to an external **DMA RADIUS** server — pools, PPPoE server, NAT, expired‑user redirect. |
 | **User Manager Radius Setup** | RouterOS **User Manager** as the RADIUS source: rate limitations, priced/validity profiles and router binding. |
-| **DHCP Speed Limit** | One‑liner DHCP lease script that auto‑creates/removes a per‑client simple queue. |
+| **DMA Radius Connect to Mikrotik** | Wire a MikroTik to an external **DMA RADIUS** server — pools, PPPoE server, NAT, expired‑user redirect. |
+| **Multiple PPPoE** | Ten MAC‑VLAN PPPoE clients on one SFP+ uplink, bundled into a `WAN_List` (multi‑session uplinks). |
 | **Mirktoik OSPF.txt** | Minimal OSPF instance/area/interface templates (normal router + default‑route originator). |
+| **VPN Server** | L2TP/IPsec + WireGuard server bootstrap with dual‑stack addressing. |
+| **DHCP Speed Limit** | Paste‑in‑Terminal command: attaches a lease‑script to **every** DHCP server so each client gets its own parent‑less simple queue (default 2M/2M, one line to change). Verified on ROS 7.23. |
 | **wgcf.zip** | `wgcf` helper binary (generate WireGuard/Cloudflare WARP configs). |
 
-> ⚠️ **Templates, not secrets.** Some RADIUS examples ship with placeholder
-> shared secrets and IPs. Always replace credentials, address ranges and
-> interface names with your own before deploying to production.
+### Security scripts
 
+Interface‑independent unless noted — paste on any router, no interface list to build first. Each was import‑tested on RouterOS 7.23, and the four attack scripts were verified with a real attacker (nmap, nping, a DHCP‑starvation flood).
+
+| File | What it does |
+|---|---|
+| **Security Connection Tracking** | The base every firewall needs: accept established/related/untracked, drop invalid, on `input` and `forward`. |
+| **Security SYN Attack** | `tcp-syncookies` on, plus a `syn-attack` chain that accepts 400 SYN/s and drops the rest. *Verified: 1 058 of a 600/s flood dropped, legitimate SYNs still accepted.* |
+| **Security Port Scan Attack** | PSD port‑scan detector on `input` and `forward`; offenders land in `Port-Scan` for 1 day and are dropped. *Verified: an nmap `-sS` scan flagged and dropped.* |
+| **Security SSH Brute Force** | Staged blacklist on SSH **and WinBox** (22, 8291): a `Trusted` list is always allowed, three 1‑minute stages, then a **1‑day** ban. **Put your own IP in `Trusted` before pasting — it drops new management sessions.** |
+| **Security DDoS Connection Rate** | Flags any source opening connections faster than 32/10s and drops it for 10m — catches floods the SYN rules miss. |
+| **Security DNS Flood Attack** | Stops the router being an open resolver: transit passes, `DNS-CLIENTS` (RFC1918 + CGNAT) are rate‑limited per source, flooders flagged 10m, everything else dropped (TCP and UDP). |
+| **Security DHCP Starvation Attack** | Rate‑limits DHCP DISCOVERs so a spoofed‑MAC flood cannot drain the pool; `conflict-detection` on. *Verified: 14 373 of 14 574 spoofed DISCOVERs dropped, 0 leases lost.* |
+| **Security Port Knocking** | Hides SSH + WinBox behind a 3‑knock sequence (default **7555 → 9555 → 8555**, change them), opening them for 15 min. Only new sessions are dropped, so pasting it will not cut your current one. *Verified: knock opened access, no knock stayed shut.* |
+| **Security Router Hardening** | Turns off attack surface with no value: telnet, ftp, www(‑ssl), bandwidth‑server, mac‑ping, neighbour discovery, proxy, socks; SSH strong‑crypto on. API (8728) left on for SAMM. |
+| **Security ICMP Policy** | Rate‑limited ping plus the ICMP types that must never be dropped (fragmentation‑needed, TTL‑exceeded) — safer than dropping all ICMP. |
+| **Security Unsolicited Forward Drop** | One rule: drop new `forward` connections that were not port‑forwarded — a stateful edge without naming an interface. |
+| **Security Bogon Source Drop** | Drops packets whose **source** is a reserved/martian range. RFC1918 and CGNAT are deliberately left out — add them only if every WAN is public. |
 ---
 
 ## IP Collector DNS + SAMM

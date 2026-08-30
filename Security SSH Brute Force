@@ -1,0 +1,19 @@
+# Put your own IP in Trusted BEFORE pasting, or you can lock yourself out.
+/ip firewall address-list
+add list=Trusted address=192.168.88.0/24
+
+/ip firewall filter
+add chain=input action=accept protocol=tcp dst-port=22,8291 src-address-list=Trusted
+add chain=input action=drop protocol=tcp dst-port=22,8291 src-address-list="SSH Blacklist"
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=22,8291 \
+    connection-state=new src-address-list="SSH Stage 3" \
+    address-list="SSH Blacklist" address-list-timeout=1d
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=22,8291 \
+    connection-state=new src-address-list="SSH Stage 2" \
+    address-list="SSH Stage 3" address-list-timeout=1m
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=22,8291 \
+    connection-state=new src-address-list="SSH Stage 1" \
+    address-list="SSH Stage 2" address-list-timeout=1m
+add chain=input action=add-src-to-address-list protocol=tcp dst-port=22,8291 \
+    connection-state=new address-list="SSH Stage 1" address-list-timeout=1m
+#by Mohammed Haidar

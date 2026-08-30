@@ -1,0 +1,15 @@
+# Sources that are never valid on the internet. RFC1918 and CGNAT are NOT here:
+# add them only if every WAN on this router is a public address.
+/ip firewall address-list
+add list=Bogons address=0.0.0.0/8
+add list=Bogons address=127.0.0.0/8
+add list=Bogons address=169.254.0.0/16
+add list=Bogons address=192.0.2.0/24
+add list=Bogons address=198.51.100.0/24
+add list=Bogons address=203.0.113.0/24
+add list=Bogons address=224.0.0.0/4
+add list=Bogons address=240.0.0.0/4
+
+/ip firewall raw
+add chain=prerouting action=drop src-address-list=Bogons
+#by Mohammed Haidar

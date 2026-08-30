@@ -1,1 +1,12 @@
-:local queueName "Client- $leaseActMAC"; :if ($leaseBound = "1") do={ /queue simple add name=$queueName target=($leaseActIP . "/32") max-limit=1M/1M parent=Guest; } else={ /queue simple remove $queueName }
+# Paste in Terminal. Applies to every DHCP server on the router.
+# Change 2M/2M below for a different speed (upload/download).
+:local speed "2M/2M"
+/ip dhcp-server set [find] lease-script="\
+:local q (\"dhcp-\" . \$leaseActMAC)\r\
+\n:if (\$leaseBound = 1) do={\r\
+\n  /queue simple remove [find name=\$q]\r\
+\n  /queue simple add name=\$q target=(\$leaseActIP . \"/32\") max-limit=$speed comment=dhcp-speed-limit\r\
+\n} else={\r\
+\n  /queue simple remove [find name=\$q]\r\
+\n}"
+#by Mohammed Haidar

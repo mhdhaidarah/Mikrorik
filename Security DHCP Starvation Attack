@@ -1,0 +1,12 @@
+# Change 30,20 if a big network floods on power-up.
+/ip firewall filter
+add chain=input action=accept protocol=udp dst-port=67 limit=30,20
+add chain=input action=drop protocol=udp dst-port=67
+
+# Only fires if the DHCP server sits on a bridge; harmless otherwise.
+/interface bridge filter
+add chain=input action=accept mac-protocol=ip ip-protocol=udp dst-port=67 limit=30,20
+add chain=input action=drop mac-protocol=ip ip-protocol=udp dst-port=67
+
+/ip dhcp-server set [find] conflict-detection=yes
+#by Mohammed Haidar

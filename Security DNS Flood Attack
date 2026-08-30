@@ -2,6 +2,7 @@
 add list=DNS-CLIENTS address=10.0.0.0/8
 add list=DNS-CLIENTS address=172.16.0.0/12
 add list=DNS-CLIENTS address=192.168.0.0/16
+add list=DNS-CLIENTS address=100.64.0.0/10
 
 /ip firewall raw
 # 1 - not addressed to this router = transit, leave it alone
@@ -12,6 +13,7 @@ add chain=prerouting action=accept protocol=tcp dst-port=53 dst-address-type=!lo
 # 2 - sources already flagged as flooding
 add chain=prerouting action=drop protocol=udp dst-port=53 src-address-list=DNS-FLOOD \
     comment="DNS-2 flagged"
+add chain=prerouting action=drop protocol=tcp dst-port=53 src-address-list=DNS-FLOOD
 
 # 3 - trusted clients, rate limited PER SOURCE
 add chain=prerouting action=accept protocol=udp dst-port=53 src-address-list=DNS-CLIENTS \

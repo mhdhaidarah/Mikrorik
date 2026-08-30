@@ -1,0 +1,8 @@
+/ip firewall filter
+add chain=input action=drop src-address-list=DDoS
+add chain=forward action=drop src-address-list=DDoS
+add chain=forward action=jump jump-target=ddos connection-state=new
+add chain=input action=jump jump-target=ddos connection-state=new
+add chain=ddos action=return dst-limit=32,32,src-and-dst-addresses/10s
+add chain=ddos action=add-src-to-address-list address-list=DDoS address-list-timeout=10m
+#by Mohammed Haidar

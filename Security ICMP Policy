@@ -1,0 +1,6 @@
+/ip firewall filter
+add chain=input action=accept protocol=icmp icmp-options=8:0 limit=5,5:packet
+add chain=input action=accept protocol=icmp icmp-options=3:4
+add chain=input action=accept protocol=icmp icmp-options=11:0
+add chain=input action=drop protocol=icmp
+#by Mohammed Haidar

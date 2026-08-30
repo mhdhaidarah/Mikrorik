@@ -1,0 +1,9 @@
+# API (8728) is left enabled on purpose - SAMM manages the router through it.
+/ip service disable telnet,ftp,www,www-ssl
+/ip ssh set strong-crypto=yes
+/tool bandwidth-server set enabled=no
+/tool mac-server ping set enabled=no
+/ip neighbor discovery-settings set discover-interface-list=none
+/ip proxy set enabled=no
+/ip socks set enabled=no
+#by Mohammed Haidar
