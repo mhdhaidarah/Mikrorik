@@ -12,10 +12,17 @@
       "enabled": true,
       "forward_to": "8.8.8.8",
       "static": [
-        { "host": "dns.msftncsi.com", "ip": "131.107.255.255", "why": "Windows NCSI DNS probe — exact IP required" }
+        {
+          "host": "dns.msftncsi.com",
+          "ip": "131.107.255.255",
+          "why": "Windows NCSI DNS probe — exact IP required"
+        }
       ],
       "forward": [
-        { "host": "captive.apple.com", "why": "iOS/iPadOS/macOS captive probe; apple.com match-subdomain would otherwise collect it" }
+        {
+          "host": "captive.apple.com",
+          "why": "iOS/iPadOS/macOS captive probe; apple.com match-subdomain would otherwise collect it"
+        }
       ]
     },
     "anti_bypass": {
@@ -56,7 +63,6 @@
         "wifiman.com",
         "check-host.net",
         "cli.speedtest.net",
-        "earthlink.net",
         "fast.com",
         "icanhazip.com",
         "ifconfig.me",
@@ -139,7 +145,14 @@
         "tiktokv.us",
         "worldfcdn.com",
         "wsdvs.com",
-        "www.tiktok.com"
+        "tiktokw.us",
+        "tiktokcdn-us.com",
+        "tiktokcdn-eu.com",
+        "tiktokv.eu",
+        "tiktokw.eu",
+        "byteimg.com",
+        "ttdns2.com",
+        "tiktokcdn-in.com"
       ],
       "cidrs": []
     },
@@ -159,15 +172,21 @@
         "telegram-cdn.org"
       ],
       "cidrs": [
-        "91.108.56.0/22",
-        "91.108.4.0/22",
-        "91.108.8.0/22",
-        "91.108.16.0/22",
-        "91.108.12.0/22",
-        "149.154.160.0/20",
         "91.105.192.0/23",
-        "91.108.20.0/22",
+        "91.108.4.0/22",
+        "91.108.8.0/21",
+        "91.108.16.0/21",
+        "91.108.56.0/22",
+        "95.161.64.0/20",
+        "149.154.160.0/20",
         "185.76.151.0/24"
+      ],
+      "asns": [
+        62041,
+        62014,
+        59930,
+        44907,
+        211157
       ]
     },
     {
@@ -181,7 +200,17 @@
         "snap.com",
         "sc-cdn.net",
         "app-analytics.snapchat.com",
-        "feelinsonice.com"
+        "feelinsonice.com",
+        "sc-static.net",
+        "sc-gw.com",
+        "sc-prod.net",
+        "snapkit.com",
+        "snapads.com",
+        "snap-dev.net",
+        "sc-jpl.com",
+        "sc-corp.net",
+        "addlive.io",
+        "snapmap.com"
       ],
       "cidrs": []
     },
@@ -214,9 +243,35 @@
         "nflxvideo.net",
         "nflximg.net",
         "nflxso.net",
-        "nflxext.com"
+        "nflxext.com",
+        "nflximg.com",
+        "nflxsearch.net",
+        "netflixdnstest1.com",
+        "tudumext.com"
       ],
-      "cidrs": []
+      "cidrs": [
+        "9.187.0.0/16",
+        "9.188.0.0/16",
+        "23.246.0.0/18",
+        "37.77.184.0/21",
+        "45.57.0.0/17",
+        "64.120.128.0/17",
+        "66.197.128.0/17",
+        "69.53.224.0/19",
+        "108.175.32.0/20",
+        "185.2.220.0/22",
+        "185.9.188.0/22",
+        "192.173.64.0/18",
+        "198.38.96.0/19",
+        "198.45.48.0/20",
+        "207.45.72.0/22",
+        "208.75.76.0/22"
+      ],
+      "asns": [
+        2906,
+        40027,
+        55095
+      ]
     },
     {
       "slug": "shahid",
@@ -256,17 +311,20 @@
       "priority": 3,
       "domains": [
         "apps.apple.com",
-        "apple.com",
         "itunes.com",
         "appstore.com",
-        "applemusic.com",
-        "apple-dns.net",
         "mzstatic.com",
         "mesu.apple.com",
         "updates-http.cdn-apple.com",
         "swscan.apple.com",
         "swdist.apple.com",
-        "icloud.com"
+        "itunes.apple.com",
+        "apps.mzstatic.com",
+        "appldnld.apple.com",
+        "updates.cdn-apple.com",
+        "osxapps.itunes.apple.com",
+        "iosapps.itunes.apple.com",
+        "gdmf.apple.com"
       ],
       "cidrs": []
     },
@@ -278,7 +336,9 @@
       "priority": 3,
       "domains": [
         "apps.microsoft.com",
-        "storeedgefd.dsx.mp.microsoft.com"
+        "storeedgefd.dsx.mp.microsoft.com",
+        "displaycatalog.mp.microsoft.com",
+        "store-images.s-microsoft.com"
       ],
       "cidrs": []
     },
@@ -291,7 +351,10 @@
       "domains": [
         "windowsupdate.com",
         "update.microsoft.com",
-        "download.windowsupdate.com"
+        "download.windowsupdate.com",
+        "delivery.mp.microsoft.com",
+        "do.dsp.mp.microsoft.com",
+        "windowsupdate.microsoft.com"
       ],
       "cidrs": []
     },
@@ -334,7 +397,8 @@
         "instagram.com",
         "cdninstagram.com",
         "threads.net",
-        "ig.me"
+        "ig.me",
+        "threads.com"
       ],
       "cidrs": []
     },
@@ -440,7 +504,13 @@
         "discordapp.com",
         "discord.gg",
         "discordapp.net",
-        "discord.media"
+        "discord.media",
+        "discord.co",
+        "discord.dev",
+        "dis.gd",
+        "discord.new",
+        "discordcdn.com",
+        "discordstatus.com"
       ],
       "cidrs": []
     },
@@ -491,7 +561,11 @@
         "twitch.tv",
         "ttvnw.net",
         "jtvnw.net",
-        "twitchcdn.net"
+        "twitchcdn.net",
+        "live-video.net",
+        "twitchsvc.net",
+        "ext-twitch.tv",
+        "twitch.a2z.com"
       ],
       "cidrs": []
     },
@@ -504,7 +578,14 @@
       "domains": [
         "spotify.com",
         "scdn.co",
-        "spotifycdn.com"
+        "spotifycdn.com",
+        "pscdn.co",
+        "spotify.link",
+        "spoti.fi",
+        "spotilocal.com",
+        "audio-ak-spotify-com.akamaized.net",
+        "audio4-ak-spotify-com.akamaized.net",
+        "heads-ak-spotify-com.akamaized.net"
       ],
       "cidrs": []
     },
@@ -582,9 +663,42 @@
         "steamcommunity.com",
         "steamcontent.com",
         "steamstatic.com",
-        "steamserver.net"
+        "steamserver.net",
+        "steam-chat.com",
+        "steamusercontent.com",
+        "steamgames.com",
+        "valvesoftware.com",
+        "steamcdn-a.akamaihd.net",
+        "steampipe.akamaized.net",
+        "steamstore-a.akamaihd.net",
+        "steamcommunity-a.akamaihd.net",
+        "steamuserimages-a.akamaihd.net"
       ],
-      "cidrs": []
+      "cidrs": [
+        "45.121.184.0/24",
+        "103.10.124.0/23",
+        "103.28.54.0/24",
+        "146.66.152.0/24",
+        "146.66.155.0/24",
+        "155.133.224.0/21",
+        "155.133.236.0/22",
+        "155.133.240.0/23",
+        "155.133.244.0/24",
+        "155.133.246.0/24",
+        "155.133.248.0/22",
+        "155.133.252.0/24",
+        "155.133.254.0/23",
+        "162.254.192.0/21",
+        "185.25.180.0/24",
+        "185.25.182.0/23",
+        "192.69.96.0/22",
+        "205.196.6.0/24",
+        "208.64.200.0/22",
+        "208.78.164.0/22"
+      ],
+      "asns": [
+        32590
+      ]
     },
     {
       "slug": "epic-games",
@@ -596,7 +710,10 @@
         "epicgames.com",
         "unrealengine.com",
         "fortnite.com",
-        "epicgames.dev"
+        "epicgames.dev",
+        "epicgames-download1.akamaized.net",
+        "epicgamescdn.com",
+        "static-assets-prod.unrealengine.com"
       ],
       "cidrs": []
     },
@@ -622,7 +739,9 @@
       "domains": [
         "xbox.com",
         "xboxlive.com",
-        "xboxservices.com"
+        "xboxservices.com",
+        "gamepass.com",
+        "xboxab.com"
       ],
       "cidrs": []
     },
@@ -671,7 +790,8 @@
       "priority": 7,
       "domains": [
         "icloud-content.com",
-        "icloud.com.cn"
+        "icloud.com.cn",
+        "icloud.com"
       ],
       "cidrs": []
     },
@@ -908,9 +1028,19 @@
       "domains": [
         "roblox.com",
         "rbxcdn.com",
-        "robloxlabs.com"
+        "robloxlabs.com",
+        "rbxinfra.com",
+        "rbx.com"
       ],
-      "cidrs": []
+      "cidrs": [
+        "103.140.28.0/23",
+        "128.116.0.0/17",
+        "141.193.3.0/24",
+        "205.201.62.0/24"
+      ],
+      "asns": [
+        22697
+      ]
     },
     {
       "slug": "minecraft",
@@ -921,7 +1051,8 @@
       "domains": [
         "minecraft.net",
         "minecraftservices.com",
-        "mojang.com"
+        "mojang.com",
+        "minecraft-services.net"
       ],
       "cidrs": []
     },
@@ -935,9 +1066,32 @@
         "riotgames.com",
         "riotcdn.net",
         "leagueoflegends.com",
-        "playvalorant.com"
+        "playvalorant.com",
+        "pvp.net",
+        "lolstatic.com",
+        "rgpub.io",
+        "lolesports.com"
       ],
-      "cidrs": []
+      "cidrs": [
+        "43.229.64.0/22",
+        "45.7.36.0/22",
+        "45.250.208.0/22",
+        "103.219.128.0/22",
+        "103.240.224.0/22",
+        "104.160.128.0/19",
+        "138.0.12.0/22",
+        "151.106.246.0/23",
+        "151.106.248.0/22",
+        "151.106.252.0/23",
+        "151.106.254.0/24",
+        "162.249.72.0/21",
+        "185.40.64.0/22",
+        "192.64.168.0/21",
+        "192.207.0.0/24"
+      ],
+      "asns": [
+        6507
+      ]
     },
     {
       "slug": "genshin-impact",
@@ -948,7 +1102,8 @@
       "domains": [
         "hoyoverse.com",
         "mihoyo.com",
-        "yuanshen.com"
+        "yuanshen.com",
+        "hoyolab.com"
       ],
       "cidrs": []
     },
@@ -963,7 +1118,66 @@
         "blizzard.com",
         "battlenet.com.cn"
       ],
-      "cidrs": []
+      "cidrs": [
+        "5.42.160.0/20",
+        "5.42.176.0/22",
+        "24.105.0.0/22",
+        "24.105.16.0/22",
+        "24.105.25.0/24",
+        "24.105.27.0/24",
+        "24.105.28.0/22",
+        "24.105.40.0/21",
+        "24.105.50.0/23",
+        "24.105.52.0/22",
+        "24.105.56.0/21",
+        "37.244.0.0/24",
+        "37.244.2.0/23",
+        "37.244.4.0/22",
+        "37.244.8.0/23",
+        "37.244.10.0/24",
+        "37.244.13.0/24",
+        "37.244.14.0/23",
+        "37.244.16.0/23",
+        "37.244.19.0/24",
+        "37.244.20.0/24",
+        "37.244.23.0/24",
+        "37.244.24.0/21",
+        "37.244.32.0/22",
+        "37.244.36.0/23",
+        "37.244.38.0/24",
+        "37.244.40.0/22",
+        "37.244.50.0/24",
+        "37.244.52.0/22",
+        "37.244.60.0/22",
+        "59.153.40.0/22",
+        "64.224.0.0/21",
+        "64.224.24.0/21",
+        "66.40.176.0/20",
+        "103.4.114.0/23",
+        "103.198.32.0/23",
+        "117.52.6.0/24",
+        "117.52.26.0/23",
+        "117.52.33.0/24",
+        "117.52.34.0/23",
+        "117.52.36.0/23",
+        "121.254.137.0/24",
+        "121.254.206.0/23",
+        "121.254.218.0/24",
+        "137.221.64.0/19",
+        "137.221.104.0/21",
+        "137.221.112.0/24",
+        "150.116.9.0/24",
+        "158.115.192.0/20",
+        "158.115.216.0/21",
+        "182.162.31.0/24",
+        "185.60.112.0/22",
+        "198.74.32.0/22",
+        "198.74.36.0/23",
+        "202.9.66.0/23"
+      ],
+      "asns": [
+        57976
+      ]
     },
     {
       "slug": "cod-warzone",
@@ -973,7 +1187,8 @@
       "priority": 4,
       "domains": [
         "callofduty.com",
-        "activision.com"
+        "demonware.net",
+        "callofdutyleague.com"
       ],
       "cidrs": []
     },
@@ -1064,81 +1279,119 @@
       "label": "COD Mobile",
       "category": "gaming",
       "priority": 4,
-      "protocol": "tcp",
-      "ports": "3013,18082,65010,65050",
-      "counter": true
+      "counter": true,
+      "domains": [
+        "codm.activision.com"
+      ],
+      "tcp": "3013,18082,65010,65050",
+      "udp": "7500-8000"
     },
     {
       "slug": "free-fire",
       "label": "Free Fire",
       "category": "gaming",
       "priority": 4,
-      "protocol": "tcp",
-      "ports": "39003,39698,39779",
-      "counter": true
+      "counter": true,
+      "domains": [
+        "freefiremobile.com",
+        "freefireind.in"
+      ],
+      "asns": [
+        58521
+      ],
+      "tcp": "39003,39698,39779",
+      "udp": "10001,10003,10012",
+      "cidrs": [
+        "103.247.204.0/22",
+        "143.92.112.0/23",
+        "143.92.116.0/23",
+        "143.92.118.0/24",
+        "143.92.120.0/21",
+        "148.222.64.0/20",
+        "148.222.84.0/23",
+        "148.222.92.0/24",
+        "202.81.96.0/22",
+        "202.81.100.0/23",
+        "202.81.104.0/21",
+        "202.81.112.0/20",
+        "202.181.64.0/23",
+        "202.181.67.0/24",
+        "202.181.68.0/24",
+        "202.181.70.0/23",
+        "202.181.72.0/21"
+      ]
     },
     {
       "slug": "pubg-mobile",
       "label": "PUBG Mobile",
       "category": "gaming",
       "priority": 4,
-      "protocol": "tcp",
-      "ports": "10012,17500",
-      "counter": true
+      "counter": true,
+      "domains": [
+        "gpubgm.com",
+        "igamecj.com",
+        "napubgm.broker.amsoveasea.com"
+      ],
+      "tcp": "10012,17500",
+      "udp": "10010,10013,10039,10096,10491,10612,11455,12235,13748,13894,13972,20000-20002"
     },
     {
       "slug": "mobile-legends",
       "label": "Mobile Legends",
       "category": "gaming",
       "priority": 4,
-      "protocol": "tcp",
-      "ports": "5001,5003,9001,30000-30200",
-      "counter": true
+      "counter": true,
+      "domains": [
+        "moonton.com",
+        "youngjoygame.com"
+      ],
+      "tcp": "5001,5003,9001,30000-30200"
     },
     {
       "slug": "rules-of-survival",
       "label": "Rules of Survival",
       "category": "gaming",
       "priority": 4,
-      "protocol": "udp",
-      "ports": "24000-24050",
-      "counter": true
+      "counter": true,
+      "udp": "24000-24050"
     },
     {
       "slug": "clash-of-clans",
       "label": "Clash of Clans",
       "category": "gaming",
       "priority": 4,
-      "protocol": "tcp",
-      "ports": "9330-9340",
-      "counter": true
+      "counter": true,
+      "domains": [
+        "game.clashofclans.com",
+        "game-assets.clashofclans.com"
+      ]
     },
     {
       "slug": "dragon-nest",
       "label": "Dragon Nest",
       "category": "gaming",
       "priority": 4,
-      "protocol": "tcp",
-      "ports": "10514",
-      "counter": true
+      "counter": true,
+      "tcp": "10514"
     },
     {
       "slug": "clash-royale",
       "label": "Clash Royale",
       "category": "gaming",
       "priority": 4,
-      "protocol": "tcp",
-      "ports": "9330-9340",
-      "counter": true
+      "counter": true,
+      "domains": [
+        "game.clashroyaleapp.com",
+        "game-assets.clashroyaleapp.com"
+      ]
     },
     {
       "slug": "arena-of-valor",
       "label": "Arena of Valor",
       "category": "gaming",
       "priority": 4,
-      "protocol": "tcp",
-      "ports": "10001-10094",
-      "counter": true
+      "counter": true,
+      "tcp": "10001-10094"
     }
   ]
 }

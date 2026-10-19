@@ -109,6 +109,15 @@ FOOTER = """\
 """
 
 
+def port_rules(g):
+    """[(protocol, ports)] of a game: "tcp"/"udp" keys, or the older single
+    protocol + ports pair."""
+    rules = [(p, g[p]) for p in ("tcp", "udp") if g.get(p)]
+    if not rules and g.get("protocol") and g.get("ports"):
+        rules = [(g["protocol"], g["ports"])]
+    return rules
+
+
 def banner(text):
     return f"# ===================== {text} ====================="
 
@@ -123,9 +132,12 @@ def build(catalog):
     # ---- DNS static (the IP collectors) ----
     out.append("/ip dns static")
     last_section = None
-    for a in apps:
+    # Games may carry domains too: a game's lobby/match servers are often
+    # found by name (game.clashofclans.com), which is far more precise than a
+    # port range shared with every other app on the Internet.
+    for a in apps + [g for g in games if g.get("domains")]:
         lst = f'{a["label"]} IPs'
-        sec = a.get("section") or a["label"]
+        sec = a.get("section") or (f'GAME: {a["label"]}' if a in games else a["label"])
         if sec != last_section:
             out.append(banner(sec))
             last_section = sec
@@ -136,7 +148,7 @@ def build(catalog):
     out.append("")
 
     # ---- Static CIDR ranges ----
-    cidr_apps = [a for a in apps if a.get("cidrs")]
+    cidr_apps = [a for a in apps + games if a.get("cidrs")]
     if cidr_apps:
         out.append("/ip firewall address-list")
         for a in cidr_apps:
@@ -172,11 +184,16 @@ def build(catalog):
         out.append(banner("GAMES"))
         for g in games:
             lst = f'{g["label"]} IPs'
-            out.append(
-                f'/ip firewall mangle add chain=prerouting '
-                f'action=add-dst-to-address-list address-list="{lst}" '
-                f'address-list-timeout=1d protocol={g["protocol"]} '
-                f'dst-port={g["ports"]} comment="{lst}" dst-address-type=!local')
+            # connection-state=new: the address only has to be learnt once per
+            # flow, so the rule runs on one packet per connection instead of
+            # every packet of every game session (router CPU).
+            for proto, ports in port_rules(g):
+                out.append(
+                    f'/ip firewall mangle add chain=prerouting '
+                    f'action=add-dst-to-address-list address-list="{lst}" '
+                    f'address-list-timeout=1d protocol={proto} '
+                    f'dst-port={ports} comment="{lst}" '
+                    f'connection-state=new dst-address-type=!local')
         out.append("")
 
     # ---- Download packet marks (disabled — manual QoS starting point) ----
@@ -262,13 +279,62 @@ def validate(catalog):
     for a in catalog["apps"]:
         if not a.get("domains"):
             errors.append(f"{a.get('slug')}: an app with no domains collects nothing")
+    for g in catalog.get("games", []):
+        if not (g.get("domains") or g.get("cidrs") or port_rules(g)):
+            errors.append(f"{g.get('slug')}: a game with no domains, cidrs or ports collects nothing")
+    # One domain, one app. A domain listed twice — or listed under one app while
+    # its parent is under another (match-subdomain) — puts the same addresses in
+    # two lists, so the same bytes are counted, and shaped, twice.
+    owner = {}
+    for a in catalog["apps"] + catalog.get("games", []):
+        for d in a.get("domains") or []:
+            d = d.lower().strip(".")
+            if d in owner and owner[d] != a["slug"]:
+                errors.append(f"{a['slug']}: {d} is already listed under {owner[d]}")
+            owner.setdefault(d, a["slug"])
+    for d, slug in owner.items():
+        parts = d.split(".")
+        for i in range(1, len(parts) - 1):
+            parent = ".".join(parts[i:])
+            if owner.get(parent) not in (None, slug):
+                errors.append(f"{slug}: {d} sits under {parent}, which belongs to {owner[parent]}")
     if errors:
         raise SystemExit("catalog.json is not valid:\n  - " + "\n  - ".join(errors))
 
 
+def refresh_cidrs(catalog):
+    """Rewrite each entry's `cidrs` from the prefixes its `asns` announce today
+    (RIPEstat), IPv4 only, aggregated. Only for networks that carry nothing but
+    that service (Netflix Open Connect, Roblox, Riot, Valve, Telegram...) — a
+    cloud or CDN ASN would sweep in thousands of unrelated sites. Network is
+    used here and only here: plain generation stays offline and repeatable."""
+    import ipaddress
+    import urllib.request
+    for a in catalog["apps"] + catalog.get("games", []):
+        if not a.get("asns"):
+            continue
+        nets = [ipaddress.ip_network(c) for c in a.get("cidrs_extra", [])]
+        for asn in a["asns"]:
+            url = f"https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS{asn}"
+            with urllib.request.urlopen(url, timeout=30) as r:
+                data = json.load(r)["data"]
+            got = [ipaddress.ip_network(p["prefix"]) for p in data["prefixes"] if ":" not in p["prefix"]]
+            if not got:
+                raise SystemExit(f"{a['slug']}: AS{asn} announces no IPv4 prefix — refusing to empty its list")
+            nets += got
+        a["cidrs"] = [str(n) for n in ipaddress.collapse_addresses(nets)]
+        print(f"  {a['slug']}: {len(a['cidrs'])} ranges from AS{', AS'.join(map(str, a['asns']))}")
+    with open(CATALOG, "w", encoding="utf-8") as f:
+        json.dump(catalog, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
+
 def main():
+    import sys
     with open(CATALOG, encoding="utf-8") as f:
         catalog = json.load(f)
+    if "--refresh-cidrs" in sys.argv[1:]:
+        refresh_cidrs(catalog)
     validate(catalog)
     text = build(catalog)
     with open(OUT, "w", encoding="utf-8") as f:

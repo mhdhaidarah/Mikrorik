@@ -35,10 +35,70 @@ This regenerates `../IP Collector DNS` from `catalog.json`. Commit both.
   ],
   "games": [
     { "slug": "pubg-mobile", "label": "PUBG Mobile", "category": "gaming",
-      "priority": 4, "protocol": "tcp", "ports": "10012,17500" }
+      "priority": 4, "counter": true,
+      "domains": ["pubgmobile.com", "igamecj.com"],   // optional, same collectors as apps
+      "asns": [58521],                                // optional, see "Networks" below
+      "tcp": "10012,17500", "udp": "10010,10013" }    // optional port collectors
   ]
 }
 ```
+
+A game is found by **name first, network second, port last**. Names and
+networks are exact; a port range also catches every other app that happens to
+use the same port. The older single `"protocol"` + `"ports"` pair still works.
+Port collectors carry `connection-state=new`, so they run once per connection
+instead of on every packet of every game session.
+
+### Networks (`asns` → `cidrs`)
+
+For a service whose traffic comes from **its own network** — Netflix Open
+Connect, Telegram, Roblox, Riot, Valve, Blizzard, Garena — the catalog lists the
+ASNs, and
+
+```bash
+python3 "DNS Generator/generate.py" --refresh-cidrs
+```
+
+rewrites that entry's `cidrs` from the prefixes those ASNs announce today
+(RIPEstat, IPv4, aggregated), then generates. Those ranges go into a static
+`/ip firewall address-list`, so game servers reached by IP (no DNS lookup at
+all) are still counted. Never give an ASN of a cloud or CDN (Google, Amazon,
+Akamai, Cloudflare, Tencent Cloud, Meta): it would sweep in thousands of other
+sites. Plain generation never touches the network.
+
+### One domain, one app
+
+RouterOS takes the **first** matching `/ip dns static` entry (lab-proven on
+7.24.4): with `apple.com` above `tv.apple.com`, Apple TV lookups landed in the
+App Store list. The generator therefore refuses a domain listed under two apps,
+or a domain sitting under another app's domain. Keep app domains specific — a
+parent domain like `apple.com` or `activision.com` swallows every sibling
+service.
+
+### Shared CDN hosts
+
+A hostname that is a CNAME to a shared CDN edge (Akamai `*.akamai.net` /
+`edgesuite.net`, Fastly, CloudFront, Cloudflare) collects an address that also
+serves unrelated sites, and every byte to that address is then counted for
+this app. Only list such a host when it carries the app's real payload (video,
+downloads); static web assets are not worth it. Measured example:
+`ttwstatic.com` (TikTok web scripts) shares `a1013.dsct.akamai.net` with Roblox's
+`rbxcdn.com` and pulled 96% of a Roblox session into TikTok — so it is not listed.
+For the same reason a game's marketing site (pubgmobile.com, ff.garena.com,
+mobilelegends.com...) is never listed: only its backends, own network and
+asset hosts.
+
+### How long a collected address stays (lab-measured, RouterOS 7.24.4)
+
+- An address lives for the DNS record's TTL plus `address-list-extra-time`.
+  SAMM leaves that at the RouterOS default `0s`; the full file sets `1d`.
+  5-minute YouTube and Twitch sessions were counted the same at `0s`, `1h` and
+  `1d` (92–99%), while the longer times only kept shared CDN addresses around
+  longer (more cross-app counting). Clients look names up again often enough.
+- RouterOS remembers what it learnt: an entry removed by hand is **not**
+  re-learnt — not after a cache flush, not after toggling the static — until
+  its original lifetime has passed. Never "clean" the `<App> IPs` lists to
+  test something; reboot the router or wait.
 
 ### Categories
 
